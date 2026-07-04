@@ -1,0 +1,29 @@
+{% if messages %}
+
+<div class="space-y-4 mb-8">
+
+    {% for message in messages %}
+
+    <div
+    class="rounded-xl px-5 py-4 border
+
+    {% if message.tags == 'success' %}
+        bg-green-50 border-green-300 text-green-700
+    {% elif message.tags == 'error' %}
+        bg-red-50 border-red-300 text-red-700
+    {% elif message.tags == 'warning' %}
+        bg-yellow-50 border-yellow-300 text-yellow-700
+    {% else %}
+        bg-blue-50 border-blue-300 text-blue-700
+    {% endif %}
+    ">
+
+        {{ message }}
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endif %}

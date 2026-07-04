@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Blogs
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto py-10">
+
+    <h1 class="text-4xl font-bold mb-8">
+
+        My Blogs
+
+    </h1>
+
+    {% if blogs %}
+
+        <div class="space-y-4">
+
+            {% for blog in blogs %}
+
+            <div class="bg-white rounded-xl shadow p-6">
+
+                <h2 class="text-2xl font-semibold">
+
+                    {{ blog.title }}
+
+                </h2>
+
+                <p class="text-slate-500 mt-2">
+
+                    {{ blog.description }}
+
+                </p>
+
+                <div class="mt-4 flex gap-3">
+
+                    <a
+                        href="{% url 'blogs:detail' blog.id %}"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+
+                        View
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="text-center py-20">
+
+            <h2 class="text-3xl font-semibold">
+
+                No Blogs Yet
+
+            </h2>
+
+            <p class="text-slate-500 mt-4">
+
+                Generate your first AI-powered blog.
+
+            </p>
+
+            <a
+                href="{% url 'blogs:generate' %}"
+                class="inline-block mt-8 bg-blue-600 text-white px-6 py-3 rounded-xl">
+
+                Generate Blog
+
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

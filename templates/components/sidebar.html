@@ -1,0 +1,97 @@
+<aside
+id="sidebar"
+class="hidden lg:flex w-72 flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
+
+    <!-- Logo -->
+
+    <div class="h-20 flex items-center px-8 border-b border-slate-200 dark:border-slate-800">
+
+        <a
+        href="/"
+        class="flex items-center gap-3">
+
+            <div
+            class="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xl font-bold">
+
+                AI
+
+            </div>
+
+            <div>
+
+                <h1 class="font-bold text-lg">
+
+                    AI Blog
+
+                </h1>
+
+                <p class="text-xs text-slate-500">
+
+                    Generator
+
+                </p>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <!-- Navigation -->
+
+    <nav class="flex-1 px-5 py-6 space-y-2">
+
+        <a
+        href="{% url 'blogs:dashboard' %}"
+        class="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-800 transition">
+
+            <i data-lucide="layout-dashboard"></i>
+
+            Dashboard
+
+        </a>
+
+        <a
+        href="{% url 'blogs:generate' %}"
+        class="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-800 transition">
+
+            <i data-lucide="sparkles"></i>
+
+            Generate Blog
+
+        </a>
+
+        <a
+        href="#"
+        class="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-800 transition">
+
+            <i data-lucide="book-open"></i>
+
+            My Blogs
+
+        </a>
+
+        <a
+        href="#"
+        class="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-800 transition">
+
+            <i data-lucide="bar-chart-3"></i>
+
+            Analytics
+
+        </a>
+
+        <a
+        href="#"
+        class="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-800 transition">
+
+            <i data-lucide="settings"></i>
+
+            Settings
+
+        </a>
+
+    </nav>
+
+
+</aside>

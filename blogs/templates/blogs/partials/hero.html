@@ -1,0 +1,118 @@
+<section class="relative">
+
+    <!-- Hero Image -->
+
+    <div class="relative h-[520px] overflow-hidden">
+
+        <img
+            src="{{ blog.hero.image.path }}"
+            alt="{{ blog.hero.image.alt_text }}"
+            class="w-full h-full object-cover">
+
+        <!-- Dark Overlay -->
+
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-transparent">
+        </div>
+
+        <!-- Content -->
+
+        <div class="absolute inset-0 flex items-end">
+
+            <div class="max-w-7xl mx-auto w-full px-6 pb-14">
+
+                <!-- Top Badges -->
+
+                <div class="flex flex-wrap gap-3 mb-6">
+
+                    <span
+                        class="inline-flex items-center rounded-full bg-blue-600 text-white px-4 py-1 text-sm font-medium">
+
+                        {{ blog.category }}
+
+                    </span>
+
+                    <span
+                        class="inline-flex items-center rounded-full bg-white/20 backdrop-blur text-white px-4 py-1 text-sm">
+
+                        🤖 AI Generated
+
+                    </span>
+
+                    <span
+                        class="inline-flex items-center rounded-full bg-white/20 backdrop-blur text-white px-4 py-1 text-sm">
+
+                        {{ chapters|length }} Chapters
+
+                    </span>
+
+                </div>
+
+                <!-- Title -->
+
+                <h1
+                    class="text-5xl md:text-6xl font-extrabold leading-tight text-white max-w-5xl">
+
+                    {{ blog.title }}
+
+                </h1>
+
+                <!-- Subtitle -->
+
+                {% if blog.hero.subtitle %}
+
+                <p
+                    class="mt-5 text-2xl text-slate-200 max-w-4xl">
+
+                    {{ blog.hero.subtitle }}
+
+                </p>
+
+                {% endif %}
+
+                <!-- Summary -->
+
+                <p
+                    class="mt-6 text-lg text-slate-300 max-w-3xl">
+
+                    {{ blog.hero.summary }}
+
+                </p>
+
+                <!-- Meta -->
+
+                <div
+                    class="flex flex-wrap items-center gap-6 mt-8 text-slate-300 text-sm">
+
+                    <span>
+
+                        📅 {{ blog.created_at|date:"d M Y" }}
+
+                    </span>
+
+                    <span>
+
+                        🎯 {{ blog.target_audience }}
+
+                    </span>
+
+                    <span>
+
+                        ✍ {{ blog.tone }}
+
+                    </span>
+
+                    <span>
+
+                        🌐 {{ blog.language }}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>

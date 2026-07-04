@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard | AI Blog Generator
+{% endblock %}
+
+{% block content %}
+
+<div class="space-y-8">
+
+    <!-- ===================== -->
+    <!-- Header -->
+    <!-- ===================== -->
+
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+
+        <div>
+
+            <h1 class="text-4xl font-bold tracking-tight">
+
+                Welcome back 👋
+
+            </h1>
+
+            <p class="text-slate-500 mt-2">
+
+                Generate, manage and publish AI-powered blogs from one place.
+
+            </p>
+
+        </div>
+
+        <div class="flex gap-3">
+
+            <a
+                href="{% url 'blogs:generate' %}"
+                class="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 py-3 font-semibold transition">
+
+                + Generate Blog
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- Statistics -->
+    <!-- ===================== -->
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6">
+
+            <div class="text-slate-500 text-sm">
+
+                Total Blogs
+
+            </div>
+
+            <div class="text-4xl font-bold mt-3">
+
+                {{ total_blogs }}
+
+            </div>
+
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6">
+
+            <div class="text-slate-500 text-sm">
+
+                Draft Blogs
+
+            </div>
+
+            <div class="text-4xl font-bold mt-3 text-yellow-500">
+
+                {{ draft_blogs }}
+
+            </div>
+
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6">
+
+            <div class="text-slate-500 text-sm">
+
+                Published
+
+            </div>
+
+            <div class="text-4xl font-bold mt-3 text-green-500">
+
+                {{ published_blogs }}
+
+            </div>
+
+        </div>
+
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6">
+
+            <div class="text-slate-500 text-sm">
+
+                Images Generated
+
+            </div>
+
+            <div class="text-4xl font-bold mt-3 text-blue-600">
+
+                {{ total_images }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- Quick Actions -->
+    <!-- ===================== -->
+
+    <div class="grid md:grid-cols-3 gap-6">
+
+        <a
+            href="{% url 'blogs:generate' %}"
+            class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6 hover:shadow-lg transition">
+
+            <div class="text-2xl mb-4">
+
+                ✨
+
+            </div>
+
+            <h2 class="text-xl font-semibold">
+
+                Generate Blog
+
+            </h2>
+
+            <p class="text-slate-500 mt-2">
+
+                Create a brand new AI-generated blog with images.
+
+            </p>
+
+        </a>
+
+        <a
+            href="{% url 'blogs:my_blogs' %}"
+            class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6 hover:shadow-lg transition">
+
+            <div class="text-2xl mb-4">
+
+                📚
+
+            </div>
+
+            <h2 class="text-xl font-semibold">
+
+                My Blogs
+
+            </h2>
+
+            <p class="text-slate-500 mt-2">
+
+                Browse, edit and publish your saved blogs.
+
+            </p>
+
+        </a>
+
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- Recent Blogs -->
+    <!-- ===================== -->
+
+    <div
+        class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm">
+
+        <div
+            class="flex items-center justify-between p-6 border-b border-slate-200 dark:border-slate-700">
+
+            <h2 class="text-2xl font-semibold">
+
+                Recent Blogs
+
+            </h2>
+
+            <a
+                href="{% url 'blogs:my_blogs' %}"
+                class="text-blue-600 hover:underline">
+
+                View All
+
+            </a>
+
+        </div>
+
+        {% if recent_blogs %}
+
+        <div class="divide-y divide-slate-200 dark:divide-slate-700">
+
+            {% for blog in recent_blogs %}
+
+            <div
+                class="p-6 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+
+                <div>
+
+                    <h3 class="text-xl font-semibold">
+
+                        {{ blog.title }}
+
+                    </h3>
+
+                    <div
+                        class="flex flex-wrap gap-3 mt-3 text-sm text-slate-500">
+
+                        <span>
+
+                            {{ blog.category }}
+
+                        </span>
+
+                        <span>
+
+                            {{ blog.created_at|date:"d M Y" }}
+
+                        </span>
+
+                        <span>
+
+                            {{ blog.status|title }}
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="flex gap-3">
+
+                    <a
+                        href="{% url 'blogs:detail' blog.id %}"
+                        class="px-5 py-2 rounded-xl border">
+
+                        View
+
+                    </a>
+
+                    <a
+                        href="{% url 'blogs:edit' blog.id %}"
+                        class="px-5 py-2 rounded-xl bg-blue-600 text-white">
+
+                        Edit
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
+
+        <div class="p-16 text-center">
+
+            <div class="text-7xl mb-6">
+
+                📝
+
+            </div>
+
+            <h3 class="text-3xl font-semibold">
+
+                No Blogs Yet
+
+            </h3>
+
+            <p class="text-slate-500 mt-3">
+
+                Generate your first AI-powered blog to get started.
+
+            </p>
+
+            <a
+                href="{% url 'blogs:generate' %}"
+                class="inline-block mt-8 bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl">
+
+                Generate First Blog
+
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

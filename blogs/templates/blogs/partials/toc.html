@@ -1,0 +1,46 @@
+<!-- =============================== -->
+<!-- Compact Table of Contents -->
+<!-- =============================== -->
+
+<aside class="hidden xl:block xl:col-span-2">
+
+    <div class="sticky top-24">
+
+        <div class="border-l-2 border-slate-200 dark:border-slate-700 pl-4">
+
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">
+
+                On this page
+
+            </h3>
+
+            <nav>
+
+                <ul class="space-y-3">
+
+                    {% for chapter in chapters %}
+
+                    <li>
+
+                        <a
+                            href="#chapter-{{ chapter.order }}"
+                            class="block text-sm text-slate-500 hover:text-blue-600 transition truncate">
+
+                            {{ chapter.order }}.
+                            {{ chapter.title|truncatechars:28 }}
+
+                        </a>
+
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div>
+
+</aside>

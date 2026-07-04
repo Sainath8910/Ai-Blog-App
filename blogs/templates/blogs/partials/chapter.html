@@ -1,0 +1,354 @@
+<section
+    id="chapter-{{ chapter.order }}"
+    class="scroll-mt-24 mb-20">
+
+    <!-- Chapter Title -->
+
+    <div class="mb-8">
+
+        <span
+            class="inline-flex items-center rounded-full bg-blue-100 text-blue-700 px-3 py-1 text-sm font-medium">
+
+            Chapter {{ chapter.order }}
+
+        </span>
+
+        <h2
+            class="mt-4 text-4xl font-bold text-slate-900 dark:text-white">
+
+            {{ chapter.title }}
+
+        </h2>
+
+    </div>
+
+    <!-- Chapter Image -->
+
+    {% if chapter.image.path %}
+
+    <div class="mb-8 overflow-hidden rounded-2xl shadow">
+
+        <img
+            src="{{ chapter.image.path }}"
+            alt="{{ chapter.image.alt_text }}"
+            class="w-full h-auto object-cover">
+
+    </div>
+
+    {% endif %}
+
+    <!-- Paragraphs -->
+
+    {% for paragraph in chapter.paragraphs %}
+
+    <p
+        class="mb-6 text-lg leading-9 text-slate-700 dark:text-slate-300">
+
+        {{ paragraph }}
+
+    </p>
+
+    {% endfor %}
+
+    <!-- Bullet Points -->
+
+    {% if chapter.bullet_points %}
+
+    <div
+        class="my-8 rounded-2xl bg-slate-100 dark:bg-slate-900 p-6">
+
+        <h3
+            class="font-bold text-xl mb-5">
+
+            Key Points
+
+        </h3>
+
+        <ul class="space-y-3">
+
+            {% for bullet in chapter.bullet_points %}
+
+            <li class="flex gap-3">
+
+                <span
+                    class="text-blue-600 mt-1">
+
+                    ✓
+
+                </span>
+
+                <span>
+
+                    {{ bullet }}
+
+                </span>
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+    {% endif %}
+
+    <!-- Numbered Steps -->
+
+    {% if chapter.numbered_steps %}
+
+    <div class="my-10">
+
+        <h3
+            class="text-2xl font-bold mb-6">
+
+            Step-by-Step
+
+        </h3>
+
+        <div class="space-y-6">
+
+            {% for step in chapter.numbered_steps %}
+
+            <div
+                class="flex gap-5">
+
+                <div
+                    class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
+
+                    {{ forloop.counter }}
+
+                </div>
+
+                <div>
+
+                    <h4
+                        class="text-xl font-semibold">
+
+                        {{ step.title }}
+
+                    </h4>
+
+                    <p
+                        class="mt-2 text-slate-600 dark:text-slate-300">
+
+                        {{ step.description }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    <!-- Tips -->
+
+    {% if chapter.tips %}
+
+    <div
+        class="my-10 rounded-2xl border-l-4 border-green-500 bg-green-50 dark:bg-green-950/30 p-6">
+
+        <h3
+            class="font-bold text-green-700 dark:text-green-400 mb-4">
+
+            💡 Tips
+
+        </h3>
+
+        <ul
+            class="space-y-3">
+
+            {% for tip in chapter.tips %}
+
+            <li>
+
+                {{ tip }}
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+    {% endif %}
+
+    <!-- Warnings -->
+
+    {% if chapter.warnings %}
+
+    <div
+        class="my-10 rounded-2xl border-l-4 border-red-500 bg-red-50 dark:bg-red-950/30 p-6">
+
+        <h3
+            class="font-bold text-red-700 dark:text-red-400 mb-4">
+
+            ⚠️ Warnings
+
+        </h3>
+
+        <ul
+            class="space-y-3">
+
+            {% for warning in chapter.warnings %}
+
+            <li>
+
+                {{ warning }}
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+    {% endif %}
+
+    <!-- Notes -->
+
+    {% if chapter.notes %}
+
+    <div
+        class="my-10 rounded-2xl border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-950/30 p-6">
+
+        <h3
+            class="font-bold text-blue-700 dark:text-blue-400 mb-4">
+
+            📝 Notes
+
+        </h3>
+
+        <ul
+            class="space-y-3">
+
+            {% for note in chapter.notes %}
+
+            <li>
+
+                {{ note }}
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+    {% endif %}
+
+    <!-- Quotes -->
+
+    {% if chapter.quotes %}
+
+    {% for quote in chapter.quotes %}
+
+    <blockquote
+        class="my-10 border-l-4 border-slate-300 pl-6 italic text-2xl text-slate-600 dark:text-slate-300">
+
+        "{{ quote }}"
+
+    </blockquote>
+
+    {% endfor %}
+
+    {% endif %}
+
+    <!-- Code Examples -->
+
+    {% if chapter.code_examples %}
+
+    {% for code in chapter.code_examples %}
+
+    <div
+        class="my-10 rounded-2xl overflow-hidden">
+
+        <div
+            class="bg-slate-900 text-white px-5 py-3 font-medium">
+
+            {{ code.language }}
+
+        </div>
+
+        <pre
+            class="bg-slate-950 text-green-400 overflow-x-auto p-6 text-sm"><code>{{ code.code }}</code></pre>
+
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+
+    <!-- Tables -->
+
+    {% if chapter.tables %}
+
+    {% for table in chapter.tables %}
+
+    <div
+        class="overflow-x-auto my-10">
+
+        <table
+            class="min-w-full border border-slate-300 dark:border-slate-700">
+
+            <thead>
+
+                <tr>
+
+                    {% for header in table.headers %}
+
+                    <th
+                        class="border bg-slate-100 dark:bg-slate-900 px-4 py-3 text-left">
+
+                        {{ header }}
+
+                    </th>
+
+                    {% endfor %}
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for row in table.rows %}
+
+                <tr>
+
+                    {% for cell in row %}
+
+                    <td
+                        class="border px-4 py-3">
+
+                        {{ cell }}
+
+                    </td>
+
+                    {% endfor %}
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+
+</section>

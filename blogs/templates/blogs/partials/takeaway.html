@@ -1,0 +1,42 @@
+{% if blog.key_takeaways %}
+
+<section id="takeaways" class="mb-20">
+
+    <div class="rounded-3xl bg-blue-600 text-white p-8">
+
+        <h2 class="text-3xl font-bold mb-8">
+
+            ✅ Key Takeaways
+
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+            {% for takeaway in blog.key_takeaways %}
+
+            <div class="flex gap-4">
+
+                <div
+                    class="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center font-bold">
+
+                    ✓
+
+                </div>
+
+                <div>
+
+                    {{ takeaway }}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endif %}

@@ -1,0 +1,40 @@
+{% if blog.faq %}
+
+<section id="faq" class="mb-20">
+
+    <h2 class="text-4xl font-bold mb-10">
+
+        Frequently Asked Questions
+
+    </h2>
+
+    <div class="space-y-5">
+
+        {% for item in blog.faq %}
+
+        <details
+            class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm p-6">
+
+            <summary
+                class="cursor-pointer text-xl font-semibold">
+
+                {{ item.question }}
+
+            </summary>
+
+            <p
+                class="mt-5 text-slate-600 dark:text-slate-300 leading-8">
+
+                {{ item.answer }}
+
+            </p>
+
+        </details>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endif %}

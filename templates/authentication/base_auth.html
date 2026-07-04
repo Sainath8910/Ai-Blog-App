@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        {% block title %}
+
+        AI Blog Generator
+
+        {% endblock %}
+
+    </title>
+
+    <!-- Tailwind -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+
+        tailwind.config = {
+
+            darkMode: "class",
+
+            theme: {
+
+                extend: {
+
+                    fontFamily: {
+
+                        sans: ["Inter"]
+
+                    }
+
+                }
+
+            }
+
+        };
+
+    </script>
+
+    <!-- Google Fonts -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+</head>
+
+<body class="min-h-screen bg-slate-950">
+
+<div class="min-h-screen grid lg:grid-cols-2">
+
+    <!-- ========================================= -->
+    <!-- Left Side -->
+    <!-- ========================================= -->
+
+    <div class="hidden lg:flex relative overflow-hidden">
+
+        <!-- Background -->
+
+        <div
+            class="absolute inset-0 bg-gradient-to-br from-blue-700 via-indigo-700 to-slate-900">
+        </div>
+
+        <!-- Blur Circles -->
+
+        <div
+            class="absolute top-20 left-20 w-96 h-96 rounded-full bg-blue-500/20 blur-3xl">
+        </div>
+
+        <div
+            class="absolute bottom-20 right-20 w-72 h-72 rounded-full bg-purple-500/20 blur-3xl">
+        </div>
+
+        <!-- Content -->
+
+        <div class="relative z-10 flex flex-col justify-center p-20 text-white">
+
+            <!-- Logo -->
+
+            <div
+                class="w-16 h-16 rounded-2xl bg-white text-blue-700 flex items-center justify-center text-2xl font-bold">
+
+                AI
+
+            </div>
+
+            <!-- Heading -->
+
+            <h1 class="mt-8 text-5xl font-bold leading-tight">
+
+                AI Blog Generator
+
+            </h1>
+
+            <p class="mt-6 text-xl text-blue-100">
+
+                Create professional blogs with AI in minutes.
+
+            </p>
+
+            <!-- Features -->
+
+            <div class="mt-12 space-y-6">
+
+                <div class="flex items-center gap-3">
+
+                    <i
+                        data-lucide="check-circle"
+                        class="text-green-400">
+                    </i>
+
+                    AI Generated Blogs
+
+                </div>
+
+                <div class="flex items-center gap-3">
+
+                    <i
+                        data-lucide="check-circle"
+                        class="text-green-400">
+                    </i>
+
+                    AI Generated Images
+
+                </div>
+
+                <div class="flex items-center gap-3">
+
+                    <i
+                        data-lucide="check-circle"
+                        class="text-green-400">
+                    </i>
+
+                    SEO Optimized Content
+
+                </div>
+
+                <div class="flex items-center gap-3">
+
+                    <i
+                        data-lucide="check-circle"
+                        class="text-green-400">
+                    </i>
+
+                    Rich Blog Formatting
+
+                </div>
+
+                <div class="flex items-center gap-3">
+
+                    <i
+                        data-lucide="check-circle"
+                        class="text-green-400">
+                    </i>
+
+                    Secure Cloud Storage
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================================= -->
+    <!-- Right Side -->
+    <!-- ========================================= -->
+
+    <div class="flex items-center justify-center bg-white p-8">
+
+        <div class="w-full max-w-md">
+
+            {% block auth_content %}
+
+            {% endblock %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================================= -->
+<!-- Supabase -->
+<!-- ========================================= -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+console.log("Supabase SDK:", window.supabase);
+
+window.SUPABASE_URL = "{{ SUPABASE_URL }}";
+window.SUPABASE_ANON_KEY = "{{ SUPABASE_ANON_KEY }}";
+
+window.supabaseClient = window.supabase.createClient(
+    window.SUPABASE_URL,
+    window.SUPABASE_ANON_KEY
+);
+
+console.log("Supabase Client:", window.supabaseClient);
+</script>
+<script>
+
+window.SUPABASE_URL = "{{ SUPABASE_URL }}";
+
+window.SUPABASE_ANON_KEY = "{{ SUPABASE_ANON_KEY }}";
+
+/*
+|--------------------------------------------------------------------------
+| Global URLs
+|--------------------------------------------------------------------------
+*/
+
+window.DASHBOARD_URL = "{% url 'blogs:dashboard' %}";
+
+window.LOGIN_URL = "{% url 'login' %}";
+
+window.SIGNUP_URL = "{% url 'signup' %}";
+
+</script>
+
+<script src="{% static 'js/auth.js' %}"></script>
+
+<!-- Lucide -->
+
+<script>
+
+    lucide.createIcons();
+
+</script>
+
+</body>
+
+</html>

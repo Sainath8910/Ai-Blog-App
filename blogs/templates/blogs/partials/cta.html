@@ -1,0 +1,38 @@
+{% if blog.call_to_action %}
+
+<section class="mb-20">
+
+    <div
+        class="rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-10 text-center">
+
+        <h2
+            class="text-4xl font-bold">
+
+            {{ blog.call_to_action.title }}
+
+        </h2>
+
+        <p
+            class="mt-5 text-xl">
+
+            {{ blog.call_to_action.description }}
+
+        </p>
+
+        {% if blog.call_to_action.button_text %}
+
+        <a
+            href="{{ blog.call_to_action.button_url|default:'#' }}"
+            class="inline-block mt-8 bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition">
+
+            {{ blog.call_to_action.button_text }}
+
+        </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endif %}

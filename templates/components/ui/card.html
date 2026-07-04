@@ -1,0 +1,69 @@
+{# ------------------------------------------------------------------ #}
+{# Reusable Card Component                                            #}
+{# Usage:                                                             #}
+{# {% include "components/ui/card.html" with                          #}
+{#     title="Recent Blogs"                                           #}
+{#     subtitle="Latest generated blogs"                              #}
+{# %}                                                                 #}
+{# ------------------------------------------------------------------ #}
+
+<div
+class="
+bg-white
+dark:bg-slate-900
+
+rounded-2xl
+
+border
+border-slate-200
+dark:border-slate-800
+
+shadow-sm
+hover:shadow-lg
+
+transition-all
+duration-300
+
+overflow-hidden
+">
+
+    {% if title or subtitle %}
+
+    <div
+    class="px-6 py-5 border-b border-slate-200 dark:border-slate-800">
+
+        {% if title %}
+
+        <h2
+        class="text-xl font-semibold">
+
+            {{ title }}
+
+        </h2>
+
+        {% endif %}
+
+        {% if subtitle %}
+
+        <p
+        class="mt-1 text-sm text-slate-500">
+
+            {{ subtitle }}
+
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+    <div class="p-6">
+
+        {% block card_content %}
+
+        {% endblock %}
+
+    </div>
+
+</div>

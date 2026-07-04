@@ -1,0 +1,898 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ blog.title }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Reading Progress -->
+
+<div
+    class="fixed top-0 left-0 w-full h-1 z-50">
+
+    <div
+        id="reading-progress"
+        class="bg-blue-600 h-full"
+        style="width:0%">
+
+    </div>
+
+</div>
+
+<!-- ========================================= -->
+<!-- HERO -->
+<!-- ========================================= -->
+
+<section class="relative">
+
+    {% if blog.hero.image.path %}
+
+    <img
+
+        src="{{ blog.hero.image.path }}"
+
+        alt="{{ blog.hero.image.alt_text }}"
+
+        class="w-full h-[520px] object-cover"
+
+    >
+
+    {% endif %}
+
+    <!-- Overlay -->
+
+    <div
+
+        class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-transparent">
+
+    </div>
+
+    <!-- Hero Content -->
+
+    <div
+
+        class="absolute inset-0 flex items-end">
+
+        <div
+
+            class="max-w-6xl mx-auto w-full px-6 pb-14">
+
+            <div
+
+                class="flex flex-wrap gap-3 mb-6">
+
+                <span
+
+                    class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm">
+
+                    {{ blog.category }}
+
+                </span>
+
+                <span
+
+                    class="bg-white/20 text-white backdrop-blur px-4 py-1 rounded-full text-sm">
+
+                    🤖 AI Generated
+
+                </span>
+
+                <span
+
+                    class="bg-white/20 text-white backdrop-blur px-4 py-1 rounded-full text-sm">
+
+                    {{ chapters|length }} Chapters
+
+                </span>
+
+            </div>
+
+            <h1
+
+                class="text-5xl md:text-6xl font-extrabold text-white leading-tight">
+
+                {{ blog.title }}
+
+            </h1>
+
+            {% if blog.hero.subtitle %}
+
+            <p
+
+                class="mt-6 text-2xl text-slate-200">
+
+                {{ blog.hero.subtitle }}
+
+            </p>
+
+            {% endif %}
+
+            {% if blog.hero.summary %}
+
+            <p
+
+                class="mt-6 max-w-3xl text-lg text-slate-300">
+
+                {{ blog.hero.summary }}
+
+            </p>
+
+            {% endif %}
+
+            <div
+
+                class="flex flex-wrap gap-6 mt-8 text-white text-sm">
+
+                <span>
+
+                    📅 {{ blog.created_at|date:"d M Y" }}
+
+                </span>
+
+                <span>
+
+                    🎯 {{ blog.target_audience }}
+
+                </span>
+
+                <span>
+
+                    ✍ {{ blog.tone }}
+
+                </span>
+
+                <span>
+
+                    🌎 {{ blog.language }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ========================================= -->
+<!-- BODY -->
+<!-- ========================================= -->
+
+<section
+
+    class="max-w-7xl mx-auto px-6 py-12">
+
+    <div class="max-w-5xl mx-auto">
+
+        <!-- =============================== -->
+        <!-- ARTICLE -->
+        <!-- =============================== -->
+
+        <article
+
+            class="xl:col-span-10 max-w-4xl">
+
+            {% for chapter in chapters %}
+
+            <section
+
+                id="chapter-{{ chapter.order }}"
+
+                class="mb-20">
+
+                <div
+
+                    class="mb-8">
+
+                    <span
+
+                        class="text-blue-600 font-semibold">
+
+                        Chapter {{ chapter.order }}
+
+                    </span>
+
+                    <h2
+
+                        class="text-4xl font-bold mt-2">
+
+                        {{ chapter.title }}
+
+                    </h2>
+
+                </div>
+
+                {% if chapter.image.path %}
+
+                <img
+
+                    src="{{ chapter.image.path }}"
+
+                    alt="{{ chapter.image.alt_text }}"
+
+                    loading="lazy"
+
+                    class="rounded-2xl shadow-lg mb-8 w-full"
+
+                >
+
+                {% endif %}
+
+                {% for paragraph in chapter.paragraphs %}
+
+                <p
+
+                    class="text-lg leading-9 text-slate-700 dark:text-slate-300 mb-6">
+
+                    {{ paragraph }}
+
+                </p>
+
+                {% endfor %}
+                                {% if chapter.bullet_points %}
+
+                <div
+                    class="my-10 rounded-2xl bg-slate-100 dark:bg-slate-900 p-8">
+
+                    <h3
+                        class="text-2xl font-bold mb-6">
+
+                        Key Points
+
+                    </h3>
+
+                    <ul
+                        class="space-y-4">
+
+                        {% for point in chapter.bullet_points %}
+
+                        <li
+                            class="flex items-start gap-4">
+
+                            <div
+                                class="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center mt-1">
+
+                                ✓
+
+                            </div>
+
+                            <div
+                                class="text-lg">
+
+                                {{ point }}
+
+                            </div>
+
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+                {% endif %}
+
+                {% if chapter.numbered_steps %}
+
+                <div
+                    class="my-12">
+
+                    <h3
+                        class="text-3xl font-bold mb-8">
+
+                        Step-by-Step Guide
+
+                    </h3>
+
+                    <div
+                        class="space-y-8">
+
+                        {% for step in chapter.numbered_steps %}
+
+                        <div
+                            class="flex gap-6">
+
+                            <div
+                                class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-lg">
+
+                                {{ forloop.counter }}
+
+                            </div>
+
+                            <div
+                                class="flex-1">
+
+                                {% if step.title %}
+
+                                <h4
+                                    class="text-2xl font-semibold">
+
+                                    {{ step.title }}
+
+                                </h4>
+
+                                {% endif %}
+
+                                <p
+                                    class="mt-3 text-lg leading-8 text-slate-700 dark:text-slate-300">
+
+                                    {% if step.description %}
+                                        {{ step.description }}
+                                    {% else %}
+                                        {{ step }}
+                                    {% endif %}
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                {% endif %}
+
+                {% if chapter.tips %}
+
+                <div
+                    class="rounded-2xl border-l-4 border-green-500 bg-green-50 dark:bg-green-950/30 p-8 my-12">
+
+                    <h3
+                        class="text-2xl font-bold text-green-700 dark:text-green-400 mb-6">
+
+                        💡 Pro Tips
+
+                    </h3>
+
+                    <ul
+                        class="space-y-4">
+
+                        {% for tip in chapter.tips %}
+
+                        <li
+                            class="text-lg">
+
+                            {{ tip }}
+
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+                {% endif %}
+
+                {% if chapter.warnings %}
+
+                <div
+                    class="rounded-2xl border-l-4 border-red-500 bg-red-50 dark:bg-red-950/30 p-8 my-12">
+
+                    <h3
+                        class="text-2xl font-bold text-red-700 dark:text-red-400 mb-6">
+
+                        ⚠ Things to Watch Out For
+
+                    </h3>
+
+                    <ul
+                        class="space-y-4">
+
+                        {% for warning in chapter.warnings %}
+
+                        <li
+                            class="text-lg">
+
+                            {{ warning }}
+
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+                {% endif %}
+
+                {% if chapter.notes %}
+
+                <div
+                    class="rounded-2xl border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-950/30 p-8 my-12">
+
+                    <h3
+                        class="text-2xl font-bold text-blue-700 dark:text-blue-400 mb-6">
+
+                        📝 Notes
+
+                    </h3>
+
+                    <ul
+                        class="space-y-4">
+
+                        {% for note in chapter.notes %}
+
+                        <li
+                            class="text-lg">
+
+                            {{ note }}
+
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+                {% endif %}
+
+                {% if chapter.quotes %}
+
+                    {% for quote in chapter.quotes %}
+
+                    <blockquote
+                        class="my-12 border-l-4 border-slate-300 pl-8 italic text-2xl text-slate-600 dark:text-slate-300">
+
+                        "{{ quote }}"
+
+                    </blockquote>
+
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if chapter.code_examples %}
+
+                    {% for code in chapter.code_examples %}
+
+                    <div
+                        class="rounded-2xl overflow-hidden shadow-xl my-12">
+
+                        <div
+                            class="bg-slate-800 text-white px-6 py-3 flex justify-between items-center">
+
+                            <span>
+
+                                {{ code.language }}
+
+                            </span>
+
+                            <button
+                                class="copy-code px-3 py-1 rounded bg-slate-700 hover:bg-slate-600">
+
+                                Copy
+
+                            </button>
+
+                        </div>
+
+                        <pre
+                            class="bg-slate-950 overflow-x-auto p-6"><code>{{ code.code }}</code></pre>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+                {% if chapter.tables %}
+
+                    {% for table in chapter.tables %}
+
+                    <div
+                        class="overflow-x-auto my-12">
+
+                        <table
+                            class="min-w-full border border-slate-300 dark:border-slate-700">
+
+                            <thead>
+
+                                <tr>
+
+                                    {% for header in table.headers %}
+
+                                    <th
+                                        class="bg-slate-100 dark:bg-slate-900 border px-5 py-3 text-left">
+
+                                        {{ header }}
+
+                                    </th>
+
+                                    {% endfor %}
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for row in table.rows %}
+
+                                <tr>
+
+                                    {% for cell in row %}
+
+                                    <td
+                                        class="border px-5 py-3">
+
+                                        {{ cell }}
+
+                                    </td>
+
+                                    {% endfor %}
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </section>
+
+            {% endfor %}
+                        <!-- ========================================= -->
+            <!-- KEY TAKEAWAYS -->
+            <!-- ========================================= -->
+
+            {% if blog.key_takeaways %}
+
+            <section
+                id="takeaways"
+                class="mb-20">
+
+                <div
+                    class="rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-10">
+
+                    <h2
+                        class="text-4xl font-bold mb-8">
+
+                        🎯 Key Takeaways
+
+                    </h2>
+
+                    <div
+                        class="grid md:grid-cols-2 gap-6">
+
+                        {% for takeaway in blog.key_takeaways %}
+
+                        <div
+                            class="flex gap-4">
+
+                            <div
+                                class="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center font-bold">
+
+                                ✓
+
+                            </div>
+
+                            <div
+                                class="text-lg">
+
+                                {{ takeaway }}
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            {% endif %}
+
+            <!-- ========================================= -->
+            <!-- FAQ -->
+            <!-- ========================================= -->
+
+            {% if blog.faq %}
+
+            <section
+                id="faq"
+                class="mb-20">
+
+                <h2
+                    class="text-4xl font-bold mb-10">
+
+                    Frequently Asked Questions
+
+                </h2>
+
+                <div
+                    class="space-y-5">
+
+                    {% for item in blog.faq %}
+
+                    <details
+                        class="bg-white dark:bg-slate-900 rounded-2xl shadow p-6">
+
+                        <summary
+                            class="cursor-pointer text-xl font-semibold">
+
+                            {{ item.question }}
+
+                        </summary>
+
+                        <p
+                            class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">
+
+                            {{ item.answer }}
+
+                        </p>
+
+                    </details>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+            {% endif %}
+
+            <!-- ========================================= -->
+            <!-- RESOURCES -->
+            <!-- ========================================= -->
+
+            {% if blog.resources %}
+
+            <section
+                id="resources"
+                class="mb-20">
+
+                <h2
+                    class="text-4xl font-bold mb-10">
+
+                    📚 Resources
+
+                </h2>
+
+                <div
+                    class="grid md:grid-cols-2 gap-6">
+
+                    {% for resource in blog.resources %}
+
+                    <div
+                        class="bg-white dark:bg-slate-900 rounded-2xl shadow p-6">
+
+                        <h3
+                            class="text-2xl font-bold">
+
+                            {{ resource.title }}
+
+                        </h3>
+
+                        {% if resource.description %}
+
+                        <p
+                            class="mt-4 text-slate-600 dark:text-slate-300">
+
+                            {{ resource.description }}
+
+                        </p>
+
+                        {% endif %}
+
+                        {% if resource.url %}
+
+                        <a
+                            href="{{ resource.url }}"
+                            target="_blank"
+                            class="inline-block mt-5 text-blue-600 hover:underline">
+
+                            Visit Resource →
+
+                        </a>
+
+                        {% endif %}
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </section>
+
+            {% endif %}
+
+            <!-- ========================================= -->
+            <!-- CONCLUSION -->
+            <!-- ========================================= -->
+
+            {% if blog.conclusion %}
+
+            <section
+                id="conclusion"
+                class="mb-20">
+
+                <h2
+                    class="text-4xl font-bold mb-10">
+
+                    Conclusion
+
+                </h2>
+
+                {% if blog.conclusion.image.path %}
+
+                <img
+
+                    src="{{ blog.conclusion.image.path }}"
+
+                    alt="{{ blog.conclusion.image.alt_text }}"
+
+                    loading="lazy"
+
+                    class="rounded-3xl shadow-xl mb-10 w-full">
+
+                {% endif %}
+
+                {% for paragraph in blog.conclusion.paragraphs %}
+
+                <p
+                    class="text-lg leading-9 text-slate-700 dark:text-slate-300 mb-6">
+
+                    {{ paragraph }}
+
+                </p>
+
+                {% endfor %}
+
+            </section>
+
+            {% endif %}
+
+            <!-- ========================================= -->
+            <!-- CALL TO ACTION -->
+            <!-- ========================================= -->
+
+            {% if blog.call_to_action %}
+
+            <section
+                class="mb-20">
+
+                <div
+                    class="rounded-3xl bg-gradient-to-r from-slate-900 to-slate-700 text-white text-center p-12">
+
+                    <h2
+                        class="text-4xl font-bold">
+
+                        {{ blog.call_to_action.title }}
+
+                    </h2>
+
+                    <p
+                        class="mt-6 text-xl">
+
+                        {{ blog.call_to_action.description }}
+
+                    </p>
+
+                    {% if blog.call_to_action.button_text %}
+
+                    <a
+
+                        href="{{ blog.call_to_action.button_url|default:'#' }}"
+
+                        class="inline-block mt-8 bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-xl font-semibold">
+
+                        {{ blog.call_to_action.button_text }}
+
+                    </a>
+
+                    {% endif %}
+
+                </div>
+
+            </section>
+
+            {% endif %}
+
+        </article>
+
+    </div>
+
+</section>
+
+<!-- ========================================= -->
+<!-- Floating Actions -->
+<!-- ========================================= -->
+
+<div
+    class="hidden xl:flex fixed right-8 bottom-8 flex-col gap-4 z-40">
+
+    <button
+
+    onclick="openExportModal()"
+
+    class="w-12 h-12 rounded-full bg-white dark:bg-slate-900 shadow-lg flex items-center justify-center hover:bg-slate-100">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+         class="w-5 h-5"
+         fill="none"
+         stroke="currentColor"
+         viewBox="0 0 24 24">
+
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 16V4m0 12l4-4m-4 4l-4-4M4 20h16"/>
+
+    </svg>
+
+</button>
+
+    <button
+        class="w-12 h-12 rounded-full bg-white dark:bg-slate-900 shadow-lg">
+
+        <a href="{% url 'blogs:edit' blog.id %}">✏</a>
+
+</button>
+{% include "components/export_modal.html" %}
+</div>
+
+<script>
+
+window.addEventListener("scroll", function () {
+
+    const winScroll =
+        document.body.scrollTop ||
+        document.documentElement.scrollTop;
+
+    const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+    const scrolled =
+        (winScroll / height) * 100;
+
+    document.getElementById("reading-progress").style.width =
+        scrolled + "%";
+
+});
+
+document.querySelectorAll(".copy-code").forEach(button => {
+
+    button.addEventListener("click", function () {
+
+        const code =
+            this.parentElement.nextElementSibling.innerText;
+
+        navigator.clipboard.writeText(code);
+
+        this.innerText = "Copied!";
+
+        setTimeout(() => {
+
+            this.innerText = "Copy";
+
+        }, 2000);
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

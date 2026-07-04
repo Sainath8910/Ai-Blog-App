@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ blog.title }}</title>
+</head>
+
+<body>
+
+<h1>{{ blog.title }}</h1>
+
+<p>{{ blog.description }}</p>
+
+<hr>
+
+<h2>Hero</h2>
+
+<img
+    src="{{ blog.hero.image.path }}"
+    alt="{{ blog.hero.image.alt_text }}"
+    width="700"
+>
+
+<h3>{{ blog.hero.title }}</h3>
+
+<h4>{{ blog.hero.subtitle }}</h4>
+
+<p>{{ blog.hero.summary }}</p>
+
+<hr>
+
+{% for chapter in chapters %}
+
+<h2>{{ chapter.order }}. {{ chapter.title }}</h2>
+
+<img
+    src="{{ chapter.image.path }}"
+    alt="{{ chapter.image.alt_text }}"
+    width="600"
+>
+
+{% for paragraph in chapter.paragraphs %}
+<p>{{ paragraph }}</p>
+{% endfor %}
+
+{% if chapter.bullet_points %}
+<ul>
+{% for bullet in chapter.bullet_points %}
+<li>{{ bullet }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% if chapter.numbered_steps %}
+<ol>
+{% for step in chapter.numbered_steps %}
+<li>
+<strong>{{ step.title }}</strong><br>
+{{ step.description }}
+</li>
+{% endfor %}
+</ol>
+{% endif %}
+
+{% if chapter.tips %}
+<h4>Tips</h4>
+
+<ul>
+{% for tip in chapter.tips %}
+<li>{{ tip }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+<hr>
+
+{% endfor %}
+
+<h2>Conclusion</h2>
+
+{% for paragraph in blog.conclusion.paragraphs %}
+<p>{{ paragraph }}</p>
+{% endfor %}
+
+<img
+    src="{{ blog.conclusion.image.path }}"
+    alt="{{ blog.conclusion.image.alt_text }}"
+    width="700"
+>
+
+</body>
+</html>

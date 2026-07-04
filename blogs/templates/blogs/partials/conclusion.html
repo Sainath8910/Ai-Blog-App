@@ -1,0 +1,33 @@
+{% if blog.conclusion %}
+
+<section id="conclusion" class="mb-20">
+
+    <h2 class="text-4xl font-bold mb-10">
+
+        Conclusion
+
+    </h2>
+
+    {% if blog.conclusion.image.path %}
+
+    <img
+        src="{{ blog.conclusion.image.path }}"
+        alt="{{ blog.conclusion.image.alt_text }}"
+        class="rounded-3xl shadow-lg mb-10 w-full">
+
+    {% endif %}
+
+    {% for paragraph in blog.conclusion.paragraphs %}
+
+    <p
+        class="text-lg leading-9 text-slate-700 dark:text-slate-300 mb-6">
+
+        {{ paragraph }}
+
+    </p>
+
+    {% endfor %}
+
+</section>
+
+{% endif %}

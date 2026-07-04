@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>{{ blog.title }}</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<style>
+
+body{
+
+font-family:'Inter',sans-serif;
+
+scroll-behavior:smooth;
+
+}
+
+pre{
+
+overflow:auto;
+
+}
+
+</style>
+
+</head>
+
+<body class="bg-slate-100">
+    <script>
+
+window.addEventListener(
+
+"scroll",
+
+()=>{
+
+const height=
+
+document.documentElement.scrollHeight-
+
+window.innerHeight;
+
+const percent=
+
+window.scrollY/height*100;
+
+document.getElementById("progress").style.width=
+
+percent+"%";
+
+}
+
+);
+
+    </script>
+<div
+id="progress"
+
+class="fixed top-0 left-0 h-1 bg-blue-600 z-50">
+
+</div>
+<div class="max-w-5xl mx-auto">
+
+<!-- Hero -->
+
+<header class="bg-white rounded-3xl shadow mt-10 overflow-hidden">
+
+{% if blog.hero.image.path %}
+
+<img
+src="{{ blog.hero.image.path }}"
+loading="lazy"
+
+class="rounded-2xl shadow-xl hover:scale-[1.02] transition duration-300 w-full">
+
+{% endif %}
+
+<div class="p-10">
+
+<span
+class="inline-block bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm">
+
+{{ blog.category }}
+
+</span>
+
+<h1
+class="text-5xl font-extrabold mt-6">
+
+{{ blog.title }}
+
+</h1>
+
+<p
+class="text-slate-600 text-xl mt-6">
+
+{{ blog.description }}
+
+</p>
+
+<div
+class="mt-8 flex gap-6 text-sm text-slate-500">
+
+<div>
+
+{{ blog.created_at|date:"d M Y" }}
+
+</div>
+
+<div>
+
+{{ chapters|length }} Chapters
+
+</div>
+
+<div>
+
+{{ blog.language }}
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+<main class="mt-10 space-y-10">
+
+{% for chapter in chapters %}
+
+<section
+class="bg-white rounded-3xl shadow p-10">
+
+<h2
+class="text-3xl font-bold mb-8">
+
+{{ chapter.title }}
+
+</h2>
+
+{% if chapter.image.path %}
+
+<img
+
+src="{{ chapter.image.path }}"
+loading="lazy"
+
+class="rounded-2xl shadow-xl hover:scale-[1.02] transition duration-300 w-full">
+
+{% endif %}
+
+{% for paragraph in chapter.paragraphs %}
+
+<p
+class="text-lg leading-9 text-slate-700 mb-6">
+
+{{ paragraph }}
+
+</p>
+
+{% endfor %}
+{% if chapter.bullet_points %}
+
+<div
+class="bg-blue-50 border-l-4 border-blue-600 rounded-xl p-6 my-8">
+
+<h3
+class="font-bold text-xl mb-4">
+
+Key Points
+
+</h3>
+
+<ul class="space-y-3 list-disc ml-6">
+
+{% for point in chapter.bullet_points %}
+
+<li>{{ point }}</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+{% endif %}
+{% if chapter.tips %}
+
+<div
+class="bg-green-50 border-l-4 border-green-600 rounded-xl p-6 my-8">
+
+<h3
+class="font-bold text-xl text-green-700 mb-4">
+
+💡 Tips
+
+</h3>
+
+<ul class="space-y-3">
+
+{% for tip in chapter.tips %}
+
+<li>{{ tip }}</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+{% endif %}
+{% if chapter.warnings %}
+
+<div
+class="bg-red-50 border-l-4 border-red-600 rounded-xl p-6 my-8">
+
+<h3
+class="font-bold text-xl text-red-700 mb-4">
+
+⚠ Things to Watch Out For
+
+</h3>
+
+<ul class="space-y-3">
+
+{% for item in chapter.warnings %}
+
+<li>{{ item }}</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+{% endif %}
+{% if chapter.code_examples %}
+
+{% for code in chapter.code_examples %}
+
+<div
+class="rounded-2xl overflow-hidden shadow my-10">
+
+<div
+class="bg-slate-900 text-white px-6 py-3">
+
+{{ code.language }}
+
+</div>
+
+<div
+class="relative my-8">
+
+<button
+
+onclick="copyCode(this)"
+
+class="absolute top-4 right-4 bg-white rounded-lg px-3 py-1 text-sm">
+
+Copy
+
+</button>
+
+<pre
+class="bg-slate-900 text-green-300 rounded-xl overflow-auto p-6">
+
+<code>{{ code.code }}</code>
+
+</pre>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+{% endif %}
+</section>
+
+{% endfor %}
+{% if blog.faq %}
+
+<section
+class="bg-white rounded-3xl shadow p-10">
+
+<h2
+class="text-3xl font-bold mb-8">
+
+Frequently Asked Questions
+
+</h2>
+
+{% for faq in blog.faq %}
+
+<details
+class="border rounded-xl p-5 mb-5">
+
+<summary
+class="cursor-pointer font-semibold">
+
+{{ faq.question }}
+
+</summary>
+
+<p
+class="mt-4">
+
+{{ faq.answer }}
+
+</p>
+
+</details>
+
+{% endfor %}
+
+</section>
+
+{% endif %}
+{% if blog.resources %}
+
+<section
+class="bg-white rounded-3xl shadow p-10">
+
+<h2
+class="text-3xl font-bold mb-8">
+
+Resources
+
+</h2>
+
+<div
+class="space-y-4">
+
+{% for resource in blog.resources %}
+
+<a
+
+href="{{ resource.url }}"
+
+class="block p-5 border rounded-xl hover:bg-slate-100">
+
+{{ resource.title }}
+
+</a>
+
+{% endfor %}
+
+</div>
+
+</section>
+
+{% endif %}
+<footer
+class="text-center py-20 text-slate-500">
+
+Generated using AI Blog Generator
+
+</footer>
+
+</main>
+
+</div>
+<script>
+
+function toggleTheme(){
+
+    document.documentElement.classList.toggle("dark");
+
+    document.body.classList.toggle("bg-slate-900");
+
+    document.body.classList.toggle("bg-slate-100");
+
+}
+
+</script>
+<script>
+
+function copyCode(button){
+
+const code =
+button.nextElementSibling.innerText;
+
+navigator.clipboard.writeText(code);
+
+button.innerText="Copied!";
+
+setTimeout(()=>{
+
+button.innerText="Copy";
+
+},1500);
+
+}
+
+</script>
+</body>
+
+</html>
