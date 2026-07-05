@@ -15,6 +15,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
 import json
+from blogs.services.regenerate_service import RegenerateService
+
 @method_decorator(login_required, name="dispatch")
 class GenerateBlogView(TemplateView):
     template_name = "blogs/generate_blog.html"
@@ -329,7 +331,6 @@ def delete_blog(request, blog_id):
 @login_required
 @require_POST
 def update_blog(request, blog_id):
-
     blog = BlogRepository.get_blog(blog_id)
 
     if str(blog.user_id) != request.user["id"]:
@@ -366,4 +367,32 @@ def update_blog(request, blog_id):
 
         }
 
+    )
+
+@login_required
+@require_POST
+def regenerate_paragraph(request):
+
+    data = json.loads(request.body)
+
+    paragraph = data["paragraph"]
+
+    chapter_title = data.get("chapter_title", "")
+
+    tone = data.get("tone", "Professional")
+
+    audience = data.get("target_audience", "General")
+
+    improved = RegenerateService.regenerate_paragraph(
+        paragraph,
+        chapter_title,
+        tone,
+        audience,
+    )
+
+    return JsonResponse(
+        {
+            "success": True,
+            "paragraph": improved,
+        }
     )

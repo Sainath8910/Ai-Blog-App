@@ -466,8 +466,45 @@ Edit Blog
     class="hidden fixed top-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl z-50">
 
 </div>
-<script>
+<div id="paragraphModal"
+     class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
 
+    <div class="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-3xl p-6">
+
+        <h2 class="text-2xl font-bold mb-6">
+            Regenerated Paragraph
+        </h2>
+
+        <textarea
+            id="newParagraph"
+            rows="12"
+            class="w-full border rounded-xl p-4"></textarea>
+
+        <div class="flex justify-end gap-3 mt-6">
+
+            <button
+                id="cancelParagraph"
+                class="px-5 py-2 rounded-xl border">
+
+                Reject
+
+            </button>
+
+            <button
+                id="acceptParagraph"
+                class="bg-blue-600 text-white px-5 py-2 rounded-xl">
+
+                Accept
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+let currentTextarea = null;
 const BLOG_ID = "{{ blog.id }}";
 
 /* ==========================================
@@ -800,29 +837,88 @@ document
 ========================================== */
 
 document
-
 .querySelectorAll(".regenerate-paragraph")
+.forEach(button => {
 
-.forEach(button=>{
+    button.addEventListener("click", () => {
 
-    button.addEventListener(
+        const textarea = button
+            .closest(".paragraph-block")
+            .querySelector(".chapter-paragraph");
 
-        "click",
+        currentTextarea = textarea;
 
-        ()=>{
+        button.disabled = true;
+        button.innerText = "Generating...";
 
-            showToast(
+        fetch("/blogs/regenerate/paragraph/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken(),
+            },
+            body: JSON.stringify({
+                paragraph: textarea.value,
+                chapter_title: button
+                    .closest(".chapter-card")
+                    .querySelector(".chapter-title").value,
+                tone: document.getElementById("tone").value,
+                target_audience: document.getElementById("targetAudience").value,
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
 
-                "Paragraph regeneration coming next."
+            document.getElementById("newParagraph").value =
+                data.paragraph;
 
-            );
+            document
+                .getElementById("paragraphModal")
+                .classList.remove("hidden");
 
-        }
+        })
+        .catch(error => {
 
-    );
+            console.error(error);
+
+            showToast("Failed to regenerate paragraph", false);
+
+        })
+        .finally(() => {
+
+            button.disabled = false;
+            button.innerText = "✨ Regenerate";
+
+        });
+
+    });
 
 });
 
+
+document.getElementById("cancelParagraph").onclick = function () {
+
+    document
+        .getElementById("paragraphModal")
+        .classList.add("hidden");
+
+};
+
+
+document.getElementById("acceptParagraph").onclick = function () {
+
+    currentTextarea.value =
+        document.getElementById("newParagraph").value;
+
+    document
+        .getElementById("paragraphModal")
+        .classList.add("hidden");
+
+    showToast(
+        "Paragraph updated. Click Save Changes to save."
+    );
+
+};
 /* ==========================================
    Chapter
 ========================================== */

@@ -8,6 +8,7 @@ from .views import (
     edit_blog,
     delete_blog,
     update_blog,
+    regenerate_paragraph,
 )
 
 app_name = "blogs"
@@ -48,5 +49,10 @@ path(
 
     name="update",
 
+),
+path(
+    "regenerate/paragraph/",
+    regenerate_paragraph,
+    name="regenerate_paragraph",
 ),
 ]
