@@ -20,7 +20,7 @@
 
     </title>
 
-    <!-- Tailwind -->
+    <!-- Tailwind CSS -->
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -36,7 +36,13 @@
 
                     fontFamily: {
 
-                        sans: ["Inter"]
+                        sans: ["Inter", "sans-serif"]
+
+                    },
+
+                    colors: {
+
+                        primary: "#2563eb",
 
                     }
 
@@ -73,65 +79,51 @@
 
 <div class="min-h-screen grid lg:grid-cols-2">
 
-    <!-- ========================================= -->
-    <!-- Left Side -->
-    <!-- ========================================= -->
+    <!-- ====================================== -->
+    <!-- Left Panel -->
+    <!-- ====================================== -->
 
     <div class="hidden lg:flex relative overflow-hidden">
-
-        <!-- Background -->
 
         <div
             class="absolute inset-0 bg-gradient-to-br from-blue-700 via-indigo-700 to-slate-900">
         </div>
-
-        <!-- Blur Circles -->
 
         <div
             class="absolute top-20 left-20 w-96 h-96 rounded-full bg-blue-500/20 blur-3xl">
         </div>
 
         <div
-            class="absolute bottom-20 right-20 w-72 h-72 rounded-full bg-purple-500/20 blur-3xl">
+            class="absolute bottom-20 right-20 w-80 h-80 rounded-full bg-purple-500/20 blur-3xl">
         </div>
-
-        <!-- Content -->
 
         <div class="relative z-10 flex flex-col justify-center p-20 text-white">
 
-            <!-- Logo -->
-
             <div
-                class="w-16 h-16 rounded-2xl bg-white text-blue-700 flex items-center justify-center text-2xl font-bold">
+                class="w-20 h-20 rounded-3xl bg-white text-blue-700 flex items-center justify-center text-3xl font-bold shadow-xl">
 
                 AI
 
             </div>
 
-            <!-- Heading -->
-
-            <h1 class="mt-8 text-5xl font-bold leading-tight">
+            <h1 class="mt-10 text-5xl font-bold leading-tight">
 
                 AI Blog Generator
 
             </h1>
 
-            <p class="mt-6 text-xl text-blue-100">
+            <p class="mt-6 text-xl text-blue-100 leading-8">
 
-                Create professional blogs with AI in minutes.
+                Generate beautiful AI-powered blogs complete with images,
+                SEO optimization and rich formatting.
 
             </p>
 
-            <!-- Features -->
-
-            <div class="mt-12 space-y-6">
+            <div class="mt-14 space-y-6">
 
                 <div class="flex items-center gap-3">
 
-                    <i
-                        data-lucide="check-circle"
-                        class="text-green-400">
-                    </i>
+                    <i data-lucide="check-circle" class="text-green-400"></i>
 
                     AI Generated Blogs
 
@@ -139,10 +131,7 @@
 
                 <div class="flex items-center gap-3">
 
-                    <i
-                        data-lucide="check-circle"
-                        class="text-green-400">
-                    </i>
+                    <i data-lucide="check-circle" class="text-green-400"></i>
 
                     AI Generated Images
 
@@ -150,10 +139,7 @@
 
                 <div class="flex items-center gap-3">
 
-                    <i
-                        data-lucide="check-circle"
-                        class="text-green-400">
-                    </i>
+                    <i data-lucide="check-circle" class="text-green-400"></i>
 
                     SEO Optimized Content
 
@@ -161,21 +147,15 @@
 
                 <div class="flex items-center gap-3">
 
-                    <i
-                        data-lucide="check-circle"
-                        class="text-green-400">
-                    </i>
+                    <i data-lucide="check-circle" class="text-green-400"></i>
 
-                    Rich Blog Formatting
+                    Rich Content Export
 
                 </div>
 
                 <div class="flex items-center gap-3">
 
-                    <i
-                        data-lucide="check-circle"
-                        class="text-green-400">
-                    </i>
+                    <i data-lucide="check-circle" class="text-green-400"></i>
 
                     Secure Cloud Storage
 
@@ -187,9 +167,9 @@
 
     </div>
 
-    <!-- ========================================= -->
-    <!-- Right Side -->
-    <!-- ========================================= -->
+    <!-- ====================================== -->
+    <!-- Right Panel -->
+    <!-- ====================================== -->
 
     <div class="flex items-center justify-center bg-white p-8">
 
@@ -205,42 +185,31 @@
 
 </div>
 
-<!-- ========================================= -->
-<!-- Supabase -->
-<!-- ========================================= -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-console.log("Supabase SDK:", window.supabase);
+<!-- ====================================== -->
+<!-- Global Variables -->
+<!-- ====================================== -->
 
-window.SUPABASE_URL = "{{ SUPABASE_URL }}";
-window.SUPABASE_ANON_KEY = "{{ SUPABASE_ANON_KEY }}";
-
-window.supabaseClient = window.supabase.createClient(
-    window.SUPABASE_URL,
-    window.SUPABASE_ANON_KEY
-);
-
-console.log("Supabase Client:", window.supabaseClient);
-</script>
 <script>
 
 window.SUPABASE_URL = "{{ SUPABASE_URL }}";
 
 window.SUPABASE_ANON_KEY = "{{ SUPABASE_ANON_KEY }}";
-
-/*
-|--------------------------------------------------------------------------
-| Global URLs
-|--------------------------------------------------------------------------
-*/
-
-window.DASHBOARD_URL = "{% url 'blogs:dashboard' %}";
 
 window.LOGIN_URL = "{% url 'login' %}";
 
 window.SIGNUP_URL = "{% url 'signup' %}";
 
+window.DASHBOARD_URL = "{% url 'blogs:dashboard' %}";
+
 </script>
+
+<!-- Supabase SDK -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Project JavaScript -->
+
+<script src="{% static 'js/supabase.js' %}"></script>
 
 <script src="{% static 'js/auth.js' %}"></script>
 
@@ -248,9 +217,13 @@ window.SIGNUP_URL = "{% url 'signup' %}";
 
 <script>
 
-    lucide.createIcons();
+lucide.createIcons();
 
 </script>
+
+{% block scripts %}
+
+{% endblock %}
 
 </body>
 

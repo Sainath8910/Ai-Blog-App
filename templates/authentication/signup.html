@@ -1,0 +1,380 @@
+{% extends "authentication/base_auth.html" %}
+
+{% block title %}
+Create Account | AI Blog Generator
+{% endblock %}
+
+{% block auth_content %}
+
+<div>
+
+    <!-- Heading -->
+
+    <div class="text-center mb-8">
+
+        <h1 class="text-4xl font-bold text-slate-900">
+
+            Create Account 🚀
+
+        </h1>
+
+        <p class="mt-3 text-slate-500">
+
+            Join AI Blog Generator and start creating amazing blogs.
+
+        </p>
+
+    </div>
+
+    <!-- Error Box -->
+
+    <div
+        id="errorBox"
+        class="hidden mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+    </div>
+
+    <!-- Signup Form -->
+
+    <form
+        id="signupForm"
+        class="space-y-6">
+
+        {% csrf_token %}
+
+        <!-- Email -->
+
+        <div>
+
+            <label class="block mb-2 font-medium">
+
+                Email
+
+            </label>
+
+            <input
+
+                id="email"
+
+                type="email"
+
+                required
+
+                placeholder="you@example.com"
+
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+
+        </div>
+
+        <!-- Password -->
+
+        <div>
+
+            <label class="block mb-2 font-medium">
+
+                Password
+
+            </label>
+
+            <div class="relative">
+
+                <input
+
+                    id="password"
+
+                    type="password"
+
+                    required
+
+                    placeholder="Create Password"
+
+                    class="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+
+                <button
+
+                    type="button"
+
+                    id="togglePassword"
+
+                    class="absolute right-4 top-3 text-slate-500">
+
+                    <i data-lucide="eye"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Confirm Password -->
+
+        <div>
+
+            <label class="block mb-2 font-medium">
+
+                Confirm Password
+
+            </label>
+
+            <div class="relative">
+
+                <input
+
+                    id="confirmPassword"
+
+                    type="password"
+
+                    required
+
+                    placeholder="Confirm Password"
+
+                    class="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+
+                <button
+
+                    type="button"
+
+                    id="toggleConfirmPassword"
+
+                    class="absolute right-4 top-3 text-slate-500">
+
+                    <i data-lucide="eye"></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Create Account -->
+
+        <button
+
+            id="signupButton"
+
+            class="w-full rounded-xl bg-blue-600 hover:bg-blue-700 text-white py-3 font-semibold transition">
+
+            Create Account
+
+        </button>
+
+    </form>
+
+    <!-- Divider -->
+
+    <div class="my-8 flex items-center">
+
+        <div class="flex-1 border-t"></div>
+
+        <span class="mx-4 text-slate-400">
+
+            OR
+
+        </span>
+
+        <div class="flex-1 border-t"></div>
+
+    </div>
+
+    <!-- OAuth -->
+
+    <div class="space-y-3">
+
+        <button
+
+            id="googleButton"
+
+            class="w-full border rounded-xl py-3 flex items-center justify-center gap-3 hover:bg-slate-50">
+
+            <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                class="w-5 h-5">
+
+            Continue with Google
+
+        </button>
+
+        <button
+
+            id="githubButton"
+
+            class="w-full border rounded-xl py-3 flex items-center justify-center gap-3 hover:bg-slate-50">
+
+            <i data-lucide="github"></i>
+
+            Continue with GitHub
+
+        </button>
+
+    </div>
+
+    <!-- Footer -->
+
+    <div class="mt-8 text-center">
+
+        Already have an account?
+
+        <a
+            href="{% url 'login' %}"
+            class="text-blue-600 font-semibold hover:underline">
+
+            Login
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+const form = document.getElementById("signupForm");
+
+const email = document.getElementById("email");
+
+const password = document.getElementById("password");
+
+const confirmPassword = document.getElementById("confirmPassword");
+
+const button = document.getElementById("signupButton");
+
+const errorBox = document.getElementById("errorBox");
+
+/* Toggle Password */
+
+document.getElementById("togglePassword").onclick = () => {
+
+    password.type =
+        password.type === "password"
+        ? "text"
+        : "password";
+
+};
+
+/* Toggle Confirm Password */
+
+document.getElementById("toggleConfirmPassword").onclick = () => {
+
+    confirmPassword.type =
+        confirmPassword.type === "password"
+        ? "text"
+        : "password";
+
+};
+
+/* Signup */
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    errorBox.classList.add("hidden");
+
+    if (password.value !== confirmPassword.value) {
+
+        errorBox.innerText = "Passwords do not match.";
+
+        errorBox.classList.remove("hidden");
+
+        return;
+
+    }
+
+    button.disabled = true;
+
+    button.innerHTML = "Creating Account...";
+
+    try {
+
+        await Auth.signup(
+
+            email.value.trim(),
+
+            password.value
+
+        );
+
+        form.innerHTML = `
+
+        <div class="rounded-2xl border border-green-200 bg-green-50 p-8 text-center">
+
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+
+                ✓
+
+            </div>
+
+            <h2 class="mt-6 text-2xl font-bold text-green-700">
+
+                Email Verification Pending
+
+            </h2>
+
+            <p class="mt-4 text-slate-600">
+
+                We've sent a verification email to:
+
+            </p>
+
+            <p class="mt-2 font-semibold text-blue-600">
+
+                ${email.value}
+
+            </p>
+
+            <p class="mt-6 text-slate-500">
+
+                Please verify your email before logging in.
+
+            </p>
+
+            <a
+                href="${window.LOGIN_URL}"
+                class="inline-block mt-8 rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold">
+
+                Back to Login
+
+            </a>
+
+        </div>
+
+        `;
+
+    }
+
+    catch (error) {
+
+        errorBox.innerText = error.message;
+
+        errorBox.classList.remove("hidden");
+
+        button.disabled = false;
+
+        button.innerHTML = "Create Account";
+
+    }
+
+});
+
+/* Google */
+
+document.getElementById("googleButton").onclick = () => {
+
+    Auth.loginWithGoogle();
+
+};
+
+/* GitHub */
+
+document.getElementById("githubButton").onclick = () => {
+
+    Auth.loginWithGithub();
+
+};
+
+</script>
+
+{% endblock %}

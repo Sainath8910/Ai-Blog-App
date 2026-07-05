@@ -16,20 +16,19 @@ def extract_token(request):
     return request.COOKIES.get("access_token")
 
 
-def verify_token(token):
+def verify_token(access_token):
     """
-    Verify token using Supabase.
+    Verify a Supabase access token and return the user.
     """
 
     try:
-        response = auth_client.auth.get_user(token)
 
-        if response.user is None:
-            return None
+        response = auth_client.auth.get_user(access_token)
 
         return response.user
 
     except Exception:
+
         return None
 
 

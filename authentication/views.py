@@ -54,11 +54,17 @@ def create_session(request):
         if not access_token:
 
             return JsonResponse(
+
                 {
+
                     "success": False,
-                    "message": "Access token missing.",
+
+                    "message": "Access token missing."
+
                 },
-                status=400,
+
+                status=400
+
             )
 
         user = verify_token(access_token)
@@ -66,11 +72,17 @@ def create_session(request):
         if user is None:
 
             return JsonResponse(
+
                 {
+
                     "success": False,
-                    "message": "Invalid token.",
+
+                    "message": "Invalid access token."
+
                 },
-                status=401,
+
+                status=401
+
             )
 
         request.session["user"] = {
@@ -84,25 +96,42 @@ def create_session(request):
         request.session["access_token"] = access_token
 
         request.session.save()
-
+        """print("=" * 50)
+        print("create_session called")
+        print("Access Token:", access_token[:20], "...")
+        print("User:", user)"""
         return JsonResponse(
+
             {
+
                 "success": True,
+
                 "user": {
+
                     "id": str(user.id),
+
                     "email": user.email,
-                },
+
+                }
+
             }
+
         )
 
     except Exception as e:
 
         return JsonResponse(
+
             {
+
                 "success": False,
+
                 "message": str(e),
+
             },
-            status=500,
+
+            status=500
+
         )
 
 
@@ -113,7 +142,11 @@ def logout_view(request):
     return response
 
 def oauth_callback(request):
+
     return render(
+
         request,
+
         "authentication/oauth_callback.html",
+
     )

@@ -8,81 +8,41 @@ Login | AI Blog Generator
 
 <div>
 
+    <!-- Heading -->
+
     <div class="text-center mb-8">
 
-        <h2 class="text-3xl font-bold text-slate-900">
+        <h1 class="text-4xl font-bold text-slate-900">
 
             Welcome Back 👋
 
-        </h2>
+        </h1>
 
         <p class="mt-3 text-slate-500">
 
-            Sign in to continue generating AI-powered blogs.
+            Sign in to continue creating AI-powered blogs.
 
         </p>
 
     </div>
 
-    {% if messages %}
-        <div class="mb-6 space-y-3">
-            {% for message in messages %}
-                <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+    <!-- Error -->
 
-    <!-- OAuth -->
-
-    <div class="space-y-3">
-
-        <button
-            id="googleLogin"
-            type="button"
-            class="w-full flex items-center justify-center gap-3 rounded-xl border border-slate-300 py-3 font-medium hover:bg-slate-100 transition">
-
-            <img
-                src="https://www.svgrepo.com/show/475656/google-color.svg"
-                class="w-5 h-5">
-
-            Continue with Google
-
-        </button>
-
-        <button
-            id="githubLogin"
-            type="button"
-            class="w-full flex items-center justify-center gap-3 rounded-xl border border-slate-300 py-3 font-medium hover:bg-slate-100 transition">
-
-            <i data-lucide="code"></i>
-
-            Continue with GitHub
-
-        </button>
-
-    </div>
-
-    <div class="my-8 flex items-center">
-
-        <div class="flex-1 border-t border-slate-300"></div>
-
-        <span class="mx-4 text-slate-400 text-sm">
-
-            OR
-
-        </span>
-
-        <div class="flex-1 border-t border-slate-300"></div>
+    <div
+        id="errorBox"
+        class="hidden mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
 
     </div>
 
     <!-- Login Form -->
 
-    <form id="loginForm" class="space-y-6" novalidate>
+    <form
+        id="loginForm"
+        class="space-y-6">
 
         {% csrf_token %}
+
+        <!-- Email -->
 
         <div>
 
@@ -102,11 +62,11 @@ Login | AI Blog Generator
 
                 placeholder="you@example.com"
 
-                class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-600 focus:outline-none"
-
-            >
+                class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-600 focus:outline-none">
 
         </div>
+
+        <!-- Password -->
 
         <div>
 
@@ -120,7 +80,7 @@ Login | AI Blog Generator
 
                 <a
                     href="#"
-                    class="text-blue-600 text-sm hover:underline">
+                    class="text-blue-600 hover:underline text-sm">
 
                     Forgot Password?
 
@@ -140,9 +100,7 @@ Login | AI Blog Generator
 
                     placeholder="Password"
 
-                    class="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-600 focus:outline-none"
-
-                >
+                    class="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 focus:ring-2 focus:ring-blue-600 focus:outline-none">
 
                 <button
 
@@ -152,27 +110,40 @@ Login | AI Blog Generator
 
                     class="absolute right-4 top-3 text-slate-500">
 
-                    <i
-                        data-lucide="eye">
-
-                    </i>
+                    <i data-lucide="eye"></i>
 
                 </button>
 
             </div>
 
         </div>
-        <div
-            id="loginError"
-            class="hidden rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+
+        <!-- Remember -->
+
+        <div class="flex items-center justify-between">
+
+            <label class="flex items-center gap-2">
+
+                <input
+                    type="checkbox">
+
+                <span class="text-sm">
+
+                    Remember Me
+
+                </span>
+
+            </label>
+
         </div>
+
+        <!-- Login -->
+
         <button
 
             id="loginButton"
 
-            class="w-full rounded-xl bg-blue-600 hover:bg-blue-700 text-white py-3 font-semibold transition"
-
-        >
+            class="w-full rounded-xl bg-blue-600 hover:bg-blue-700 text-white py-3 font-semibold transition">
 
             Login
 
@@ -180,17 +151,63 @@ Login | AI Blog Generator
 
     </form>
 
+    <!-- Divider -->
+
+    <div class="my-8 flex items-center">
+
+        <div class="flex-1 border-t"></div>
+
+        <span class="mx-4 text-slate-400">
+
+            OR
+
+        </span>
+
+        <div class="flex-1 border-t"></div>
+
+    </div>
+
+    <!-- OAuth -->
+
+    <div class="space-y-3">
+
+        <button
+
+            id="googleButton"
+
+            class="w-full border rounded-xl py-3 flex items-center justify-center gap-3 hover:bg-slate-50">
+
+            <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                class="w-5 h-5">
+
+            Continue with Google
+
+        </button>
+
+        <button
+
+            id="githubButton"
+
+            class="w-full border rounded-xl py-3 flex items-center justify-center gap-3 hover:bg-slate-50">
+
+            <i data-lucide="github"></i>
+
+            Continue with GitHub
+
+        </button>
+
+    </div>
+
+    <!-- Footer -->
+
     <div class="mt-8 text-center">
 
         Don't have an account?
 
         <a
-
             href="{% url 'signup' %}"
-
-            class="text-blue-600 font-semibold hover:underline"
-
-        >
+            class="text-blue-600 font-semibold hover:underline">
 
             Create Account
 
@@ -200,105 +217,113 @@ Login | AI Blog Generator
 
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+
 <script>
 
-const form = document.getElementById("loginForm");
+const form =
+document.getElementById("loginForm");
 
-const emailInput = document.getElementById("email");
+const email =
+document.getElementById("email");
 
-const passwordInput = document.getElementById("password");
+const password =
+document.getElementById("password");
 
-const loginButton = document.getElementById("loginButton");
+const button =
+document.getElementById("loginButton");
 
-const errorBox = document.getElementById("loginError");
+const errorBox =
+document.getElementById("errorBox");
 
-const togglePassword = document.getElementById("togglePassword");
+/* Password Toggle */
 
-togglePassword.addEventListener("click", () => {
+document
+.getElementById("togglePassword")
+.onclick = () => {
 
-    if (passwordInput.type === "password") {
+    if(password.type==="password"){
 
-        passwordInput.type = "text";
+        password.type="text";
 
-        togglePassword.innerHTML =
-            '<i data-lucide="eye-off"></i>';
+    }else{
 
-    } else {
-
-        passwordInput.type = "password";
-
-        togglePassword.innerHTML =
-            '<i data-lucide="eye"></i>';
+        password.type="password";
 
     }
 
-    lucide.createIcons();
+};
 
-});
+/* Login */
 
-function showError(message) {
+form.addEventListener(
 
-    errorBox.innerText = message;
+"submit",
 
-    errorBox.classList.remove("hidden");
+async(e)=>{
+
+e.preventDefault();
+
+errorBox.classList.add("hidden");
+
+button.disabled=true;
+
+button.innerHTML="Signing In...";
+
+try{
+
+await Auth.login(
+
+email.value.trim(),
+
+password.value
+
+);
+
+window.location.href=
+
+window.DASHBOARD_URL;
 
 }
 
-function hideError() {
+catch(error){
 
-    errorBox.classList.add("hidden");
+errorBox.innerText=
+
+error.message;
+
+errorBox.classList.remove("hidden");
+
+button.disabled=false;
+
+button.innerHTML="Login";
 
 }
 
-form.addEventListener("submit", async (event) => {
-
-    event.preventDefault();
-
-    hideError();
-
-    disableButton(loginButton, "Signing In...");
-
-    try {
-
-        await login(
-
-            emailInput.value.trim(),
-
-            passwordInput.value
-
-        );
-
-    }
-
-    catch (error) {
-
-        showError(error.message);
-
-        enableButton(loginButton, "Login");
-
-    }
-
 });
+
+/* Google */
 
 document
-.getElementById("googleLogin")
-.addEventListener("click", () => {
+.getElementById("googleButton")
+.onclick=()=>{
 
-    console.log("Google button clicked");
+Auth.loginWithGoogle();
 
-    loginWithGoogle();
+};
 
-});
+/* GitHub */
 
 document
-.getElementById("githubLogin")
-.addEventListener("click", () => {
+.getElementById("githubButton")
+.onclick=()=>{
 
-    console.log("GitHub button clicked");
+Auth.loginWithGithub();
 
-    console.log(typeof loginWithGithub);
+};
 
-});
 </script>
 
 {% endblock %}
