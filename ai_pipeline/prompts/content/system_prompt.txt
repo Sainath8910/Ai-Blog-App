@@ -123,7 +123,7 @@ Subtitle
 
 Summary
 
-Image Prompt
+Image Prompt(Aspect Ratio should be 16:9)
 
 Alt Text
 

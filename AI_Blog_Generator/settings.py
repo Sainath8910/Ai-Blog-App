@@ -161,7 +161,11 @@ SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
 
 SECURE_SSL_REDIRECT = not DEBUG
-CSRF_TRUSTED_ORIGINS = os.getenv(
+"""CSRF_TRUSTED_ORIGINS = os.getenv(
     "CSRF_TRUSTED_ORIGINS",
     ""
-).split(",")
+).split(",")"""
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
