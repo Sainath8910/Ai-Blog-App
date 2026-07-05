@@ -10,6 +10,7 @@ from .views import (
     update_blog,
     regenerate_paragraph,
     regenerate_image,
+    regenerate_chapter,
 )
 
 app_name = "blogs"
@@ -60,5 +61,10 @@ path(
     "regenerate/image/",
     regenerate_image,
     name="regenerate_image",
+),
+path(
+    "regenerate/chapter/",
+    regenerate_chapter,
+    name="regenerate_chapter",
 ),
 ]

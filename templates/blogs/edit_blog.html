@@ -558,6 +558,50 @@ class="chapter-image"
     </div>
 
 </div>
+<div id="chapterModal"
+class="fixed inset-0 hidden items-center justify-center bg-black/60 z-50">
+
+<div class="bg-white dark:bg-slate-900 rounded-2xl p-6 max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+
+<h2 class="text-2xl font-bold mb-4">
+Preview Chapter
+</h2>
+
+<input
+id="newChapterTitle"
+class="w-full border rounded-lg p-3 mb-4">
+
+<textarea
+id="newChapterParagraphs"
+class="w-full h-72 border rounded-lg p-3 mb-4"></textarea>
+
+<textarea
+id="newChapterBullets"
+class="w-full h-40 border rounded-lg p-3"></textarea>
+
+<div class="flex justify-end gap-3 mt-6">
+
+<button
+id="cancelChapter"
+class="px-5 py-2 border rounded-xl">
+
+Reject
+
+</button>
+
+<button
+id="acceptChapter"
+class="px-5 py-2 rounded-xl bg-blue-600 text-white">
+
+Accept
+
+</button>
+
+</div>
+
+</div>
+
+</div>
 <script>
 let currentImage = null;
 let generatedImage = null;
@@ -1161,30 +1205,122 @@ document
    Chapter
 ========================================== */
 
-document
+let currentChapter = null;
+let generatedChapter = null;
 
-.querySelectorAll(".regenerate-chapter")
-
+document.querySelectorAll(".regenerate-chapter")
 .forEach(button=>{
 
-    button.addEventListener(
+button.addEventListener("click", function () {
 
-        "click",
+    const btn = this;
 
-        ()=>{
+    btn.disabled = true;
+    btn.innerHTML = "⏳ Generating...";
 
-            showToast(
+const card=this.closest(".chapter-card");
 
-                "Chapter regeneration coming next."
+currentChapter=card;
 
-            );
+const paragraphs=[];
 
-        }
+card.querySelectorAll(".chapter-paragraph")
+.forEach(p=>paragraphs.push(p.value));
 
-    );
+const bullets=card.querySelector(".chapter-bullets")
+.value
+.split("\n")
+.filter(Boolean);
+
+this.disabled=true;
+this.innerText="Generating...";
+
+fetch("/blogs/regenerate/chapter/",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json",
+"X-CSRFToken":getCSRFToken(),
+},
+
+body:JSON.stringify({
+
+title:card.querySelector(".chapter-title").value,
+
+paragraphs,
+
+bullet_points:bullets,
+
+tone:document.getElementById("tone").value,
+
+target_audience:document.getElementById("targetAudience").value,
+
+})
+
+})
+
+.then(r=>r.json())
+
+.then(data=>{
+
+generatedChapter=data.chapter;
+
+document.getElementById("newChapterTitle").value=data.chapter.title;
+
+document.getElementById("newChapterParagraphs").value=
+data.chapter.paragraphs.join("\n\n");
+
+document.getElementById("newChapterBullets").value=
+data.chapter.bullet_points.join("\n");
+
+document.getElementById("chapterModal")
+.classList.remove("hidden");
+
+})
+
+.finally(()=>{
+
+btn.disabled = false;
+btn.innerHTML = "✨ Regenerate Chapter";
 
 });
 
+});
+
+});
+document.getElementById("acceptChapter").onclick=function(){
+
+currentChapter.querySelector(".chapter-title").value=
+generatedChapter.title;
+
+const paras=currentChapter.querySelectorAll(".chapter-paragraph");
+
+generatedChapter.paragraphs.forEach((p,i)=>{
+
+if(paras[i])
+paras[i].value=p;
+
+});
+
+currentChapter.querySelector(".chapter-bullets").value=
+generatedChapter.bullet_points.join("\n");
+
+document.getElementById("chapterModal")
+.classList.add("hidden");
+
+showToast(
+"Chapter updated. Click Save Changes."
+);
+
+};
+
+document.getElementById("cancelChapter").onclick=function(){
+
+document.getElementById("chapterModal")
+.classList.add("hidden");
+
+};
 </script>
 
 {% endblock %}

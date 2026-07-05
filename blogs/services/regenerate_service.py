@@ -32,7 +32,26 @@ Rules:
 - Do not explain anything.
 - Return ONLY the improved paragraph.
 """
+CHAPTER_SYSTEM_PROMPT = """
+You are an expert blog editor.
 
+Improve the given chapter.
+
+Rules:
+- Improve readability.
+- Improve grammar.
+- Improve flow.
+- Preserve meaning.
+- Keep approximately same length.
+
+Return ONLY valid JSON.
+
+{
+    "title":"...",
+    "paragraphs":["..."],
+    "bullet_points":["..."]
+}
+"""
 
 class RegenerateService:
 
@@ -106,3 +125,39 @@ Current Paragraph:
             user_prompt="\n\n".join(paragraphs),
 
         ).strip()
+    @staticmethod
+    def regenerate_chapter(
+        title,
+        paragraphs,
+        bullet_points,
+        tone,
+        audience,
+    ):
+
+        import json
+
+        llm = LLMManager()
+
+        prompt = f"""
+    Title:
+    {title}
+
+    Tone:
+    {tone}
+
+    Audience:
+    {audience}
+
+    Paragraphs:
+    {json.dumps(paragraphs)}
+
+    Bullet Points:
+    {json.dumps(bullet_points)}
+    """
+
+        response = llm.generate(
+            system_prompt=CHAPTER_SYSTEM_PROMPT,
+            user_prompt=prompt,
+        )
+
+        return json.loads(response)

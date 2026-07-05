@@ -434,3 +434,31 @@ def regenerate_image(request):
         }
 
     })
+
+@login_required
+@require_POST
+def regenerate_chapter(request):
+
+    data = json.loads(request.body)
+
+    chapter = RegenerateService.regenerate_chapter(
+
+        title=data["title"],
+
+        paragraphs=data["paragraphs"],
+
+        bullet_points=data["bullet_points"],
+
+        tone=data["tone"],
+
+        audience=data["target_audience"],
+
+    )
+
+    return JsonResponse({
+
+        "success":True,
+
+        "chapter":chapter,
+
+    })
