@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from django.db import transaction
+from django.db.models import Q
 
 from blogs.models import Blog
 from blogs.repositories.chapter_repository import ChapterRepository
@@ -125,26 +126,89 @@ class BlogRepository:
             is_deleted=False,
         )
 
+    
     @staticmethod
-    def get_user_blogs(user_id):
+    def get_user_blogs(
+        user_id,
+        search="",
+        category="",
+        status="",
+    ):
 
-        return Blog.objects.filter(
+        blogs = Blog.objects.filter(
             user_id=user_id,
             is_deleted=False,
         )
 
-    @staticmethod
-    def update_blog(blog, **kwargs):
+        if search:
 
-        for key, value in kwargs.items():
+            blogs = blogs.filter(
 
-            setattr(
-                blog,
-                key,
-                serialize(value),
+                Q(title__icontains=search) |
+
+                Q(topic__icontains=search) |
+
+                Q(description__icontains=search)
+
             )
 
+        if category:
+
+            blogs = blogs.filter(
+                category=category
+            )
+
+        if status:
+
+            blogs = blogs.filter(
+                status=status
+            )
+
+        return blogs.order_by("-created_at")
+
+    @staticmethod
+    @transaction.atomic
+    def update_blog(blog, data):
+
+        # -----------------------------
+        # Metadata
+        # -----------------------------
+
+        blog.title = data["title"]
+
+        blog.description = data["description"]
+
+        blog.category = data["category"]
+
+        blog.language = data["language"]
+
+        blog.tone = data["tone"]
+
+        blog.target_audience = data["target_audience"]
+
+        blog.status = data["status"]
+
         blog.save()
+
+        # -----------------------------
+        # Chapters
+        # -----------------------------
+
+        for chapter_data in data["chapters"]:
+
+            chapter = blog.chapters.get(
+
+                id=chapter_data["id"]
+
+            )
+
+            chapter.title = chapter_data["title"]
+
+            chapter.paragraphs = chapter_data["paragraphs"]
+
+            chapter.bullet_points = chapter_data["bullet_points"]
+
+            chapter.save()
 
         return blog
 

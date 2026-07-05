@@ -6,6 +6,8 @@ from .views import (
     blog_detail,
     my_blogs,
     edit_blog,
+    delete_blog,
+    update_blog,
 )
 
 app_name = "blogs"
@@ -33,4 +35,18 @@ urlpatterns = [
     "<int:blog_id>/edit/",
     edit_blog,
     name="edit",),
+    path(
+    "<int:blog_id>/delete/",
+    delete_blog,
+    name="delete",
+),
+path(
+
+    "<int:blog_id>/update/",
+
+    update_blog,
+
+    name="update",
+
+),
 ]

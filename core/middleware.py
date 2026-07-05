@@ -1,27 +1,24 @@
 from .auth import authenticate_request
 
 
+from .auth import verify_token
+
+
 class SupabaseAuthMiddleware:
 
     def __init__(self, get_response):
+
         self.get_response = get_response
 
     def __call__(self, request):
 
-        user = authenticate_request(request)
+        session_user = request.session.get("user")
 
-        request.supabase_user = user
+        if session_user:
 
-        if user:
-
-            request.user_id = user.id
-            request.email = user.email
-
-            request.role = (
-                user.user_metadata.get("role", "authenticated")
-                if user.user_metadata
-                else "authenticated"
-            )
+            request.user_id = session_user["id"]
+            request.email = session_user["email"]
+            request.role = "authenticated"
 
         else:
 

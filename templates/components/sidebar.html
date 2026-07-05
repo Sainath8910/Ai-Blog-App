@@ -62,7 +62,7 @@ class="hidden lg:flex w-72 flex-col bg-white dark:bg-slate-900 border-r border-s
         </a>
 
         <a
-        href="#"
+        href="{% url 'blogs:my_blogs' %}"
         class="flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-blue-50 dark:hover:bg-slate-800 transition">
 
             <i data-lucide="book-open"></i>
@@ -93,5 +93,20 @@ class="hidden lg:flex w-72 flex-col bg-white dark:bg-slate-900 border-r border-s
 
     </nav>
 
+<div class="p-5 border-t border-slate-200 dark:border-slate-800">
 
+    {% csrf_token %}
+
+    <button
+        id="logoutButton"
+        type="button"
+        class="w-full flex items-center justify-center gap-3 rounded-xl px-4 py-3 bg-red-50 text-red-600 hover:bg-red-100 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30 transition">
+
+        <i data-lucide="log-out"></i>
+
+        Logout
+
+    </button>
+
+</div>
 </aside>

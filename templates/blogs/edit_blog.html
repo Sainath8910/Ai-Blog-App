@@ -1,0 +1,856 @@
+{% extends "base.html" %}
+
+{% block title %}
+Edit Blog
+{% endblock %}
+
+{% block content %}
+
+{% csrf_token %}
+
+<div class="max-w-6xl mx-auto px-6 py-8">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="flex items-center justify-between mb-8">
+
+        <div>
+
+            <a
+                href="{% url 'blogs:my_blogs' %}"
+                class="text-blue-600 hover:text-blue-700">
+
+                ← Back to My Blogs
+
+            </a>
+
+            <h1 class="text-4xl font-bold mt-3">
+
+                Edit Blog
+
+            </h1>
+
+            <p class="text-slate-500 mt-2">
+
+                Edit your generated blog and save changes.
+
+            </p>
+
+        </div>
+
+        <button
+
+            id="saveButton"
+
+            type="button"
+
+            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow">
+
+            💾 Save Changes
+
+        </button>
+
+    </div>
+
+    <!-- ================= BLOG DETAILS ================= -->
+
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow border p-6">
+
+        <h2 class="text-2xl font-semibold mb-6">
+
+            Blog Details
+
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-5">
+
+            <div class="md:col-span-2">
+
+                <label class="font-medium">
+
+                    Title
+
+                </label>
+
+                <input
+
+                    id="title"
+
+                    value="{{ blog.title }}"
+
+                    class="mt-2 w-full border rounded-xl p-3">
+
+            </div>
+
+            <div class="md:col-span-2">
+
+                <label class="font-medium">
+
+                    Description
+
+                </label>
+
+                <textarea
+
+                    id="description"
+
+                    rows="5"
+
+                    class="mt-2 w-full border rounded-xl p-3">{{ blog.description }}</textarea>
+
+            </div>
+
+            <div>
+
+                <label>Category</label>
+
+                <input
+
+                    id="category"
+
+                    value="{{ blog.category }}"
+
+                    class="mt-2 w-full border rounded-xl p-3">
+
+            </div>
+
+            <div>
+
+                <label>Language</label>
+
+                <input
+
+                    id="language"
+
+                    value="{{ blog.language }}"
+
+                    class="mt-2 w-full border rounded-xl p-3">
+
+            </div>
+
+            <div>
+
+                <label>Tone</label>
+
+                <input
+
+                    id="tone"
+
+                    value="{{ blog.tone }}"
+
+                    class="mt-2 w-full border rounded-xl p-3">
+
+            </div>
+
+            <div>
+
+                <label>Target Audience</label>
+
+                <input
+
+                    id="targetAudience"
+
+                    value="{{ blog.target_audience }}"
+
+                    class="mt-2 w-full border rounded-xl p-3">
+
+            </div>
+
+            <div>
+
+                <label>Status</label>
+
+                <select
+
+                    id="status"
+
+                    class="mt-2 w-full border rounded-xl p-3">
+
+                    <option value="draft"
+                    {% if blog.status == "draft" %}selected{% endif %}>
+                        Draft
+                    </option>
+
+                    <option value="published"
+                    {% if blog.status == "published" %}selected{% endif %}>
+                        Published
+                    </option>
+
+                    <option value="archived"
+                    {% if blog.status == "archived" %}selected{% endif %}>
+                        Archived
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div>
+
+                <label>Generation Version</label>
+
+                <input
+
+                    disabled
+
+                    value="v{{ blog.generation_version }}"
+
+                    class="mt-2 w-full rounded-xl p-3 bg-slate-100 dark:bg-slate-800">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= HERO IMAGE ================= -->
+
+    <div class="mt-8 bg-white dark:bg-slate-900 rounded-2xl shadow border p-6">
+
+        <div class="flex items-center justify-between mb-5">
+
+            <div>
+
+                <h2 class="text-2xl font-semibold">
+
+                    Hero Image
+
+                </h2>
+
+                <p class="text-slate-500">
+
+                    Main image of the blog
+
+                </p>
+
+            </div>
+
+            <button
+
+                type="button"
+
+                class="regenerate-hero bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl">
+
+                🖼 Regenerate Hero Image
+
+            </button>
+
+        </div>
+
+        {% if blog.hero.image_url %}
+
+        <img
+
+            src="{{ blog.hero.image_url }}"
+
+            class="rounded-xl w-full border">
+
+        {% else %}
+
+        <div
+
+            class="border-2 border-dashed rounded-xl py-20 text-center text-slate-500">
+
+            No Hero Image
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    <!-- ================= CHAPTERS START ================= -->
+     <div class="mt-8 space-y-8">
+
+{% for chapter in chapters %}
+
+<div
+
+    class="chapter-card bg-white dark:bg-slate-900 rounded-2xl shadow border p-6"
+
+    data-chapter="{{ chapter.id }}">
+
+    <!-- ====================================== -->
+    <!-- Chapter Header -->
+    <!-- ====================================== -->
+
+    <div class="flex items-center justify-between mb-6">
+
+        <div class="flex-1">
+
+            <p class="text-sm text-slate-500">
+
+                Chapter {{ chapter.order }}
+
+            </p>
+
+            <input
+
+                type="text"
+
+                class="chapter-title w-full mt-2 text-3xl font-bold bg-transparent outline-none"
+
+                data-chapter="{{ chapter.id }}"
+
+                value="{{ chapter.title }}">
+
+        </div>
+
+        <button
+
+            type="button"
+
+            class="regenerate-chapter bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-xl"
+
+            data-chapter="{{ chapter.id }}">
+
+            ✨ Regenerate Chapter
+
+        </button>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- Chapter Image -->
+    <!-- ====================================== -->
+
+    {% if chapter.image.image_url %}
+
+    <div class="mb-8">
+
+        <img
+
+            src="{{ chapter.image.image_url }}"
+
+            class="rounded-xl border w-full">
+
+        <div class="mt-4">
+
+            <button
+
+                type="button"
+
+                class="regenerate-image bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl"
+
+                data-chapter="{{ chapter.id }}">
+
+                🖼 Regenerate Image
+
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+    <!-- ====================================== -->
+    <!-- Paragraphs -->
+    <!-- ====================================== -->
+
+    {% for paragraph in chapter.paragraphs %}
+
+    <div
+
+        class="paragraph-block border rounded-xl p-5 mb-6">
+
+        <div class="flex items-center justify-between mb-3">
+
+            <h4 class="font-semibold">
+
+                Paragraph {{ forloop.counter }}
+
+            </h4>
+
+            <button
+
+                type="button"
+
+                class="regenerate-paragraph bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+
+                data-chapter="{{ chapter.id }}"
+
+                data-index="{{ forloop.counter0 }}">
+
+                ✨ Regenerate
+
+            </button>
+
+        </div>
+
+        <textarea
+
+            rows="7"
+
+            class="chapter-paragraph w-full border rounded-xl p-4"
+
+            data-chapter="{{ chapter.id }}"
+
+            data-index="{{ forloop.counter0 }}">{{ paragraph }}</textarea>
+
+    </div>
+
+    {% endfor %}
+
+    <!-- ====================================== -->
+    <!-- Bullet Points -->
+    <!-- ====================================== -->
+
+    {% if chapter.bullet_points %}
+
+    <div class="mt-8">
+
+        <label class="font-semibold">
+
+            Bullet Points
+
+        </label>
+
+        <textarea
+
+            rows="6"
+
+            class="chapter-bullets mt-3 w-full border rounded-xl p-4"
+
+            data-chapter="{{ chapter.id }}">{% for point in chapter.bullet_points %}{{ point }}
+{% endfor %}</textarea>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- ====================================== -->
+<!-- Bottom Actions -->
+<!-- ====================================== -->
+
+<div class="mt-10 flex flex-wrap gap-4 justify-end">
+
+    <button
+
+        id="regenerateBlog"
+
+        type="button"
+
+        class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-xl">
+
+        ✨ Regenerate Entire Blog
+
+    </button>
+
+    <button
+
+        id="saveBottom"
+
+        type="button"
+
+        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl">
+
+        💾 Save Changes
+
+    </button>
+
+</div>
+
+<!-- Toast -->
+
+<div
+
+    id="toast"
+
+    class="hidden fixed top-6 right-6 bg-slate-900 text-white px-5 py-3 rounded-xl shadow-xl z-50">
+
+</div>
+<script>
+
+const BLOG_ID = "{{ blog.id }}";
+
+/* ==========================================
+   CSRF
+========================================== */
+
+function getCSRFToken() {
+
+    return document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+    ).value;
+
+}
+
+/* ==========================================
+   Toast
+========================================== */
+
+function showToast(message, success=true){
+
+    const toast = document.getElementById("toast");
+
+    toast.innerHTML = message;
+
+    toast.classList.remove("hidden");
+
+    toast.classList.remove(
+        "bg-red-600",
+        "bg-green-600",
+        "bg-slate-900"
+    );
+
+    toast.classList.add(
+
+        success
+            ? "bg-green-600"
+            : "bg-red-600"
+
+    );
+
+    setTimeout(()=>{
+
+        toast.classList.add("hidden");
+
+    },2500);
+
+}
+
+/* ==========================================
+   Collect Blog
+========================================== */
+
+function collectBlogData(){
+
+    const blog = {
+
+        title:
+            document.getElementById("title").value,
+
+        description:
+            document.getElementById("description").value,
+
+        category:
+            document.getElementById("category").value,
+
+        language:
+            document.getElementById("language").value,
+
+        tone:
+            document.getElementById("tone").value,
+
+        target_audience:
+            document.getElementById("targetAudience").value,
+
+        status:
+            document.getElementById("status").value,
+
+        chapters: []
+
+    };
+
+    document
+
+    .querySelectorAll(".chapter-card")
+
+    .forEach(card=>{
+
+        const chapterId =
+
+            card.dataset.chapter;
+
+        const title =
+
+            card.querySelector(".chapter-title").value;
+
+        const paragraphs = [];
+
+        card
+
+        .querySelectorAll(".chapter-paragraph")
+
+        .forEach(p=>{
+
+            paragraphs.push(
+
+                p.value
+
+            );
+
+        });
+
+        let bullets = [];
+
+        const bulletArea =
+
+            card.querySelector(".chapter-bullets");
+
+        if(bulletArea){
+
+            bullets = bulletArea.value
+
+            .split("\n")
+
+            .map(x=>x.trim())
+
+            .filter(Boolean);
+
+        }
+
+        blog.chapters.push({
+
+            id: chapterId,
+
+            title: title,
+
+            paragraphs: paragraphs,
+
+            bullet_points: bullets,
+
+        });
+
+    });
+
+    return blog;
+
+}
+
+/* ==========================================
+   Save
+========================================== */
+
+async function saveBlog(){
+
+    try{
+
+        const response = await fetch(
+
+            `/blogs/${BLOG_ID}/update/`,
+
+            {
+
+                method:"POST",
+
+                headers:{
+
+                    "Content-Type":"application/json",
+
+                    "X-CSRFToken":getCSRFToken(),
+
+                },
+
+                credentials:"same-origin",
+
+                body:JSON.stringify(
+
+                    collectBlogData()
+
+                ),
+
+            }
+
+        );
+
+        const result =
+
+            await response.json();
+
+        if(!response.ok){
+
+            throw new Error(
+
+                result.message ||
+
+                "Save failed."
+
+            );
+
+        }
+
+        showToast(
+
+            "Blog saved successfully."
+
+        );
+
+    }
+
+    catch(error){
+
+        console.error(error);
+
+        showToast(
+
+            error.message,
+
+            false
+
+        );
+
+    }
+
+}
+
+/* ==========================================
+   Save Buttons
+========================================== */
+
+document
+
+.getElementById("saveButton")
+
+.addEventListener(
+
+    "click",
+
+    saveBlog
+
+);
+
+document
+
+.getElementById("saveBottom")
+
+.addEventListener(
+
+    "click",
+
+    saveBlog
+
+);
+
+/* ==========================================
+   Hero Image
+========================================== */
+
+document
+
+.querySelector(".regenerate-hero")
+
+.addEventListener(
+
+    "click",
+
+    ()=>{
+
+        showToast(
+
+            "Hero image regeneration coming next."
+
+        );
+
+    }
+
+);
+
+/* ==========================================
+   Entire Blog
+========================================== */
+
+document
+
+.getElementById("regenerateBlog")
+
+.addEventListener(
+
+    "click",
+
+    ()=>{
+
+        showToast(
+
+            "Entire blog regeneration coming next."
+
+        );
+
+    }
+
+);
+
+/* ==========================================
+   Chapter Images
+========================================== */
+
+document
+
+.querySelectorAll(".regenerate-image")
+
+.forEach(button=>{
+
+    button.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            showToast(
+
+                "Image regeneration coming next."
+
+            );
+
+        }
+
+    );
+
+});
+
+/* ==========================================
+   Paragraph
+========================================== */
+
+document
+
+.querySelectorAll(".regenerate-paragraph")
+
+.forEach(button=>{
+
+    button.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            showToast(
+
+                "Paragraph regeneration coming next."
+
+            );
+
+        }
+
+    );
+
+});
+
+/* ==========================================
+   Chapter
+========================================== */
+
+document
+
+.querySelectorAll(".regenerate-chapter")
+
+.forEach(button=>{
+
+    button.addEventListener(
+
+        "click",
+
+        ()=>{
+
+            showToast(
+
+                "Chapter regeneration coming next."
+
+            );
+
+        }
+
+    );
+
+});
+
+</script>
+
+{% endblock %}

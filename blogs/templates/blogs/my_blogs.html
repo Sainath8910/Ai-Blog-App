@@ -6,80 +6,887 @@ My Blogs
 
 {% block content %}
 
-<div class="max-w-7xl mx-auto py-10">
+{% csrf_token %}
 
-    <h1 class="text-4xl font-bold mb-8">
+<div class="max-w-7xl mx-auto px-6 py-8">
 
-        My Blogs
+    <!-- ====================================== -->
+    <!-- Header -->
+    <!-- ====================================== -->
 
-    </h1>
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
 
-    {% if blogs %}
+        <div>
 
-        <div class="space-y-4">
+            <h1 class="text-4xl font-bold text-slate-900 dark:text-white">
 
-            {% for blog in blogs %}
+                My Blogs
 
-            <div class="bg-white rounded-xl shadow p-6">
+            </h1>
 
-                <h2 class="text-2xl font-semibold">
+            <p class="mt-2 text-slate-500 dark:text-slate-400">
+
+                Manage, edit and export your AI generated blogs.
+
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'blogs:generate' %}"
+            class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700 transition">
+
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4v16m8-8H4"/>
+
+            </svg>
+
+            Generate Blog
+
+        </a>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- Search & Filters -->
+    <!-- ====================================== -->
+
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow border border-slate-200 dark:border-slate-800 p-5 mb-8">
+
+        <form
+            method="GET"
+            class="grid lg:grid-cols-12 gap-4">
+
+            <!-- Search -->
+
+            <div class="lg:col-span-6 relative">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="absolute left-4 top-3.5 w-5 h-5 text-slate-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-4.35-4.35M16 10a6 6 0 11-12 0 6 6 0 0112 0z"/>
+
+                </svg>
+
+                <input
+
+                    type="text"
+
+                    name="q"
+
+                    value="{{ search }}"
+
+                    placeholder="Search title, topic or description..."
+
+                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 pl-12 pr-4 py-3 focus:ring-2 focus:ring-blue-600 focus:outline-none">
+
+            </div>
+
+            <!-- Category -->
+
+            <div class="lg:col-span-2">
+
+                <select
+
+                    name="category"
+
+                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3">
+
+                    <option value="">
+
+                        All Categories
+
+                    </option>
+
+                    {% for category in categories %}
+
+                    <option
+
+                        value="{{ category }}"
+
+                        {% if category == selected_category %}
+
+                        selected
+
+                        {% endif %}>
+
+                        {{ category }}
+
+                    </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <!-- Status -->
+
+            <div class="lg:col-span-2">
+
+                <select
+
+                    name="status"
+
+                    class="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3">
+
+                    <option value="">
+
+                        All Status
+
+                    </option>
+
+                    <option
+
+                        value="draft"
+
+                        {% if selected_status == "draft" %}
+
+                        selected
+
+                        {% endif %}>
+
+                        Draft
+
+                    </option>
+
+                    <option
+
+                        value="published"
+
+                        {% if selected_status == "published" %}
+
+                        selected
+
+                        {% endif %}>
+
+                        Published
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Search Button -->
+
+            <div class="lg:col-span-2">
+
+                <button
+
+                    class="w-full rounded-xl bg-blue-600 text-white py-3 font-semibold hover:bg-blue-700 transition">
+
+                    Search
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- ====================================== -->
+    <!-- Blog Cards -->
+    <!-- ====================================== -->
+
+    {% if page_obj %}
+
+    <div class="grid gap-6">
+        {% for blog in page_obj %}
+
+<div
+    id="blog-{{ blog.id }}"
+    class="group rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl transition-all duration-300">
+
+    <div class="p-6">
+
+        <!-- ====================================== -->
+        <!-- Header -->
+        <!-- ====================================== -->
+
+        <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5">
+
+            <div class="flex-1">
+
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition">
 
                     {{ blog.title }}
 
                 </h2>
 
-                <p class="text-slate-500 mt-2">
+                <p class="mt-3 text-slate-500 dark:text-slate-400 line-clamp-2">
 
                     {{ blog.description }}
 
                 </p>
 
-                <div class="mt-4 flex gap-3">
+            </div>
 
-                    <a
-                        href="{% url 'blogs:detail' blog.id %}"
-                        class="px-4 py-2 bg-blue-600 text-white rounded-lg">
+            <div class="flex flex-wrap gap-2">
 
-                        View
+                <span
+                    class="rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 px-3 py-1 text-xs font-semibold">
 
-                    </a>
+                    {{ blog.category }}
 
-                </div>
+                </span>
+
+                {% if blog.status == "draft" %}
+
+                <span
+                    class="rounded-full bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300 px-3 py-1 text-xs font-semibold">
+
+                    Draft
+
+                </span>
+
+                {% else %}
+
+                <span
+                    class="rounded-full bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 px-3 py-1 text-xs font-semibold">
+
+                    Published
+
+                </span>
+
+                {% endif %}
 
             </div>
 
-            {% endfor %}
+        </div>
+
+        <!-- ====================================== -->
+        <!-- Blog Information -->
+        <!-- ====================================== -->
+
+        <div class="mt-6 grid md:grid-cols-4 gap-4 text-sm">
+
+            <div>
+
+                <p class="text-slate-400">
+
+                    Topic
+
+                </p>
+
+                <p class="font-medium">
+
+                    {{ blog.topic }}
+
+                </p>
+
+            </div>
+
+            <div>
+
+                <p class="text-slate-400">
+
+                    Language
+
+                </p>
+
+                <p class="font-medium">
+
+                    {{ blog.language }}
+
+                </p>
+
+            </div>
+
+            <div>
+
+                <p class="text-slate-400">
+
+                    Tone
+
+                </p>
+
+                <p class="font-medium">
+
+                    {{ blog.tone }}
+
+                </p>
+
+            </div>
+
+            <div>
+
+                <p class="text-slate-400">
+
+                    Created
+
+                </p>
+
+                <p class="font-medium">
+
+                    {{ blog.created_at|date:"M d, Y" }}
+
+                </p>
+
+            </div>
 
         </div>
 
-    {% else %}
+        <!-- ====================================== -->
+        <!-- Action Bar -->
+        <!-- ====================================== -->
 
-        <div class="text-center py-20">
+        <div class="mt-8 flex items-center justify-between border-t border-slate-200 dark:border-slate-800 pt-5">
 
-            <h2 class="text-3xl font-semibold">
+            <div class="flex gap-3">
 
-                No Blogs Yet
+                <!-- View -->
 
-            </h2>
+                <a
+                    href="{% url 'blogs:detail' blog.id %}"
+                    title="View Blog"
+                    class="w-11 h-11 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition">
 
-            <p class="text-slate-500 mt-4">
+                    👁
 
-                Generate your first AI-powered blog.
+                </a>
 
-            </p>
+                <!-- Edit -->
 
-            <a
-                href="{% url 'blogs:generate' %}"
-                class="inline-block mt-8 bg-blue-600 text-white px-6 py-3 rounded-xl">
+                <a
+                    href="{% url 'blogs:edit' blog.id %}"
+                    title="Edit Blog"
+                    class="w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 transition">
 
-                Generate Blog
+                    ✏️
 
-            </a>
+                </a>
+
+                <!-- Export -->
+
+                <button
+
+                    type="button"
+
+                    onclick="openExportModal('{{ blog.id }}')"
+
+                    title="Export"
+
+                    class="w-11 h-11 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 16V4m0 12l4-4m-4 4l-4-4M4 20h16"/>
+
+                    </svg>
+
+                </button>
+
+                <!-- Delete -->
+
+                <button
+
+                    type="button"
+
+                    data-blog-id="{{ blog.id }}"
+
+                    title="Delete"
+
+                    class="deleteButton w-11 h-11 rounded-full bg-red-600 text-white flex items-center justify-center hover:bg-red-700 transition">
+
+                    🗑
+
+                </button>
+
+            </div>
+
+            <div class="text-sm text-slate-400">
+
+                {{ blog.updated_at|timesince }} ago
+
+            </div>
 
         </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+{% else %}
+
+<!-- ====================================== -->
+<!-- Empty State -->
+<!-- ====================================== -->
+
+<div class="rounded-3xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 py-24 text-center">
+
+    <div class="text-7xl">
+
+        📄
+
+    </div>
+
+    <h2 class="mt-8 text-3xl font-bold">
+
+        No Blogs Found
+
+    </h2>
+
+    <p class="mt-4 text-slate-500">
+
+        Generate your first AI-powered blog to get started.
+
+    </p>
+
+    <a
+
+        href="{% url 'blogs:generate' %}"
+
+        class="inline-flex items-center gap-2 mt-8 rounded-xl bg-blue-600 px-8 py-3 text-white font-semibold hover:bg-blue-700 transition">
+
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16m8-8H4"/>
+
+        </svg>
+
+        Generate Blog
+
+    </a>
+
+</div>
+
+{% endif %}
+
+<!-- ====================================== -->
+<!-- Pagination -->
+<!-- ====================================== -->
+
+{% if page_obj.paginator.num_pages > 1 %}
+
+<div class="mt-12 flex items-center justify-center gap-2">
+
+    {% if page_obj.has_previous %}
+
+    <a
+
+        href="?page={{ page_obj.previous_page_number }}&q={{ search }}&category={{ selected_category }}&status={{ selected_status }}"
+
+        class="px-4 py-2 rounded-xl border border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800">
+
+        Previous
+
+    </a>
+
+    {% endif %}
+
+    {% for page in page_obj.paginator.page_range %}
+
+    <a
+
+        href="?page={{ page }}&q={{ search }}&category={{ selected_category }}&status={{ selected_status }}"
+
+        class="w-10 h-10 rounded-xl flex items-center justify-center transition
+
+        {% if page == page_obj.number %}
+
+            bg-blue-600 text-white
+
+        {% else %}
+
+            border border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800
+
+        {% endif %}">
+
+        {{ page }}
+
+    </a>
+
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+
+    <a
+
+        href="?page={{ page_obj.next_page_number }}&q={{ search }}&category={{ selected_category }}&status={{ selected_status }}"
+
+        class="px-4 py-2 rounded-xl border border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800">
+
+        Next
+
+    </a>
 
     {% endif %}
 
 </div>
 
+{% endif %}
+
+</div>
+
+<!-- ====================================== -->
+<!-- Delete Confirmation Modal -->
+<!-- ====================================== -->
+
+<div
+
+    id="deleteModal"
+
+    class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+
+    <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl w-full max-w-md p-8">
+
+        <div class="text-center">
+
+            <div class="text-6xl mb-5">
+
+                🗑
+
+            </div>
+
+            <h2 class="text-2xl font-bold">
+
+                Delete Blog?
+
+            </h2>
+
+            <p class="mt-3 text-slate-500">
+
+                This blog will be moved to the recycle bin.
+
+            </p>
+
+        </div>
+
+        <div class="mt-8 flex gap-4">
+
+            <button
+
+                id="cancelDelete"
+
+                class="flex-1 rounded-xl border py-3 hover:bg-slate-100 dark:hover:bg-slate-800">
+
+                Cancel
+
+            </button>
+
+            <button
+
+                id="confirmDelete"
+
+                class="flex-1 rounded-xl bg-red-600 text-white hover:bg-red-700">
+
+                Delete
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ====================================== -->
+<!-- Toast -->
+<!-- ====================================== -->
+
+<div
+
+    id="toast"
+
+    class="fixed bottom-6 right-6 hidden rounded-xl bg-slate-900 text-white px-6 py-4 shadow-2xl z-50">
+
+</div>
+<script>
+
+let deleteBlogId = null;
+
+/* ==========================================
+   CSRF
+========================================== */
+
+function getCSRFToken() {
+
+    return document.querySelector(
+        "[name=csrfmiddlewaretoken]"
+    ).value;
+
+}
+
+/* ==========================================
+   Toast
+========================================== */
+
+function showToast(message) {
+
+    const toast = document.getElementById("toast");
+
+    if (!toast) {
+        alert(message);
+        return;
+    }
+
+    toast.innerHTML = message;
+
+    toast.classList.remove("hidden");
+
+    toast.classList.add("flex");
+
+    setTimeout(() => {
+
+        toast.classList.add("hidden");
+
+        toast.classList.remove("flex");
+
+    }, 3000);
+
+}
+
+/* ==========================================
+   Delete Modal Elements
+========================================== */
+
+const deleteModal = document.getElementById("deleteModal");
+
+const confirmDelete = document.getElementById("confirmDelete");
+
+const cancelDelete = document.getElementById("cancelDelete");
+
+/* ==========================================
+   Attach Delete Button Events
+========================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    console.log("My Blogs JS Loaded");
+
+    document.querySelectorAll(".deleteButton").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            console.log("Delete button clicked");
+
+            deleteBlogId = button.dataset.blogId;
+
+            console.log("Blog ID:", deleteBlogId);
+
+            deleteModal.classList.remove("hidden");
+
+            deleteModal.classList.add("flex");
+
+        });
+
+    });
+
+});
+
+/* ==========================================
+   Cancel Delete
+========================================== */
+
+if (cancelDelete) {
+
+    cancelDelete.addEventListener("click", () => {
+
+        deleteBlogId = null;
+
+        deleteModal.classList.add("hidden");
+
+        deleteModal.classList.remove("flex");
+
+    });
+
+}
+
+/* ==========================================
+   Confirm Delete
+========================================== */
+
+if (confirmDelete) {
+
+    confirmDelete.addEventListener("click", async () => {
+
+        if (!deleteBlogId) {
+
+            return;
+
+        }
+
+        try {
+
+            const response = await fetch(
+
+                `/blogs/${deleteBlogId}/delete/`,
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "X-CSRFToken": getCSRFToken(),
+
+                    },
+
+                    credentials: "same-origin",
+
+                }
+
+            );
+
+            const result = await response.json();
+
+            console.log(result);
+
+            if (!result.success) {
+
+                showToast(result.message);
+
+                return;
+
+            }
+
+            const card = document.getElementById(
+
+                `blog-${deleteBlogId}`
+
+            );
+
+            if (card) {
+
+                card.style.opacity = "0";
+
+                card.style.transform = "translateY(-20px)";
+
+                setTimeout(() => {
+
+                    card.remove();
+
+                }, 300);
+
+            }
+
+            showToast("Blog deleted successfully.");
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            showToast("Failed to delete blog.");
+
+        }
+
+        deleteModal.classList.add("hidden");
+
+        deleteModal.classList.remove("flex");
+
+        deleteBlogId = null;
+
+    });
+
+}
+
+/* ==========================================
+   Close Modal by Clicking Outside
+========================================== */
+
+if (deleteModal) {
+
+    deleteModal.addEventListener("click", (event) => {
+
+        if (event.target === deleteModal) {
+
+            deleteModal.classList.add("hidden");
+
+            deleteModal.classList.remove("flex");
+
+            deleteBlogId = null;
+
+        }
+
+    });
+
+}
+
+/* ==========================================
+   Export
+========================================== */
+
+function openExportModal(blogId) {
+
+    window.selectedBlogId = blogId;
+
+    const modal = document.getElementById("exportModal");
+
+    if (modal) {
+
+        modal.classList.remove("hidden");
+
+        modal.classList.add("flex");
+
+    } else {
+
+        console.log("Export Modal Not Found");
+
+    }
+
+}
+
+/* ==========================================
+   ESC closes modal
+========================================== */
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+
+        if (deleteModal) {
+
+            deleteModal.classList.add("hidden");
+
+            deleteModal.classList.remove("flex");
+
+        }
+
+    }
+
+});
+
+</script>
 {% endblock %}

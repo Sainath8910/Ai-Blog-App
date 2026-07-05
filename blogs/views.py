@@ -9,9 +9,16 @@ from django.views.generic import TemplateView
 from django.contrib import messages
 from .forms import BlogEditForm
 from .services.blog_update_service import BlogUpdateService
-
+from core.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.core.paginator import Paginator
+import json
+@method_decorator(login_required, name="dispatch")
 class GenerateBlogView(TemplateView):
     template_name = "blogs/generate_blog.html"
+
 
     def get(self, request):
 
@@ -112,6 +119,7 @@ class GenerateBlogView(TemplateView):
             },
         )"""
 
+@method_decorator(login_required, name="dispatch")
 class DashboardView(TemplateView):
     """
     User dashboard.
@@ -178,7 +186,7 @@ class DashboardView(TemplateView):
     
 
 
-
+@login_required
 def blog_detail(request, blog_id):
 
     blog = BlogRepository.get_blog(blog_id)
@@ -198,62 +206,82 @@ def blog_detail(request, blog_id):
         },
 
     )
+
+@login_required
 def my_blogs(request):
 
-    print("=" * 50)
-    print("request.user_id:", request.user_id)
+    search = request.GET.get("q", "").strip()
+
+    category = request.GET.get("category", "").strip()
+
+    status = request.GET.get("status", "").strip()
 
     blogs = BlogRepository.get_user_blogs(
-        request.user_id
+
+        request.user["id"],
+
+        search,
+
+        category,
+
+        status,
+
     )
 
-    print("Blogs Count:", blogs.count())
+    paginator = Paginator(
+
+        blogs,
+
+        6,
+
+    )
+
+    page_number = request.GET.get("page")
+
+    page_obj = paginator.get_page(page_number)
+
+    categories = Blog.objects.filter(
+
+        user_id=request.user["id"],
+
+        is_deleted=False,
+
+    ).values_list(
+
+        "category",
+
+        flat=True,
+
+    ).distinct()
 
     return render(
+
         request,
+
         "blogs/my_blogs.html",
+
         {
-            "blogs": blogs,
+
+            "page_obj": page_obj,
+
+            "search": search,
+
+            "selected_category": category,
+
+            "selected_status": status,
+
+            "categories": categories,
+
         },
+
     )
+@login_required
 def edit_blog(request, blog_id):
 
     blog = BlogRepository.get_blog(blog_id)
 
-    if request.method == "POST":
-
-        form = BlogEditForm(request.POST)
-
-        if form.is_valid():
-
-            BlogUpdateService().update_blog(
-                blog,
-                form.cleaned_data,
-            )
-
-            messages.success(
-                request,
-                "Blog updated successfully."
-            )
-
-            return redirect(
-                "blogs:detail",
-                blog.id,
-            )
-
-    else:
-
-        form = BlogEditForm(
-            initial={
-                "title": blog.title,
-                "description": blog.description,
-                "category": blog.category,
-                "language": blog.language,
-                "tone": blog.tone,
-                "target_audience": blog.target_audience,
-                "status": blog.status,
-            }
-        )
+    if str(blog.user_id) != request.user["id"]:
+        return redirect("blogs:my_blogs")
 
     return render(
         request,
@@ -261,6 +289,81 @@ def edit_blog(request, blog_id):
         {
             "blog": blog,
             "chapters": blog.chapters.all(),
-            "form": form,
         },
+    )
+@login_required
+@require_POST
+def delete_blog(request, blog_id):
+
+    try:
+
+        blog = BlogRepository.get_blog(blog_id)
+
+        if str(blog.user_id) != request.user["id"]:
+
+            return JsonResponse(
+                {
+                    "success": False,
+                    "message": "Permission denied."
+                },
+                status=403,
+            )
+
+        BlogRepository.delete_blog(blog)
+
+        return JsonResponse(
+            {
+                "success": True,
+            }
+        )
+
+    except Blog.DoesNotExist:
+
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Blog not found."
+            },
+            status=404,
+        )
+@login_required
+@require_POST
+def update_blog(request, blog_id):
+
+    blog = BlogRepository.get_blog(blog_id)
+
+    if str(blog.user_id) != request.user["id"]:
+
+        return JsonResponse(
+
+            {
+
+                "success":False,
+
+                "message":"Permission denied"
+
+            },
+
+            status=403,
+
+        )
+
+    data = json.loads(request.body)
+
+    BlogRepository.update_blog(
+
+        blog,
+
+        data,
+
+    )
+
+    return JsonResponse(
+
+        {
+
+            "success":True
+
+        }
+
     )

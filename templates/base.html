@@ -84,6 +84,17 @@
 
 <body
 class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-white min-h-screen">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+window.SUPABASE_URL = "{{ SUPABASE_URL }}";
+window.SUPABASE_ANON_KEY = "{{ SUPABASE_ANON_KEY }}";
+window.LOGIN_URL = "{% url 'login' %}";
+window.DASHBOARD_URL = "{% url 'blogs:dashboard' %}";
+</script>
+
+<script src="{% static 'js/supabase.js' %}"></script>
+<script src="{% static 'js/auth.js' %}"></script>
 
 <div class="flex h-screen overflow-hidden">
 
@@ -110,12 +121,32 @@ class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-white min-h-scree
 
 </div>
 
+
+<script>
+
+logoutButton.addEventListener("click", async () => {
+
+    try {
+
+        await Auth.logout();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(error.message);
+
+    }
+
+});
+</script>
 <script>
 
 lucide.createIcons();
 
 </script>
-
 {% block extra_js %}
 
 {% endblock %}

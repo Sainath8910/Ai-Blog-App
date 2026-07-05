@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.shortcuts import render
 
-from core.decorators import supabase_login_required
+from core.decorators import login_required
 
 
-@supabase_login_required
+@login_required
 def dashboard_view(request):
 
     context = {

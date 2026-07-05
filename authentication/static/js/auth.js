@@ -188,7 +188,17 @@ Logout
 
 async function logout() {
 
-    await window.supabaseClient.auth.signOut();
+    try {
+
+        await window.supabaseClient.auth.signOut();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
 
     await fetch(
 
@@ -211,6 +221,7 @@ async function logout() {
     );
 
     window.location.href =
+
         window.LOGIN_URL;
 
 }
@@ -242,7 +253,22 @@ async function logout() {
         }
 
     }
+    async function updatePassword(password) {
 
+    const { error } =
+        await window.supabaseClient.auth.updateUser({
+
+            password,
+
+        });
+
+    if (error) {
+
+        throw error;
+
+    }
+
+}
     /*----------------------------------------------------------
     Expose Public API
     ----------------------------------------------------------*/
@@ -262,6 +288,7 @@ async function logout() {
         forgotPassword,
 
         createDjangoSession,
+        updatePassword,
 
     };
 

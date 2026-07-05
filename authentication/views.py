@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from core.decorators import supabase_login_required, anonymous_required
+from core.decorators import anonymous_required
 import json
 from django.views.decorators.http import require_POST
 from core.auth import verify_token
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from core.decorators import anonymous_required
 
 @anonymous_required
 def login_view(request):
@@ -137,8 +138,15 @@ def create_session(request):
 
 @require_POST
 def logout_view(request):
-    response = JsonResponse({"success": True})
-    response.delete_cookie("access_token")
+
+    request.session.flush()
+
+    response = JsonResponse({
+
+        "success": True,
+
+    })
+
     return response
 
 def oauth_callback(request):
@@ -148,5 +156,26 @@ def oauth_callback(request):
         request,
 
         "authentication/oauth_callback.html",
+
+    )
+
+def forgot_password_view(request):
+
+    return render(
+
+        request,
+
+        "authentication/forgot_password.html",
+
+    )
+
+
+def reset_password_view(request):
+
+    return render(
+
+        request,
+
+        "authentication/reset_password.html",
 
     )
