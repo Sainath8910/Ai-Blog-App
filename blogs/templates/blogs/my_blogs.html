@@ -140,7 +140,7 @@ My Blogs
 
             <!-- Status -->
 
-            <div class="lg:col-span-2">
+            <!--<div class="lg:col-span-2">
 
                 <select
 
@@ -184,7 +184,7 @@ My Blogs
 
                 </select>
 
-            </div>
+            </div>-->
 
             <!-- Search Button -->
 
@@ -631,6 +631,7 @@ My Blogs
     class="fixed bottom-6 right-6 hidden rounded-xl bg-slate-900 text-white px-6 py-4 shadow-2xl z-50">
 
 </div>
+{% include "components/export_modal_v2.html" %}
 <script>
 
 let deleteBlogId = null;
@@ -844,29 +845,6 @@ if (deleteModal) {
 
 }
 
-/* ==========================================
-   Export
-========================================== */
-
-function openExportModal(blogId) {
-
-    window.selectedBlogId = blogId;
-
-    const modal = document.getElementById("exportModal");
-
-    if (modal) {
-
-        modal.classList.remove("hidden");
-
-        modal.classList.add("flex");
-
-    } else {
-
-        console.log("Export Modal Not Found");
-
-    }
-
-}
 
 /* ==========================================
    ESC closes modal

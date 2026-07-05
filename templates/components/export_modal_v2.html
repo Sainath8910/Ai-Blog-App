@@ -1,0 +1,111 @@
+<div
+    id="exportModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+
+    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-lg p-6">
+
+        <div class="flex justify-between items-center mb-6">
+
+            <h2 class="text-2xl font-bold">
+                Export Blog
+            </h2>
+
+            <button
+                type="button"
+                onclick="closeExportModal()"
+                class="text-xl">
+                ✕
+            </button>
+
+        </div>
+
+        <div class="space-y-3">
+
+            <a
+                id="exportMarkdown"
+                href="#"
+                class="block rounded-xl border p-4 hover:bg-slate-100">
+
+                📄 Markdown
+
+            </a>
+
+            <a
+                id="exportHtml"
+                href="#"
+                class="block rounded-xl border p-4 hover:bg-slate-100">
+
+                🌐 HTML
+
+            </a>
+
+            <a
+                id="exportDocx"
+                href="#"
+                class="block rounded-xl border p-4 hover:bg-slate-100">
+
+                📝 DOCX
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+    <script>
+
+let currentBlogId = null;
+
+const exportModal =
+    document.getElementById("exportModal");
+
+function openExportModal(blogId){
+
+    console.log("Blog ID:", blogId);
+
+    const markdown = document.getElementById("exportMarkdown");
+    const html = document.getElementById("exportHtml");
+    const docx = document.getElementById("exportDocx");
+
+    console.log(markdown, html, docx);
+
+    markdown.href = "/export/markdown/" + blogId + "/";
+    html.href = "/export/html/" + blogId + "/";
+    docx.href = "/export/docx/" + blogId + "/";
+
+    console.log(markdown.href);
+
+    exportModal.classList.remove("hidden");
+    exportModal.classList.add("flex");
+}
+
+function closeExportModal(){
+
+    exportModal.classList.remove("flex");
+
+    exportModal.classList.add("hidden");
+
+}
+
+exportModal.addEventListener("click",function(e){
+
+    if(e.target===exportModal){
+
+        closeExportModal();
+
+    }
+
+});
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Escape"){
+
+        closeExportModal();
+
+    }
+
+});
+
+</script>
