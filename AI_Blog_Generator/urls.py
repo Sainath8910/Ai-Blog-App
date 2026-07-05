@@ -24,4 +24,5 @@ urlpatterns = [
     path("dashboard/", include("dashboard.urls")),
     path("blogs/",include("blogs.urls")),
     path("export/",include("export_app.urls")),
+    path("", include("core.urls")),
 ]

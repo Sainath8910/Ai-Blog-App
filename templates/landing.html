@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Blog Generator</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>body{font-family:Inter,sans-serif}.hero{background:radial-gradient(circle at top,#6366f1 0%,#0f172a 65%)}</style>
+</head><body class="bg-slate-950 text-white">
+<nav class="fixed top-0 w-full bg-slate-950/80 backdrop-blur border-b border-slate-800">
+<div class="max-w-7xl mx-auto h-20 flex justify-between items-center px-6">
+<a href="/" class="text-2xl font-bold text-indigo-400">AI Blog Generator</a>
+<div class="hidden md:flex gap-8"><a href="#features">Features</a><a href="#templates">Templates</a><a href="#how">How it Works</a><a href="#faq">FAQ</a></div>
+<div class="flex gap-3">
+<a href="{% url 'login' %}" class="border px-5 py-2 rounded-lg">Login</a>
+<a href="{% url 'signup' %}" class="bg-indigo-600 px-5 py-2 rounded-lg">Sign Up</a>
+</div></div></nav>
+
+<section class="hero pt-40 pb-24">
+<div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+<div><h1 class="text-6xl font-extrabold">Generate AI Blogs in Minutes</h1>
+<p class="mt-6 text-slate-300 text-xl">Create SEO-friendly blogs, tutorials, reviews and articles with AI.</p>
+<div class="mt-8 flex gap-4">
+<a href="{% url 'signup' %}" class="bg-indigo-600 px-8 py-4 rounded-xl">Get Started</a>
+<a href="{% url 'login' %}" class="border px-8 py-4 rounded-xl">Login</a>
+</div></div>
+<div class="bg-slate-900 rounded-3xl p-8 border border-slate-700"><div class="space-y-3"><div class="h-3 bg-slate-700 rounded"></div><div class="h-3 bg-slate-700 rounded w-5/6"></div><div class="h-3 bg-slate-700 rounded"></div></div></div>
+</div></section>
+
+<section id="features" class="py-24 bg-slate-900"><div class="max-w-7xl mx-auto px-6"><h2 class="text-4xl font-bold text-center">Features</h2><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">AI Writing</h3><p class="text-slate-300 mt-2">Generate articles</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">SEO</h3><p class="text-slate-300 mt-2">Optimize automatically</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">AI Images</h3><p class="text-slate-300 mt-2">Generate images</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">Rich Editor</h3><p class="text-slate-300 mt-2">Edit content</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">Export</h3><p class="text-slate-300 mt-2">PDF DOCX HTML</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">History</h3><p class="text-slate-300 mt-2">Saved blogs</p></div></div></div></section>
+
+<section id="templates" class="py-24"><div class="max-w-7xl mx-auto px-6"><h2 class="text-4xl font-bold text-center">Templates</h2><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-12"><div class="bg-slate-800 rounded-xl p-6 text-center">Technology</div><div class="bg-slate-800 rounded-xl p-6 text-center">Programming</div><div class="bg-slate-800 rounded-xl p-6 text-center">Travel</div><div class="bg-slate-800 rounded-xl p-6 text-center">Food</div><div class="bg-slate-800 rounded-xl p-6 text-center">Business</div><div class="bg-slate-800 rounded-xl p-6 text-center">Tutorial</div></div></div></section>
+
+<section id="how" class="py-24 bg-slate-900"><div class="max-w-6xl mx-auto px-6"><h2 class="text-4xl font-bold text-center mb-12">How It Works</h2><div class="grid md:grid-cols-4 gap-8"><div class="text-center"><div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center mx-auto">1</div><div class="mt-4 font-semibold">Enter Topic</div></div><div class="text-center"><div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center mx-auto">2</div><div class="mt-4 font-semibold">Choose AI</div></div><div class="text-center"><div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center mx-auto">3</div><div class="mt-4 font-semibold">Generate</div></div><div class="text-center"><div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center mx-auto">4</div><div class="mt-4 font-semibold">Export</div></div></div></div></section>
+
+<section class="py-24"><div class="max-w-4xl mx-auto text-center"><h2 class="text-5xl font-bold">Start Writing Today</h2><div class="mt-8 flex justify-center gap-4"><a href="{% url 'signup' %}" class="bg-indigo-600 px-8 py-4 rounded-xl">Create Account</a><a href="{% url 'login' %}" class="border px-8 py-4 rounded-xl">Login</a></div></div></section>
+
+<section id="faq" class="py-20 bg-slate-900"><div class="max-w-4xl mx-auto px-6"><h2 class="text-4xl font-bold text-center mb-8">FAQ</h2><div class="space-y-4"><div class="p-6 bg-slate-800 rounded-xl">Supports AI blog generation, exports, and editing.</div></div></div></section>
+
+<footer class="py-8 border-t border-slate-800 text-center text-slate-400">©2026 AI Blog Generator</footer>
+</body></html>
