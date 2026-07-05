@@ -187,7 +187,9 @@ class BlogRepository:
         blog.target_audience = data["target_audience"]
 
         blog.status = data["status"]
+        if "hero" in data:
 
+            blog.hero = data["hero"]
         blog.save()
 
         # -----------------------------
@@ -207,6 +209,10 @@ class BlogRepository:
             chapter.paragraphs = chapter_data["paragraphs"]
 
             chapter.bullet_points = chapter_data["bullet_points"]
+
+            if "image" in chapter_data:
+
+                chapter.image = chapter_data["image"]
 
             chapter.save()
 

@@ -396,3 +396,41 @@ def regenerate_paragraph(request):
             "paragraph": improved,
         }
     )
+
+@login_required
+@require_POST
+def regenerate_image(request):
+
+    data = json.loads(request.body)
+
+    stored = RegenerateService.regenerate_image(
+
+        paragraphs=data["paragraphs"],
+
+        user_id=request.user["id"],
+
+        generation_uuid=data["generation_uuid"],
+
+        image_name=data["image_name"],
+
+    )
+
+    return JsonResponse({
+
+        "success": True,
+
+        "image": {
+
+            "path": stored.public_url,
+
+            "storage_path": stored.storage_path,
+
+            "prompt": stored.prompt,
+
+            "alt_text": stored.alt_text,
+
+            "provider": stored.provider,
+
+        }
+
+    })

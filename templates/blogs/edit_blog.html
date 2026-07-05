@@ -237,11 +237,14 @@ Edit Blog
 
         </div>
 
-        {% if blog.hero.image_url %}
+        {% if blog.hero.image.path %}
 
         <img
-
-            src="{{ blog.hero.image_url }}"
+class="hero-image"
+    src="{{ blog.hero.image.path }}"
+    data-storage-path="{{ blog.hero.image.storage_path }}"
+    data-prompt="{{ blog.hero.image.prompt }}"
+    alt="{{ blog.hero.image.alt_text }}"
 
             class="rounded-xl w-full border">
 
@@ -314,13 +317,16 @@ Edit Blog
     <!-- Chapter Image -->
     <!-- ====================================== -->
 
-    {% if chapter.image.image_url %}
+    {% if chapter.image.path %}
 
     <div class="mb-8">
 
         <img
-
-            src="{{ chapter.image.image_url }}"
+class="chapter-image"
+    src="{{ chapter.image.path }}"
+    data-storage-path="{{ chapter.image.storage_path }}"
+    data-prompt="{{ chapter.image.prompt }}"
+    alt="{{ chapter.image.alt_text }}"
 
             class="rounded-xl border w-full">
 
@@ -503,7 +509,58 @@ Edit Blog
     </div>
 
 </div>
+<div
+    id="imageModal"
+    class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/60">
+
+    <div class="min-h-screen flex items-center justify-center p-6">
+
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl w-full max-w-5xl">
+
+            <div class="p-6 border-b">
+
+                <h2 class="text-2xl font-bold">
+                    Preview New Image
+                </h2>
+
+            </div>
+
+            <div class="p-6">
+
+                <img
+                    id="previewImage"
+                    class="w-full max-h-[70vh] object-contain rounded-xl border">
+
+            </div>
+
+            <div class="flex justify-end gap-3 p-6 border-t">
+
+                <button
+                    id="rejectImage"
+                    class="px-5 py-2 rounded-xl border">
+
+                    Reject
+
+                </button>
+
+                <button
+                    id="acceptImage"
+                    class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl">
+
+                    Accept
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 <script>
+let currentImage = null;
+let generatedImage = null;
 let currentTextarea = null;
 const BLOG_ID = "{{ blog.id }}";
 
@@ -586,63 +643,84 @@ function collectBlogData(){
 
     };
 
+    // Hero image
+    const heroImg = document.querySelector(".hero-image");
+
+    blog.hero = {
+
+        image: {
+
+            path: heroImg.src,
+
+            storage_path: heroImg.dataset.storagePath,
+
+            prompt: heroImg.dataset.prompt,
+
+            alt_text: heroImg.alt,
+
+            provider: "pollinations",
+
+        }
+
+    };
+
     document
-
     .querySelectorAll(".chapter-card")
-
     .forEach(card=>{
 
-        const chapterId =
-
-            card.dataset.chapter;
+        const chapterId = card.dataset.chapter;
 
         const title =
-
             card.querySelector(".chapter-title").value;
 
         const paragraphs = [];
 
-        card
-
-        .querySelectorAll(".chapter-paragraph")
-
+        card.querySelectorAll(".chapter-paragraph")
         .forEach(p=>{
 
-            paragraphs.push(
-
-                p.value
-
-            );
+            paragraphs.push(p.value);
 
         });
 
         let bullets = [];
 
         const bulletArea =
-
             card.querySelector(".chapter-bullets");
 
         if(bulletArea){
 
             bullets = bulletArea.value
-
-            .split("\n")
-
-            .map(x=>x.trim())
-
-            .filter(Boolean);
+                .split("\n")
+                .map(x=>x.trim())
+                .filter(Boolean);
 
         }
+
+        const img = card.querySelector(".chapter-image");
 
         blog.chapters.push({
 
             id: chapterId,
 
-            title: title,
+            title,
 
-            paragraphs: paragraphs,
+            paragraphs,
 
             bullet_points: bullets,
+
+            image: {
+
+                path: img.src,
+
+                storage_path: img.dataset.storagePath,
+
+                prompt: img.dataset.prompt,
+
+                alt_text: img.alt,
+
+                provider: "pollinations",
+
+            }
 
         });
 
@@ -761,25 +839,82 @@ document
 ========================================== */
 
 document
-
 .querySelector(".regenerate-hero")
+.addEventListener("click", function () {
 
-.addEventListener(
+    const button = this;
 
-    "click",
+    button.disabled = true;
+    button.innerText = "Generating...";
 
-    ()=>{
+    const heroImage = document.querySelector(".hero-image");
+
+    currentImage = heroImage;
+
+    const paragraphs = [];
+
+    document
+        .querySelectorAll(".chapter-paragraph")
+        .forEach(p => paragraphs.push(p.value));
+
+    fetch("/blogs/regenerate/image/", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type":"application/json",
+
+            "X-CSRFToken":getCSRFToken(),
+
+        },
+
+        body: JSON.stringify({
+
+            paragraphs,
+
+            generation_uuid:"{{ blog.generation_uuid }}",
+
+            image_name:"hero",
+
+        })
+
+    })
+
+    .then(r => r.json())
+
+    .then(data => {
+
+        generatedImage = data.image;
+
+        document.getElementById("previewImage").src =
+            data.image.path;
+
+        document
+            .getElementById("imageModal")
+            .classList.remove("hidden");
+
+    })
+
+    .catch(err => {
+
+        console.error(err);
 
         showToast(
-
-            "Hero image regeneration coming next."
-
+            "Failed to regenerate hero image.",
+            false
         );
 
-    }
+    })
 
-);
+    .finally(() => {
 
+        button.disabled = false;
+        button.innerText = "🖼 Regenerate Hero Image";
+
+    });
+
+});
 /* ==========================================
    Entire Blog
 ========================================== */
@@ -820,18 +955,112 @@ document
 
         ()=>{
 
+            document
+.querySelectorAll(".regenerate-image")
+.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        const card = button.closest(".chapter-card");
+
+        const img = card.querySelector("img");
+
+        const paragraphs = [];
+
+        card
+        .querySelectorAll(".chapter-paragraph")
+        .forEach(p => {
+
+            paragraphs.push(p.value);
+
+        });
+
+        button.disabled = true;
+        button.innerText = "Generating...";
+
+        fetch("/blogs/regenerate/image/", {
+
+            method: "POST",
+
+            headers:{
+
+                "Content-Type":"application/json",
+
+                "X-CSRFToken":getCSRFToken(),
+
+            },
+
+            body: JSON.stringify({
+
+                paragraphs,
+
+                generation_uuid:"{{ blog.generation_uuid }}",
+
+                image_name:"chapter_" + card.dataset.chapter,
+
+            })
+
+        })
+
+        .then(r=>r.json())
+
+        .then(data=>{
+
+            currentImage = img;
+
+generatedImage = data.image;
+
+document
+.getElementById("previewImage")
+.src = data.image.path;
+
+document
+.getElementById("imageModal")
+.classList.remove("hidden");
+
             showToast(
-
-                "Image regeneration coming next."
-
+                "Image regenerated. Click Save Changes."
             );
+
+        })
+
+        .catch(err=>{
+
+            console.error(err);
+
+            showToast(
+                "Failed to regenerate image.",
+                false
+            );
+
+        })
+
+        .finally(()=>{
+
+            button.disabled = false;
+
+            button.innerText = "🖼 Regenerate Image";
+
+        });
+
+    });
+
+});
 
         }
 
     );
 
 });
+document.getElementById("acceptImage").onclick = function () {
 
+    console.log(currentImage);
+    console.log(generatedImage);
+
+    currentImage.src = generatedImage.path;
+
+    document.getElementById("imageModal").classList.add("hidden");
+};
 /* ==========================================
    Paragraph
 ========================================== */
@@ -917,6 +1146,15 @@ document.getElementById("acceptParagraph").onclick = function () {
     showToast(
         "Paragraph updated. Click Save Changes to save."
     );
+
+};
+document
+.getElementById("rejectImage")
+.onclick = function(){
+
+    document
+    .getElementById("imageModal")
+    .classList.add("hidden");
 
 };
 /* ==========================================
