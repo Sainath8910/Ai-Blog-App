@@ -17,14 +17,14 @@ from ai_pipeline.providers.base.llm_provider import LLMProvider
 from ai_pipeline.utils.logger import logger
 
 
-class OpenRouterProvider(LLMProvider):
+class OpenRouterLlama33Provider(LLMProvider):
     """
     OpenRouter implementation.
     """
-
+    MODEL =  "meta-llama/llama-3.3-70b-instruct"
     @property
     def name(self) -> str:
-        return "OpenRouter"
+        return "OpenRouter - Llama 3.3 70B"
 
     def generate(
         self,
@@ -40,7 +40,7 @@ class OpenRouterProvider(LLMProvider):
         }
 
         payload = {
-            "model": OPENROUTER_MODEL,
+            "model": self.MODEL,
             "messages": [
                 {
                     "role": "system",

@@ -13,7 +13,21 @@ from ai_pipeline.config.settings import (
     PRIMARY_LLM,
     BACKUP_LLMS,
 )
-
+from ai_pipeline.providers.llm.openrouter_qwen_provider import (
+    OpenRouterQwenProvider,
+)
+from ai_pipeline.providers.llm.openrouter_llama33_provider import (
+    OpenRouterLlama33Provider,
+)
+from ai_pipeline.providers.llm.openrouter_deepseek_provider import (
+    OpenRouterDeepSeekProvider,
+)
+from ai_pipeline.providers.llm.gemini_20_flash_provider import (
+    Gemini20FlashProvider,
+)
+from ai_pipeline.providers.llm.gemini_25_flash_lite_provider import (
+    Gemini25FlashLiteProvider,
+)
 from ai_pipeline.providers.llm.gemini_provider import GeminiProvider
 from ai_pipeline.providers.llm.openrouter_provider import OpenRouterProvider
 
@@ -26,7 +40,12 @@ class LLMManager:
 
         self.registry = {
             "gemini": GeminiProvider(),
+            "gemini_flash_lite": Gemini25FlashLiteProvider(),
+            "gemini_20_flash": Gemini20FlashProvider(),
             "openrouter": OpenRouterProvider(),
+            "openrouter_deepseek": OpenRouterDeepSeekProvider(),
+            "openrouter_qwen": OpenRouterQwenProvider(),
+            "openrouter_llama33": OpenRouterLlama33Provider(),
         }
 
         self.providers = [

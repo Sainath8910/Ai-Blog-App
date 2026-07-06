@@ -1,5 +1,5 @@
 """
-Gemini LLM Provider.
+Gemini 2.5 Flash Lite LLM Provider.
 """
 
 from google.genai.types import GenerateContentConfig
@@ -7,7 +7,6 @@ from google.genai.types import Part
 from google.genai.types import Content
 
 from ai_pipeline.config.settings import (
-    CONTENT_MODEL,
     TEMPERATURE,
     MAX_OUTPUT_TOKENS,
 )
@@ -18,14 +17,16 @@ from ai_pipeline.providers.base.llm_provider import LLMProvider
 from ai_pipeline.utils.logger import logger
 
 
-class GeminiProvider(GoogleProvider, LLMProvider):
+class Gemini25FlashLiteProvider(GoogleProvider, LLMProvider):
     """
-    Gemini text generation provider.
+    Gemini 2.5 Flash Lite text generation provider.
     """
+
+    MODEL = "gemini-2.5-flash-lite"
 
     @property
     def name(self) -> str:
-        return "Gemini 2.5 Flash"
+        return "Gemini 2.5 Flash Lite"
 
     def generate(
         self,
@@ -37,7 +38,7 @@ class GeminiProvider(GoogleProvider, LLMProvider):
 
         response = self.client.models.generate_content(
 
-            model=CONTENT_MODEL,
+            model=self.MODEL,
 
             contents=[
                 Content(

@@ -54,7 +54,12 @@ PRIMARY_LLM = os.getenv(
 )
 
 BACKUP_LLMS = [
-    "openrouter"
+    "gemini_flash_lite",
+    "gemini_20_flash",
+    "openrouter",
+    "openrouter_deepseek",
+    "openrouter_qwen",
+    "openrouter_llama33",
 ]
 
 CONTENT_MODEL = os.getenv(

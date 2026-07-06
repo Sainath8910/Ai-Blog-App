@@ -7,7 +7,6 @@ import requests
 from ai_pipeline.config.settings import (
     OPENROUTER_API_KEY,
     OPENROUTER_BASE_URL,
-    OPENROUTER_MODEL,
     TEMPERATURE,
     MAX_OUTPUT_TOKENS,
 )
@@ -17,14 +16,14 @@ from ai_pipeline.providers.base.llm_provider import LLMProvider
 from ai_pipeline.utils.logger import logger
 
 
-class OpenRouterProvider(LLMProvider):
+class OpenRouterQwenProvider(LLMProvider):
     """
     OpenRouter implementation.
     """
-
+    MODEL =  "qwen/qwen3-32b"
     @property
     def name(self) -> str:
-        return "OpenRouter"
+        return "OpenRouter - Qwen3 32B"
 
     def generate(
         self,
@@ -40,7 +39,7 @@ class OpenRouterProvider(LLMProvider):
         }
 
         payload = {
-            "model": OPENROUTER_MODEL,
+            "model": self.MODEL,
             "messages": [
                 {
                     "role": "system",
@@ -75,7 +74,8 @@ class OpenRouterProvider(LLMProvider):
         data = response.json()
 
         logger.info(
-            "%s response generated successfully.",self.name,
+            "%s response generated successfully.",
+            self.name,
         )
 
         return data["choices"][0]["message"]["content"]

@@ -17,14 +17,14 @@ from ai_pipeline.providers.base.llm_provider import LLMProvider
 from ai_pipeline.utils.logger import logger
 
 
-class OpenRouterProvider(LLMProvider):
+class OpenRouterDeepSeekProvider(LLMProvider):
     """
     OpenRouter implementation.
     """
-
+    MODEL = "deepseek/deepseek-chat-v3"
     @property
     def name(self) -> str:
-        return "OpenRouter"
+        return "OpenRouter - DeepSeek V3"
 
     def generate(
         self,
@@ -40,7 +40,7 @@ class OpenRouterProvider(LLMProvider):
         }
 
         payload = {
-            "model": OPENROUTER_MODEL,
+            "model": self.MODEL,
             "messages": [
                 {
                     "role": "system",
