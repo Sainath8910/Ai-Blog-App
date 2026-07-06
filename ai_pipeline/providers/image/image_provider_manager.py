@@ -12,7 +12,9 @@ from ai_pipeline.config.settings import (
 from ai_pipeline.providers.image.pollinations_provider import PollinationsProvider
 
 from ai_pipeline.utils.logger import logger
+from ai_pipeline.providers.image.pollinations_flux_dev_provider import PollinationsFluxDevProvider
 
+from ai_pipeline.providers.image.pollinations_turbo_provider import PollinationsTurboProvider
 
 class ImageProviderManager:
 
@@ -20,6 +22,8 @@ class ImageProviderManager:
 
         self.registry = {
             "pollinations": PollinationsProvider(),
+            "pollinations_flux_dev": PollinationsFluxDevProvider(),
+            "pollinations_turbo": PollinationsTurboProvider(),
         }
 
         self.providers = [

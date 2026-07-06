@@ -1,28 +1,24 @@
 """
-Pollinations FLUX Image Provider.
+Pollinations Image Provider.
 """
-
-import urllib.parse
 
 import requests
 
 from ai_pipeline.providers.base.image_provider import ImageProvider
 
 from ai_pipeline.utils.logger import logger
+import urllib.parse
 
-
-class PollinationsProvider(ImageProvider):
+class PollinationsTurboProvider(ImageProvider):
     """
-    Pollinations FLUX image generation provider.
+    Free image generation using Pollinations.
     """
 
     BASE_URL = "https://image.pollinations.ai/prompt/"
 
-    MODEL = "flux"
-
     @property
     def name(self) -> str:
-        return "Pollinations - FLUX"
+        return "Pollinations - Turbo"
 
     def generate(
         self,
@@ -36,7 +32,7 @@ class PollinationsProvider(ImageProvider):
         response = requests.get(
             f"{self.BASE_URL}{encoded_prompt}",
             params={
-                "model": self.MODEL,
+                "model": "turbo",
                 "width": width,
                 "height": height,
             },
@@ -46,8 +42,7 @@ class PollinationsProvider(ImageProvider):
         response.raise_for_status()
 
         logger.info(
-            "%s image generated successfully.",
-            self.name,
+            "Image generated using Pollinations."
         )
 
         return response.content

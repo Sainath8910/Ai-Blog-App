@@ -88,7 +88,10 @@ IMAGE_PRIMARY_PROVIDER = os.getenv(
     "pollinations"
 )
 
-IMAGE_BACKUP_PROVIDERS = []
+IMAGE_BACKUP_PROVIDERS = [
+    "pollinations_flux_dev",
+    "pollinations_turbo",
+]
 
 IMAGE_MODEL = os.getenv(
     "IMAGE_MODEL",
