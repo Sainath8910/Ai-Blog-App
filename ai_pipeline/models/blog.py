@@ -60,6 +60,9 @@ class Quote(BaseModel):
     author: str
 
 
+class KeyTakeaway(BaseModel):
+    title: str
+    description: str
 # ---------------------------------------------------------
 # Code Example
 # ---------------------------------------------------------
@@ -179,7 +182,7 @@ class Blog(BaseModel):
 
     chapters: List[Chapter]
 
-    key_takeaways: List[str] = Field(default_factory=list)
+    key_takeaways: List[KeyTakeaway] = Field(default_factory=list)
 
     resources: Resources | None = None
 

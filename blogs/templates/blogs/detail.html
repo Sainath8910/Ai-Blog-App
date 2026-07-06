@@ -573,27 +573,14 @@
                         class="grid md:grid-cols-2 gap-6">
 
                         {% for takeaway in blog.key_takeaways %}
-
-                        <div
-                            class="flex gap-4">
-
-                            <div
-                                class="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center font-bold">
-
-                                ✓
-
-                            </div>
-
-                            <div
-                                class="text-lg">
-
-                                {{ takeaway }}
-
-                            </div>
-
-                        </div>
-
-                        {% endfor %}
+<div class="flex items-start gap-3">
+    <span class="text-green-500">✓</span>
+    <p>
+        <strong>{{ takeaway.title }}</strong>:
+        {{ takeaway.description }}
+    </p>
+</div>
+{% endfor %}
 
                     </div>
 

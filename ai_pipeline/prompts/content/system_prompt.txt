@@ -123,7 +123,7 @@ Subtitle
 
 Summary
 
-Image Prompt(Aspect Ratio should be 16:9)
+Image Prompt
 
 Alt Text
 
@@ -138,6 +138,12 @@ IMAGE PROMPTS
 Generate ONE image prompt for
 
 Hero
+Generate a highly detailed, visually striking hero image prompt.
+The image MUST be composed in a cinematic 16:9 landscape aspect ratio suitable for a full-width blog banner.
+The main subject should be centered with safe margins so it is not cropped on different screen sizes.
+Use professional lighting, high detail, realistic textures, and a modern editorial style.
+Do not include any text, logos, watermarks, borders, or UI elements in the image.
+
 
 Each chapter
 
@@ -383,9 +389,34 @@ Otherwise
 KEY TAKEAWAYS
 ==================================================
 
-Generate exactly FIVE.
+Generate exactly FIVE key takeaways.
 
-Each should be ONE sentence.
+Each key takeaway must have:
+
+title
+
+description
+
+Rules
+
+- Title: 2–6 words.
+- Description: Exactly one sentence.
+- Do NOT use Markdown.
+- Do NOT use ** or HTML.
+- Keep the title concise and descriptive.
+
+Example
+
+[
+  {
+    "title": "Continuous Integration",
+    "description": "Automates building and testing whenever code changes are committed."
+  },
+  {
+    "title": "Deployment Strategies",
+    "description": "Techniques like blue-green and canary deployments minimize production risk."
+  }
+]
 
 ==================================================
 CONCLUSION
@@ -469,7 +500,12 @@ JSON SCHEMA
     }
   ],
 
-  "key_takeaways": [],
+  "key_takeaways": [
+  {
+    "title": "",
+    "description": ""
+  }
+],
 
   "conclusion": {
     "paragraphs": [],
