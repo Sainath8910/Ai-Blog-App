@@ -603,11 +603,62 @@ Accept
 
 </div>
 <script>
+let currentLoadingButton = null;
 let currentImage = null;
 let generatedImage = null;
 let currentTextarea = null;
 const BLOG_ID = "{{ blog.id }}";
+function setLoading(button, text){
 
+    button.disabled = true;
+
+    button.dataset.original = button.innerHTML;
+
+    button.classList.add(
+        "opacity-60",
+        "cursor-not-allowed"
+    );
+
+    button.innerHTML = `
+        <svg class="animate-spin h-4 w-4 inline mr-2"
+             viewBox="0 0 24 24"
+             fill="none">
+
+            <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"></circle>
+
+            <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+            </path>
+
+        </svg>
+
+        ${text}
+    `;
+
+}
+
+function stopLoading(button){
+
+    if(!button) return;
+
+    button.disabled = false;
+
+    button.classList.remove(
+        "opacity-60",
+        "cursor-not-allowed"
+    );
+
+    button.innerHTML = button.dataset.original;
+
+}
 /* ==========================================
    CSRF
 ========================================== */
@@ -888,9 +939,11 @@ document
 
     const button = this;
 
-    button.disabled = true;
-    button.innerText = "Generating...";
-
+    setLoading(
+    button,
+    "Generating..."
+);
+    currentLoadingButton = button;
     const heroImage = document.querySelector(".hero-image");
 
     currentImage = heroImage;
@@ -953,8 +1006,7 @@ document
 
     .finally(() => {
 
-        button.disabled = false;
-        button.innerText = "🖼 Regenerate Hero Image";
+        stopLoading(button);
 
     });
 
@@ -1019,9 +1071,11 @@ document
 
         });
 
-        button.disabled = true;
-        button.innerText = "Generating...";
-
+        setLoading(
+    button,
+    "Generating..."
+);
+        currentLoadingButton = button;
         fetch("/blogs/regenerate/image/", {
 
             method: "POST",
@@ -1081,9 +1135,7 @@ document
 
         .finally(()=>{
 
-            button.disabled = false;
-
-            button.innerText = "🖼 Regenerate Image";
+            stopLoading(button);
 
         });
 
@@ -1104,6 +1156,9 @@ document.getElementById("acceptImage").onclick = function () {
     currentImage.src = generatedImage.path;
 
     document.getElementById("imageModal").classList.add("hidden");
+    stopLoading(currentLoadingButton);
+
+    currentLoadingButton = null;
 };
 /* ==========================================
    Paragraph
@@ -1121,9 +1176,11 @@ document
 
         currentTextarea = textarea;
 
-        button.disabled = true;
-        button.innerText = "Generating...";
-
+        setLoading(
+    button,
+    "Generating..."
+);
+        currentLoadingButton = button;
         fetch("/blogs/regenerate/paragraph/", {
             method: "POST",
             headers: {
@@ -1159,8 +1216,7 @@ document
         })
         .finally(() => {
 
-            button.disabled = false;
-            button.innerText = "✨ Regenerate";
+            stopLoading(button);
 
         });
 
@@ -1186,7 +1242,9 @@ document.getElementById("acceptParagraph").onclick = function () {
     document
         .getElementById("paragraphModal")
         .classList.add("hidden");
+    stopLoading(currentLoadingButton);
 
+    currentLoadingButton = null;
     showToast(
         "Paragraph updated. Click Save Changes to save."
     );
@@ -1215,9 +1273,7 @@ button.addEventListener("click", function () {
 
     const btn = this;
 
-    btn.disabled = true;
-    btn.innerHTML = "⏳ Generating...";
-
+    
 const card=this.closest(".chapter-card");
 
 currentChapter=card;
@@ -1232,9 +1288,11 @@ const bullets=card.querySelector(".chapter-bullets")
 .split("\n")
 .filter(Boolean);
 
-this.disabled=true;
-this.innerText="Generating...";
-
+setLoading(
+    this,
+    "Generating..."
+);
+currentLoadingButton = this;
 fetch("/blogs/regenerate/chapter/",{
 
 method:"POST",
@@ -1281,8 +1339,7 @@ document.getElementById("chapterModal")
 
 .finally(()=>{
 
-btn.disabled = false;
-btn.innerHTML = "✨ Regenerate Chapter";
+stopLoading(btn);
 
 });
 
@@ -1291,36 +1348,64 @@ btn.innerHTML = "✨ Regenerate Chapter";
 });
 document.getElementById("acceptChapter").onclick=function(){
 
-currentChapter.querySelector(".chapter-title").value=
-generatedChapter.title;
+    currentChapter.querySelector(".chapter-title").value =
+        generatedChapter.title;
 
-const paras=currentChapter.querySelectorAll(".chapter-paragraph");
+    const paras =
+        currentChapter.querySelectorAll(".chapter-paragraph");
 
-generatedChapter.paragraphs.forEach((p,i)=>{
+    generatedChapter.paragraphs.forEach((p,i)=>{
 
-if(paras[i])
-paras[i].value=p;
+        if(paras[i])
+            paras[i].value = p;
 
-});
+    });
 
-currentChapter.querySelector(".chapter-bullets").value=
-generatedChapter.bullet_points.join("\n");
+    currentChapter.querySelector(".chapter-bullets").value =
+        generatedChapter.bullet_points.join("\n");
 
-document.getElementById("chapterModal")
-.classList.add("hidden");
+    document
+    .getElementById("chapterModal")
+    .classList.add("hidden");
 
-showToast(
-"Chapter updated. Click Save Changes."
-);
+    stopLoading(currentLoadingButton);
+
+    currentLoadingButton = null;
+
+    showToast(
+        "Chapter updated. Click Save Changes."
+    );
 
 };
 
 document.getElementById("cancelChapter").onclick=function(){
 
-document.getElementById("chapterModal")
-.classList.add("hidden");
+    document
+    .getElementById("chapterModal")
+    .classList.add("hidden");
+
+    stopLoading(currentLoadingButton);
+
+    currentLoadingButton = null;
 
 };
+document.addEventListener(
+    "keydown",
+    function(e){
+
+        if(
+            (e.ctrlKey || e.metaKey) &&
+            e.key.toLowerCase() === "s"
+        ){
+
+            e.preventDefault();
+
+            saveBlog();
+
+        }
+
+    }
+);
 </script>
 
 {% endblock %}

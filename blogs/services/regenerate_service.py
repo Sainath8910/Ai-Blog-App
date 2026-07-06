@@ -159,5 +159,17 @@ Current Paragraph:
             system_prompt=CHAPTER_SYSTEM_PROMPT,
             user_prompt=prompt,
         )
+        response = response.strip()
+
+        if response.startswith("```json"):
+            response = response[len("```json"):]
+
+        if response.startswith("```"):
+            response = response[3:]
+
+        if response.endswith("```"):
+            response = response[:-3]
+
+        response = response.strip()
 
         return json.loads(response)
