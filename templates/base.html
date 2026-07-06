@@ -103,6 +103,10 @@ window.DASHBOARD_URL = "{% url 'blogs:dashboard' %}";
     <div class="flex flex-col flex-1 overflow-hidden">
 
         {% include "components/navbar.html" %}
+        <div
+    id="sidebarOverlay"
+    class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden">
+</div>
 
         <main
         class="flex-1 overflow-y-auto p-8">
@@ -145,6 +149,25 @@ logoutButton.addEventListener("click", async () => {
 <script>
 
 lucide.createIcons();
+const sidebar = document.getElementById("sidebar");
+const sidebarToggle = document.getElementById("sidebarToggle");
+const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+sidebarToggle.addEventListener("click", () => {
+
+    sidebar.classList.toggle("-translate-x-full");
+
+    sidebarOverlay.classList.toggle("hidden");
+
+});
+
+sidebarOverlay.addEventListener("click", () => {
+
+    sidebar.classList.add("-translate-x-full");
+
+    sidebarOverlay.classList.add("hidden");
+
+});
 
 </script>
 {% block extra_js %}
