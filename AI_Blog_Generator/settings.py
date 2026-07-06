@@ -76,6 +76,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "core.context_processors.app_context",
+                "core.context_processors.app_settings",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -128,7 +129,10 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
+APP_URL = os.getenv(
+    "APP_URL",
+    "http://127.0.0.1:8000"
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

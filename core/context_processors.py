@@ -31,3 +31,8 @@ def app_context(request):
         "SUPABASE_ANON_KEY": settings.SUPABASE_ANON_KEY,
 
     }
+
+def app_settings(request):
+    return {
+        "APP_URL": settings.APP_URL,
+    }

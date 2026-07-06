@@ -113,6 +113,12 @@ async function signup(email, password) {
             email,
 
             password,
+            options: {
+
+            emailRedirectTo:
+                window.APP_URL + "/oauth/",
+
+        },
 
         });
 
@@ -140,7 +146,7 @@ async function signup(email, password) {
                 options: {
 
                     redirectTo:
-                        window.location.origin + "/oauth/",
+                        window.APP_URL + "/oauth/",
 
                 },
 
@@ -168,7 +174,7 @@ async function signup(email, password) {
                 options: {
 
                     redirectTo:
-                        window.location.origin + "/oauth/",
+                        window.APP_URL + "/oauth/",
 
                 },
 
@@ -240,7 +246,7 @@ async function logout() {
                 {
 
                     redirectTo:
-                        window.location.origin + "/reset-password/",
+                        window.APP_URL + "/reset-password/",
 
                 }
 
