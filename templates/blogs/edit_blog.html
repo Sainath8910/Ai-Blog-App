@@ -527,9 +527,25 @@ class="chapter-image"
 
             <div class="p-6">
 
+                <div
+                    id="imageLoading"
+                    class="flex flex-col items-center justify-center py-24">
+
+                    <div
+                        class="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin">
+                    </div>
+
+                    <p class="mt-4 text-slate-600 dark:text-slate-300">
+
+                        Generating image...
+
+                    </p>
+
+                </div>
+
                 <img
                     id="previewImage"
-                    class="w-full max-h-[70vh] object-contain rounded-xl border">
+                    class="hidden w-full max-h-[70vh] object-contain rounded-xl border">
 
             </div>
 
@@ -932,20 +948,16 @@ document
 /* ==========================================
    Hero Image
 ========================================== */
-
 document
 .querySelector(".regenerate-hero")
 .addEventListener("click", function () {
 
     const button = this;
 
-    setLoading(
-    button,
-    "Generating..."
-);
+    setLoading(button, "Generating...");
     currentLoadingButton = button;
-    const heroImage = document.querySelector(".hero-image");
 
+    const heroImage = document.querySelector(".hero-image");
     currentImage = heroImage;
 
     const paragraphs = [];
@@ -954,15 +966,29 @@ document
         .querySelectorAll(".chapter-paragraph")
         .forEach(p => paragraphs.push(p.value));
 
+    const preview =
+        document.getElementById("previewImage");
+
+    preview.classList.add("hidden");
+
+    document
+        .getElementById("imageLoading")
+        .classList.remove("hidden");
+
+    // Open the modal immediately so the spinner is visible
+    document
+        .getElementById("imageModal")
+        .classList.remove("hidden");
+
     fetch("/blogs/regenerate/image/", {
 
         method: "POST",
 
         headers: {
 
-            "Content-Type":"application/json",
+            "Content-Type": "application/json",
 
-            "X-CSRFToken":getCSRFToken(),
+            "X-CSRFToken": getCSRFToken(),
 
         },
 
@@ -970,9 +996,9 @@ document
 
             paragraphs,
 
-            generation_uuid:"{{ blog.generation_uuid }}",
+            generation_uuid: "{{ blog.generation_uuid }}",
 
-            image_name:"hero",
+            image_name: "hero",
 
         })
 
@@ -984,12 +1010,17 @@ document
 
         generatedImage = data.image;
 
-        document.getElementById("previewImage").src =
-            data.image.path;
+        preview.onload = function () {
 
-        document
-            .getElementById("imageModal")
-            .classList.remove("hidden");
+            document
+                .getElementById("imageLoading")
+                .classList.add("hidden");
+
+            preview.classList.remove("hidden");
+
+        };
+
+        preview.src = data.image.path;
 
     })
 
@@ -997,16 +1028,18 @@ document
 
         console.error(err);
 
+        document
+            .getElementById("imageModal")
+            .classList.add("hidden");
+
+        stopLoading(currentLoadingButton);
+
+        currentLoadingButton = null;
+
         showToast(
             "Failed to regenerate hero image.",
             false
         );
-
-    })
-
-    .finally(() => {
-
-        stopLoading(button);
 
     });
 
@@ -1035,23 +1068,12 @@ document
 
 );
 
+
 /* ==========================================
    Chapter Images
 ========================================== */
 
 document
-
-.querySelectorAll(".regenerate-image")
-
-.forEach(button=>{
-
-    button.addEventListener(
-
-        "click",
-
-        ()=>{
-
-            document
 .querySelectorAll(".regenerate-image")
 .forEach(button => {
 
@@ -1059,7 +1081,9 @@ document
 
         const card = button.closest(".chapter-card");
 
-        const img = card.querySelector("img");
+        const img = card.querySelector(".chapter-image");
+
+        currentImage = img;
 
         const paragraphs = [];
 
@@ -1071,20 +1095,32 @@ document
 
         });
 
-        setLoading(
-    button,
-    "Generating..."
-);
+        setLoading(button, "Generating...");
         currentLoadingButton = button;
+
+        // Show spinner modal immediately
+        const preview =
+            document.getElementById("previewImage");
+
+        preview.classList.add("hidden");
+
+        document
+            .getElementById("imageLoading")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("imageModal")
+            .classList.remove("hidden");
+
         fetch("/blogs/regenerate/image/", {
 
             method: "POST",
 
-            headers:{
+            headers: {
 
-                "Content-Type":"application/json",
+                "Content-Type": "application/json",
 
-                "X-CSRFToken":getCSRFToken(),
+                "X-CSRFToken": getCSRFToken(),
 
             },
 
@@ -1092,60 +1128,54 @@ document
 
                 paragraphs,
 
-                generation_uuid:"{{ blog.generation_uuid }}",
+                generation_uuid: "{{ blog.generation_uuid }}",
 
-                image_name:"chapter_" + card.dataset.chapter,
+                image_name: "chapter_" + card.dataset.chapter,
 
             })
 
         })
 
-        .then(r=>r.json())
+        .then(r => r.json())
 
-        .then(data=>{
+        .then(data => {
 
-            currentImage = img;
+            generatedImage = data.image;
 
-generatedImage = data.image;
+            preview.onload = function(){
 
-document
-.getElementById("previewImage")
-.src = data.image.path;
+                document
+                    .getElementById("imageLoading")
+                    .classList.add("hidden");
 
-document
-.getElementById("imageModal")
-.classList.remove("hidden");
+                preview.classList.remove("hidden");
 
-            showToast(
-                "Image regenerated. Click Save Changes."
-            );
+            };
+
+            preview.src = data.image.path;
 
         })
 
-        .catch(err=>{
+        .catch(err => {
 
             console.error(err);
+
+            document
+                .getElementById("imageModal")
+                .classList.add("hidden");
+
+            stopLoading(currentLoadingButton);
+
+            currentLoadingButton = null;
 
             showToast(
                 "Failed to regenerate image.",
                 false
             );
 
-        })
-
-        .finally(()=>{
-
-            stopLoading(button);
-
         });
 
     });
-
-});
-
-        }
-
-    );
 
 });
 document.getElementById("acceptImage").onclick = function () {
@@ -1156,6 +1186,13 @@ document.getElementById("acceptImage").onclick = function () {
     currentImage.src = generatedImage.path;
 
     document.getElementById("imageModal").classList.add("hidden");
+    document
+    .getElementById("previewImage")
+    .classList.add("hidden");
+
+    document
+    .getElementById("imageLoading")
+    .classList.remove("hidden");
     stopLoading(currentLoadingButton);
 
     currentLoadingButton = null;
@@ -1199,12 +1236,33 @@ document
         .then(response => response.json())
         .then(data => {
 
-            document.getElementById("newParagraph").value =
-                data.paragraph;
+            generatedImage = data.image;
+
+            const preview =
+                document.getElementById("previewImage");
+
+            
 
             document
-                .getElementById("paragraphModal")
-                .classList.remove("hidden");
+            .getElementById("imageLoading")
+            .classList.remove("hidden");
+            preview.classList.add("hidden");
+
+            preview.onload = function(){
+
+                document
+                .getElementById("imageLoading")
+                .classList.add("hidden");
+
+                preview.classList.remove("hidden");
+
+            };
+
+            preview.src = data.image.path;
+
+            document
+            .getElementById("imageModal")
+            .classList.remove("hidden");
 
         })
         .catch(error => {
@@ -1214,11 +1272,11 @@ document
             showToast("Failed to regenerate paragraph", false);
 
         })
-        .finally(() => {
+        /*.finally(() => {
 
             stopLoading(button);
 
-        });
+        });*/
 
     });
 
@@ -1257,6 +1315,18 @@ document
     document
     .getElementById("imageModal")
     .classList.add("hidden");
+
+    document
+    .getElementById("previewImage")
+    .classList.add("hidden");
+
+    document
+    .getElementById("imageLoading")
+    .classList.remove("hidden");
+
+    stopLoading(currentLoadingButton);
+
+    currentLoadingButton = null;
 
 };
 /* ==========================================
@@ -1336,12 +1406,12 @@ document.getElementById("chapterModal")
 .classList.remove("hidden");
 
 })
-
+/*
 .finally(()=>{
 
 stopLoading(btn);
 
-});
+});*/
 
 });
 
