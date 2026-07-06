@@ -28,7 +28,8 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 HUGGINGFACE_API_KEY = os.getenv("HUGGINGFACE_API_KEY")
 
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
-
+CLOUDFLARE_ACCOUNT_ID = os.getenv("CLOUDFLARE_ACCOUNT_ID")
+CLOUDFLARE_API_TOKEN = os.getenv("CLOUDFLARE_API_TOKEN")
 # ==========================================================
 # Supabase
 # ==========================================================
@@ -83,12 +84,11 @@ MAX_OUTPUT_TOKENS = int(
 # Image Generation
 # ==========================================================
 
-IMAGE_PRIMARY_PROVIDER = os.getenv(
-    "IMAGE_PRIMARY_PROVIDER",
-    "pollinations"
-)
+IMAGE_PRIMARY_PROVIDER = "cloudflare_dreamshaper"
 
 IMAGE_BACKUP_PROVIDERS = [
+    "cloudflare_sdxl",
+    "pollinations",
     "pollinations_flux_dev",
     "pollinations_turbo",
 ]

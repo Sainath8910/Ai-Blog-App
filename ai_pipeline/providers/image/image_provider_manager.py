@@ -15,12 +15,16 @@ from ai_pipeline.utils.logger import logger
 from ai_pipeline.providers.image.pollinations_flux_dev_provider import PollinationsFluxDevProvider
 
 from ai_pipeline.providers.image.pollinations_turbo_provider import PollinationsTurboProvider
-
+from ai_pipeline.providers.image.cloudflare_dreamshaper_provider import CloudflareDreamShaperProvider
+from ai_pipeline.providers.image.cloudflare_sdxl_provider import CloudflareSDXLProvider
 class ImageProviderManager:
 
     def __init__(self):
 
         self.registry = {
+            "cloudflare_dreamshaper": CloudflareDreamShaperProvider(),
+            "cloudflare_sdxl": CloudflareSDXLProvider(),
+
             "pollinations": PollinationsProvider(),
             "pollinations_flux_dev": PollinationsFluxDevProvider(),
             "pollinations_turbo": PollinationsTurboProvider(),
