@@ -24,22 +24,111 @@ class BlogGenerationForm(forms.Form):
         ("Advanced", "Advanced"),
     ]
 
+    INPUT_CLASS = """
+    w-full
+    rounded-2xl
+
+    border
+    border-slate-300
+    dark:border-slate-700
+
+    bg-white
+    dark:bg-slate-900
+
+    text-slate-900
+    dark:text-white
+
+    placeholder:text-slate-400
+    dark:placeholder:text-slate-500
+
+    px-5
+    py-4
+
+    transition-all
+    duration-200
+
+    focus:outline-none
+    focus:ring-4
+    focus:ring-blue-500/20
+    focus:border-blue-500
+    """
+
+    SELECT_CLASS = """
+    w-full
+    rounded-2xl
+
+    border
+    border-slate-300
+    dark:border-slate-700
+
+    bg-white
+    dark:bg-slate-900
+
+    text-slate-900
+    dark:text-white
+
+    px-5
+    py-4
+
+    transition-all
+    duration-200
+
+    focus:outline-none
+    focus:ring-4
+    focus:ring-blue-500/20
+    focus:border-blue-500
+    """
+
+    TEXTAREA_CLASS = """
+    w-full
+    rounded-2xl
+
+    border
+    border-slate-300
+    dark:border-slate-700
+
+    bg-white
+    dark:bg-slate-900
+
+    text-slate-900
+    dark:text-white
+
+    placeholder:text-slate-400
+    dark:placeholder:text-slate-500
+
+    px-5
+    py-4
+
+    min-h-[180px]
+
+    resize-y
+
+    transition-all
+    duration-200
+
+    focus:outline-none
+    focus:ring-4
+    focus:ring-blue-500/20
+    focus:border-blue-500
+    """
+
     topic = forms.CharField(
         max_length=TOPIC_MAX_LENGTH,
         widget=forms.TextInput(
             attrs={
-                "class": "w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none",
-                "placeholder": "Docker"
+                "class": INPUT_CLASS,
+                "placeholder": "e.g. Future of Artificial Intelligence in Healthcare",
+                "autocomplete": "off",
             }
-        )
+        ),
     )
 
     content_brief = forms.CharField(
         widget=forms.Textarea(
             attrs={
-                "class": "w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none",
-    "rows": 6,
-                "placeholder": "Explain Docker from scratch..."
+                "class": TEXTAREA_CLASS,
+                "rows": 8,
+                "placeholder": "Describe what you want the AI to write. Include important points, goals, audience and anything you want covered...",
             }
         )
     )
@@ -48,41 +137,39 @@ class BlogGenerationForm(forms.Form):
         choices=AUDIENCE_CHOICES,
         widget=forms.Select(
             attrs={
-                "class": "w-full rounded-xl border border-slate-300 px-4 py-3 bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-slate-900 dark:border-slate-700",
-                "placeholder": "Beginners"
+                "class": SELECT_CLASS,
             }
         ),
     )
 
     tone = forms.ChoiceField(
+        choices=TONE_CHOICES,
         widget=forms.Select(
             attrs={
-                "class": "w-full rounded-xl border border-slate-300 px-4 py-3 bg-white focus:ring-2 focus:ring-blue-500",
-                "placeholder": "Professional"
+                "class": SELECT_CLASS,
             }
         ),
-        choices=TONE_CHOICES
     )
 
     length = forms.ChoiceField(
+        choices=LENGTH_CHOICES,
         widget=forms.Select(
             attrs={
-                "class": "w-full rounded-xl border border-slate-300 px-4 py-3 bg-white focus:ring-2 focus:ring-blue-500",
-                "placeholder": "Medium"
+                "class": SELECT_CLASS,
             }
         ),
-        choices=LENGTH_CHOICES
     )
 
     keywords = forms.CharField(
+        required=False,
+        help_text="Separate keywords with commas.",
         widget=forms.TextInput(
             attrs={
-                "class": "w-full rounded-xl border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none",
-                "placeholder": "keyword1, keyword2, keyword3"
+                "class": INPUT_CLASS,
+                "placeholder": "AI, SEO, Django, Python, Machine Learning",
+                "autocomplete": "off",
             }
         ),
-        required=False,
-        help_text="Comma separated keywords"
     )
 
 class BlogEditForm(forms.Form):

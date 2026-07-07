@@ -1,39 +1,1761 @@
 {% load static %}
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI Blog Generator</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-<style>body{font-family:Inter,sans-serif}.hero{background:radial-gradient(circle at top,#6366f1 0%,#0f172a 65%)}</style>
-</head><body class="bg-slate-950 text-white">
-<nav class="fixed top-0 w-full bg-slate-950/80 backdrop-blur border-b border-slate-800">
-<div class="max-w-7xl mx-auto h-20 flex justify-between items-center px-6">
-<a href="/" class="text-2xl font-bold text-indigo-400">AI Blog Generator</a>
-<div class="hidden md:flex gap-8"><a href="#features">Features</a><a href="#templates">Templates</a><a href="#how">How it Works</a><a href="#faq">FAQ</a></div>
-<div class="flex gap-3">
-<a href="{% url 'login' %}" class="border px-5 py-2 rounded-lg">Login</a>
-<a href="{% url 'signup' %}" class="bg-indigo-600 px-5 py-2 rounded-lg">Sign Up</a>
-</div></div></nav>
+<!DOCTYPE html>
+<html lang="en">
 
-<section class="hero pt-40 pb-24">
-<div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-<div><h1 class="text-6xl font-extrabold">Generate AI Blogs in Minutes</h1>
-<p class="mt-6 text-slate-300 text-xl">Create SEO-friendly blogs, tutorials, reviews and articles with AI.</p>
-<div class="mt-8 flex gap-4">
-<a href="{% url 'signup' %}" class="bg-indigo-600 px-8 py-4 rounded-xl">Get Started</a>
-<a href="{% url 'login' %}" class="border px-8 py-4 rounded-xl">Login</a>
-</div></div>
-<div class="bg-slate-900 rounded-3xl p-8 border border-slate-700"><div class="space-y-3"><div class="h-3 bg-slate-700 rounded"></div><div class="h-3 bg-slate-700 rounded w-5/6"></div><div class="h-3 bg-slate-700 rounded"></div></div></div>
-</div></section>
+<head>
 
-<section id="features" class="py-24 bg-slate-900"><div class="max-w-7xl mx-auto px-6"><h2 class="text-4xl font-bold text-center">Features</h2><div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">AI Writing</h3><p class="text-slate-300 mt-2">Generate articles</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">SEO</h3><p class="text-slate-300 mt-2">Optimize automatically</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">AI Images</h3><p class="text-slate-300 mt-2">Generate images</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">Rich Editor</h3><p class="text-slate-300 mt-2">Edit content</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">Export</h3><p class="text-slate-300 mt-2">PDF DOCX HTML</p></div><div class="bg-slate-800 p-6 rounded-xl"><h3 class="font-bold text-xl">History</h3><p class="text-slate-300 mt-2">Saved blogs</p></div></div></div></section>
+    <meta charset="UTF-8">
 
-<section id="templates" class="py-24"><div class="max-w-7xl mx-auto px-6"><h2 class="text-4xl font-bold text-center">Templates</h2><div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mt-12"><div class="bg-slate-800 rounded-xl p-6 text-center">Technology</div><div class="bg-slate-800 rounded-xl p-6 text-center">Programming</div><div class="bg-slate-800 rounded-xl p-6 text-center">Travel</div><div class="bg-slate-800 rounded-xl p-6 text-center">Food</div><div class="bg-slate-800 rounded-xl p-6 text-center">Business</div><div class="bg-slate-800 rounded-xl p-6 text-center">Tutorial</div></div></div></section>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<section id="how" class="py-24 bg-slate-900"><div class="max-w-6xl mx-auto px-6"><h2 class="text-4xl font-bold text-center mb-12">How It Works</h2><div class="grid md:grid-cols-4 gap-8"><div class="text-center"><div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center mx-auto">1</div><div class="mt-4 font-semibold">Enter Topic</div></div><div class="text-center"><div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center mx-auto">2</div><div class="mt-4 font-semibold">Choose AI</div></div><div class="text-center"><div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center mx-auto">3</div><div class="mt-4 font-semibold">Generate</div></div><div class="text-center"><div class="w-14 h-14 bg-indigo-600 rounded-full flex items-center justify-center mx-auto">4</div><div class="mt-4 font-semibold">Export</div></div></div></div></section>
+    <title>
+        AI Blog Generator
+    </title>
 
-<section class="py-24"><div class="max-w-4xl mx-auto text-center"><h2 class="text-5xl font-bold">Start Writing Today</h2><div class="mt-8 flex justify-center gap-4"><a href="{% url 'signup' %}" class="bg-indigo-600 px-8 py-4 rounded-xl">Create Account</a><a href="{% url 'login' %}" class="border px-8 py-4 rounded-xl">Login</a></div></div></section>
+    <!-- Font -->
 
-<section id="faq" class="py-20 bg-slate-900"><div class="max-w-4xl mx-auto px-6"><h2 class="text-4xl font-bold text-center mb-8">FAQ</h2><div class="space-y-4"><div class="p-6 bg-slate-800 rounded-xl">Supports AI blog generation, exports, and editing.</div></div></div></section>
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
 
-<footer class="py-8 border-t border-slate-800 text-center text-slate-400">©2026 AI Blog Generator</footer>
-</body></html>
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+
+        tailwind.config = {
+
+            darkMode: "class",
+
+            theme: {
+
+                extend: {
+
+                    fontFamily: {
+
+                        sans: ["Inter"]
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+    <style>
+
+        body{
+
+            font-family:Inter,sans-serif;
+
+            background:#020617;
+
+        }
+
+        .hero-bg{
+
+            background:
+            radial-gradient(circle at top,#4f46e5 0%,#1e1b4b 25%,#020617 75%);
+
+        }
+
+        .grid-bg{
+
+            background-image:
+
+            linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+
+            linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+
+            background-size:42px 42px;
+
+        }
+
+        .glass{
+
+            backdrop-filter:blur(18px);
+
+        }
+
+        .floating{
+
+            animation:float 6s ease-in-out infinite;
+
+        }
+
+        @keyframes float{
+
+            0%,100%{
+
+                transform:translateY(0px);
+
+            }
+
+            50%{
+
+                transform:translateY(-12px);
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body class="text-white">
+
+<!-- ================================================= -->
+<!-- Navigation -->
+<!-- ================================================= -->
+
+<nav
+class="fixed inset-x-0 top-0 z-50">
+
+    <div
+    class="
+    max-w-7xl
+
+    mx-auto
+
+    px-6
+
+    pt-6">
+
+        <div
+        class="
+        glass
+
+        rounded-2xl
+
+        border
+
+        border-white/10
+
+        bg-slate-900/60
+
+        shadow-xl">
+
+            <div
+            class="
+            h-20
+
+            flex
+
+            items-center
+
+            justify-between
+
+            px-8">
+
+                <!-- Logo -->
+
+                <a
+                href="/"
+
+                class="
+                flex
+
+                items-center
+
+                gap-4">
+
+                    <div
+                    class="
+                    flex
+
+                    h-12
+
+                    w-12
+
+                    items-center
+
+                    justify-center
+
+                    rounded-2xl
+
+                    bg-gradient-to-br
+
+                    from-blue-500
+
+                    to-indigo-600
+
+                    text-xl
+
+                    font-bold">
+
+                        AI
+
+                    </div>
+
+                    <div>
+
+                        <h1
+                        class="text-xl font-bold">
+
+                            AI Blog
+
+                        </h1>
+
+                        <p
+                        class="text-sm text-slate-400">
+
+                            Generator
+
+                        </p>
+
+                    </div>
+
+                </a>
+
+                <!-- Desktop Menu -->
+
+                <div
+                class="
+                hidden
+
+                lg:flex
+
+                items-center
+
+                gap-8
+
+                text-sm">
+
+                    <a
+                    href="#features"
+                    class="hover:text-blue-400 transition">
+
+                        Features
+
+                    </a>
+
+                    <a
+                    href="#templates"
+                    class="hover:text-blue-400 transition">
+
+                        Templates
+
+                    </a>
+
+                    <a
+                    href="#how"
+                    class="hover:text-blue-400 transition">
+
+                        How It Works
+
+                    </a>
+
+                    <a
+                    href="#faq"
+                    class="hover:text-blue-400 transition">
+
+                        FAQ
+
+                    </a>
+
+                </div>
+
+                <!-- Buttons -->
+
+                <div
+                class="
+                flex
+
+                items-center
+
+                gap-3">
+
+                    <a
+
+                    href="{% url 'login' %}"
+
+                    class="
+                    hidden
+
+                    sm:inline-flex
+
+                    rounded-xl
+
+                    border
+
+                    border-white/15
+
+                    px-5
+
+                    py-2.5
+
+                    hover:bg-white/5
+
+                    transition">
+
+                        Login
+
+                    </a>
+
+                    <a
+
+                    href="{% url 'signup' %}"
+
+                    class="
+                    rounded-xl
+
+                    bg-gradient-to-r
+
+                    from-blue-600
+
+                    to-indigo-600
+
+                    px-6
+
+                    py-2.5
+
+                    font-semibold
+
+                    shadow-lg
+
+                    hover:scale-105
+
+                    transition">
+
+                        Get Started
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- ================================================= -->
+<!-- Hero -->
+<!-- ================================================= -->
+
+<section
+class="
+hero-bg
+
+grid-bg
+
+relative
+
+overflow-hidden
+
+pt-40
+
+pb-28">
+
+    <!-- Background Blur -->
+
+    <div
+    class="
+    absolute
+
+    -left-40
+
+    top-20
+
+    h-96
+
+    w-96
+
+    rounded-full
+
+    bg-blue-500/20
+
+    blur-[120px]">
+    </div>
+
+    <div
+    class="
+    absolute
+
+    -right-32
+
+    bottom-0
+
+    h-96
+
+    w-96
+
+    rounded-full
+
+    bg-violet-500/20
+
+    blur-[120px]">
+    </div>
+
+    <div
+    class="
+    relative
+
+    max-w-7xl
+
+    mx-auto
+
+    px-6">
+
+        <div
+        class="
+        grid
+
+        lg:grid-cols-2
+
+        gap-16
+
+        items-center">
+
+            <!-- Left -->
+
+            <div>
+
+                <div
+                class="
+                inline-flex
+
+                items-center
+
+                gap-3
+
+                rounded-full
+
+                border
+
+                border-blue-500/30
+
+                bg-blue-500/10
+
+                px-5
+
+                py-2
+
+                text-blue-300">
+
+                    <i
+                    data-lucide="sparkles"
+
+                    class="w-4 h-4">
+                    </i>
+
+                    AI Powered Blog Generation
+
+                </div>
+
+                <h1
+                class="
+                mt-8
+
+                text-5xl
+
+                md:text-6xl
+
+                xl:text-7xl
+
+                font-black
+
+                leading-tight">
+
+                    Create Beautiful
+
+                    <span
+                    class="
+                    bg-gradient-to-r
+
+                    from-blue-400
+
+                    via-cyan-300
+
+                    to-indigo-400
+
+                    bg-clip-text
+
+                    text-transparent">
+
+                        AI Blogs
+
+                    </span>
+
+                    in Minutes
+
+                </h1>
+
+                <p
+                class="
+                mt-8
+
+                text-xl
+
+                leading-9
+
+                text-slate-300">
+
+                    Generate SEO-optimized blogs with AI-written content,
+                    beautiful AI-generated images,
+                    FAQs,
+                    resources,
+                    exports,
+                    and more—
+                    all from one modern workspace.
+
+                </p>
+
+                <div
+                class="
+                mt-10
+
+                flex
+
+                flex-wrap
+
+                gap-4">
+
+                    <a
+
+                    href="{% url 'signup' %}"
+
+                    class="
+                    inline-flex
+
+                    items-center
+
+                    gap-3
+
+                    rounded-2xl
+
+                    bg-gradient-to-r
+
+                    from-blue-600
+
+                    to-indigo-600
+
+                    px-8
+
+                    py-4
+
+                    text-lg
+
+                    font-semibold
+
+                    shadow-xl
+
+                    hover:-translate-y-1
+
+                    transition">
+
+                        <i
+                        data-lucide="rocket">
+
+                        </i>
+
+                        Get Started
+
+                    </a>
+
+                    <a
+
+                    href="{% url 'login' %}"
+
+                    class="
+                    inline-flex
+
+                    items-center
+
+                    gap-3
+
+                    rounded-2xl
+
+                    border
+
+                    border-white/15
+
+                    bg-white/5
+
+                    px-8
+
+                    py-4
+
+                    text-lg
+
+                    backdrop-blur
+
+                    hover:bg-white/10
+
+                    transition">
+
+                        <i
+                        data-lucide="log-in">
+
+                        </i>
+
+                        Login
+
+                    </a>
+
+                </div>
+
+                <!-- Trust -->
+
+                <div
+                class="
+                mt-10
+
+                flex
+
+                flex-wrap
+
+                gap-3">
+
+                    <span class="rounded-full bg-white/5 px-4 py-2">
+
+                        ✨ AI Content
+
+                    </span>
+
+                    <span class="rounded-full bg-white/5 px-4 py-2">
+
+                        🖼 AI Images
+
+                    </span>
+
+                    <span class="rounded-full bg-white/5 px-4 py-2">
+
+                        🚀 SEO Optimized
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- Right -->
+
+            <div
+            class="
+            relative
+
+            floating">
+
+                <div
+                class="
+                rounded-[2rem]
+
+                border
+
+                border-white/10
+
+                bg-slate-900/70
+
+                shadow-2xl
+
+                backdrop-blur-xl">
+
+                    <!-- Fake Navbar -->
+
+                    <div
+                    class="
+                    flex
+
+                    items-center
+
+                    gap-2
+
+                    border-b
+
+                    border-slate-700
+
+                    p-5">
+
+                        <div class="h-3 w-3 rounded-full bg-red-400"></div>
+
+                        <div class="h-3 w-3 rounded-full bg-yellow-400"></div>
+
+                        <div class="h-3 w-3 rounded-full bg-green-400"></div>
+
+                    </div>
+
+                    <div class="p-8">
+
+                        <div
+                        class="
+                        inline-flex
+
+                        items-center
+
+                        gap-2
+
+                        rounded-full
+
+                        bg-green-500/20
+
+                        px-3
+
+                        py-1
+
+                        text-green-400">
+
+                            <i
+                            data-lucide="bot"
+                            class="w-4 h-4">
+                            </i>
+
+                            AI Generating...
+
+                        </div>
+
+                        <div
+                        class="
+                        mt-6
+
+                        h-8
+
+                        rounded-lg
+
+                        bg-slate-700">
+                        </div>
+
+                        <div
+                        class="
+                        mt-4
+
+                        h-4
+
+                        w-4/5
+
+                        rounded
+
+                        bg-slate-700">
+                        </div>
+
+                        <div
+                        class="
+                        mt-10
+
+                        h-56
+
+                        rounded-2xl
+
+                        bg-gradient-to-br
+
+                        from-blue-600
+
+                        to-indigo-700">
+                        </div>
+
+                        <div class="mt-8 space-y-4">
+
+                            <div class="h-4 rounded bg-slate-700"></div>
+
+                            <div class="h-4 rounded bg-slate-700 w-11/12"></div>
+
+                            <div class="h-4 rounded bg-slate-700 w-10/12"></div>
+
+                            <div class="h-4 rounded bg-slate-700 w-9/12"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================================================= -->
+<!-- Statistics -->
+<!-- ================================================= -->
+
+<section class="relative py-20">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-blue-500">
+
+                <div class="text-5xl font-black text-blue-400">
+                    50K+
+                </div>
+
+                <p class="mt-3 text-slate-400">
+                    Blogs Generated
+                </p>
+
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-indigo-500">
+
+                <div class="text-5xl font-black text-indigo-400">
+                    120K+
+                </div>
+
+                <p class="mt-3 text-slate-400">
+                    AI Images
+                </p>
+
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500">
+
+                <div class="text-5xl font-black text-cyan-400">
+                    98%
+                </div>
+
+                <p class="mt-3 text-slate-400">
+                    SEO Optimized
+                </p>
+
+            </div>
+
+            <div class="rounded-3xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:border-green-500">
+
+                <div class="text-5xl font-black text-green-400">
+                    24/7
+                </div>
+
+                <p class="mt-3 text-slate-400">
+                    Available
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- Features -->
+<!-- ================================================= -->
+
+<section
+id="features"
+class="py-28">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center max-w-3xl mx-auto">
+
+            <span class="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-5 py-2 text-blue-300">
+
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+
+                Everything You Need
+
+            </span>
+
+            <h2 class="mt-8 text-5xl font-black">
+
+                Powerful AI Features
+
+            </h2>
+
+            <p class="mt-6 text-xl text-slate-400">
+
+                From idea to publication, every step is powered by AI and designed to help you create professional blogs effortlessly.
+
+            </p>
+
+        </div>
+
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8 mt-20">
+
+            <!-- Card -->
+
+            <div class="group rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-3 hover:border-blue-500 hover:shadow-[0_0_50px_rgba(59,130,246,.15)]">
+
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white">
+
+                    <i data-lucide="pen-square" class="w-8 h-8"></i>
+
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold">
+
+                    AI Writing
+
+                </h3>
+
+                <p class="mt-4 text-slate-400 leading-8">
+
+                    Generate complete, structured, high-quality blog articles with one prompt.
+
+                </p>
+
+            </div>
+
+            <div class="group rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-3 hover:border-violet-500 hover:shadow-[0_0_50px_rgba(139,92,246,.15)]">
+
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-fuchsia-600 text-white">
+
+                    <i data-lucide="image" class="w-8 h-8"></i>
+
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold">
+
+                    AI Images
+
+                </h3>
+
+                <p class="mt-4 text-slate-400 leading-8">
+
+                    Every section receives matching high-quality AI-generated illustrations.
+
+                </p>
+
+            </div>
+
+            <div class="group rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-3 hover:border-cyan-500 hover:shadow-[0_0_50px_rgba(6,182,212,.15)]">
+
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white">
+
+                    <i data-lucide="search-check" class="w-8 h-8"></i>
+
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold">
+
+                    SEO Optimized
+
+                </h3>
+
+                <p class="mt-4 text-slate-400 leading-8">
+
+                    Generate titles, headings and content designed for better search rankings.
+
+                </p>
+
+            </div>
+
+            <div class="group rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-3 hover:border-green-500 hover:shadow-[0_0_50px_rgba(34,197,94,.15)]">
+
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 text-white">
+
+                    <i data-lucide="square-pen" class="w-8 h-8"></i>
+
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold">
+
+                    Rich Editor
+
+                </h3>
+
+                <p class="mt-4 text-slate-400 leading-8">
+
+                    Edit every generated section with an intuitive editing experience.
+
+                </p>
+
+            </div>
+
+            <div class="group rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-3 hover:border-orange-500 hover:shadow-[0_0_50px_rgba(249,115,22,.15)]">
+
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 text-white">
+
+                    <i data-lucide="download" class="w-8 h-8"></i>
+
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold">
+
+                    Export Anywhere
+
+                </h3>
+
+                <p class="mt-4 text-slate-400 leading-8">
+
+                    Export your blogs to Markdown, HTML and DOCX with one click.
+
+                </p>
+
+            </div>
+
+            <div class="group rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 transition-all duration-500 hover:-translate-y-3 hover:border-pink-500 hover:shadow-[0_0_50px_rgba(236,72,153,.15)]">
+
+                <div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 text-white">
+
+                    <i data-lucide="history" class="w-8 h-8"></i>
+
+                </div>
+
+                <h3 class="mt-8 text-2xl font-bold">
+
+                    Blog History
+
+                </h3>
+
+                <p class="mt-4 text-slate-400 leading-8">
+
+                    Store, organize and regenerate every blog from your personal dashboard.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================================================= -->
+<!-- Templates -->
+<!-- ================================================= -->
+
+<section
+id="templates"
+class="py-28 bg-slate-900/40">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center max-w-3xl mx-auto">
+
+            <span class="inline-flex items-center gap-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-5 py-2 text-indigo-300">
+
+                <i data-lucide="layout-template"></i>
+
+                Ready-to-Use Templates
+
+            </span>
+
+            <h2 class="mt-8 text-5xl font-black">
+
+                Write About Anything
+
+            </h2>
+
+            <p class="mt-6 text-xl text-slate-400">
+
+                Generate professional blogs across multiple industries using AI-powered templates.
+
+            </p>
+
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mt-20">
+
+            <div class="group rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:border-blue-500">
+
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-500/20 text-blue-400">
+
+                    <i data-lucide="cpu"></i>
+
+                </div>
+
+                <h3 class="mt-6 font-bold">
+
+                    Technology
+
+                </h3>
+
+            </div>
+
+            <div class="group rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:border-green-500">
+
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-green-500/20 text-green-400">
+
+                    <i data-lucide="code-2"></i>
+
+                </div>
+
+                <h3 class="mt-6 font-bold">
+
+                    Programming
+
+                </h3>
+
+            </div>
+
+            <div class="group rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:border-orange-500">
+
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-orange-500/20 text-orange-400">
+
+                    <i data-lucide="plane"></i>
+
+                </div>
+
+                <h3 class="mt-6 font-bold">
+
+                    Travel
+
+                </h3>
+
+            </div>
+
+            <div class="group rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:border-red-500">
+
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-red-500/20 text-red-400">
+
+                    <i data-lucide="utensils-crossed"></i>
+
+                </div>
+
+                <h3 class="mt-6 font-bold">
+
+                    Food
+
+                </h3>
+
+            </div>
+
+            <div class="group rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:border-cyan-500">
+
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-500/20 text-cyan-400">
+
+                    <i data-lucide="briefcase-business"></i>
+
+                </div>
+
+                <h3 class="mt-6 font-bold">
+
+                    Business
+
+                </h3>
+
+            </div>
+
+            <div class="group rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8 text-center transition-all duration-300 hover:-translate-y-3 hover:border-violet-500">
+
+                <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-violet-500/20 text-violet-400">
+
+                    <i data-lucide="graduation-cap"></i>
+
+                </div>
+
+                <h3 class="mt-6 font-bold">
+
+                    Tutorials
+
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- How It Works -->
+<!-- ================================================= -->
+
+<section
+id="how"
+class="relative py-32 overflow-hidden">
+
+    <div class="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+
+        <div class="text-center">
+
+            <span class="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-5 py-2 text-blue-300">
+
+                <i data-lucide="workflow"></i>
+
+                Simple Workflow
+
+            </span>
+
+            <h2 class="mt-8 text-5xl font-black">
+
+                How It Works
+
+            </h2>
+
+            <p class="mt-6 text-xl text-slate-400">
+
+                From a simple idea to a complete AI-generated article in just a few clicks.
+
+            </p>
+
+        </div>
+
+        <div class="relative mt-24">
+
+            <div class="hidden lg:block absolute top-10 left-0 right-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500"></div>
+
+            <div class="grid lg:grid-cols-4 gap-10">
+
+                <div class="relative text-center">
+
+                    <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 shadow-xl text-white text-2xl font-bold">
+
+                        1
+
+                    </div>
+
+                    <div class="mt-8 flex justify-center">
+
+                        <div class="rounded-2xl bg-blue-500/20 p-4">
+
+                            <i data-lucide="lightbulb" class="w-10 h-10 text-blue-400"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="mt-6 text-2xl font-bold">
+
+                        Enter Your Idea
+
+                    </h3>
+
+                    <p class="mt-4 text-slate-400 leading-8">
+
+                        Provide a topic, audience and writing style.
+
+                    </p>
+
+                </div>
+
+                <div class="relative text-center">
+
+                    <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 shadow-xl text-white text-2xl font-bold">
+
+                        2
+
+                    </div>
+
+                    <div class="mt-8 flex justify-center">
+
+                        <div class="rounded-2xl bg-violet-500/20 p-4">
+
+                            <i data-lucide="brain-circuit" class="w-10 h-10 text-violet-400"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="mt-6 text-2xl font-bold">
+
+                        AI Processing
+
+                    </h3>
+
+                    <p class="mt-4 text-slate-400 leading-8">
+
+                        AI generates complete, structured content automatically.
+
+                    </p>
+
+                </div>
+
+                <div class="relative text-center">
+
+                    <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-cyan-600 to-blue-600 shadow-xl text-white text-2xl font-bold">
+
+                        3
+
+                    </div>
+
+                    <div class="mt-8 flex justify-center">
+
+                        <div class="rounded-2xl bg-cyan-500/20 p-4">
+
+                            <i data-lucide="image-plus" class="w-10 h-10 text-cyan-400"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="mt-6 text-2xl font-bold">
+
+                        AI Images
+
+                    </h3>
+
+                    <p class="mt-4 text-slate-400 leading-8">
+
+                        Matching hero and section images are generated automatically.
+
+                    </p>
+
+                </div>
+
+                <div class="relative text-center">
+
+                    <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-green-600 to-emerald-600 shadow-xl text-white text-2xl font-bold">
+
+                        4
+
+                    </div>
+
+                    <div class="mt-8 flex justify-center">
+
+                        <div class="rounded-2xl bg-green-500/20 p-4">
+
+                            <i data-lucide="download" class="w-10 h-10 text-green-400"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h3 class="mt-6 text-2xl font-bold">
+
+                        Export Anywhere
+
+                    </h3>
+
+                    <p class="mt-4 text-slate-400 leading-8">
+
+                        Export your finished blog in Markdown, HTML or DOCX.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================================================= -->
+<!-- Testimonials -->
+<!-- ================================================= -->
+
+<section class="py-28">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="text-center">
+
+            <span class="inline-flex items-center gap-2 rounded-full border border-yellow-500/30 bg-yellow-500/10 px-5 py-2 text-yellow-300">
+
+                <i data-lucide="star"></i>
+
+                Trusted by Creators
+
+            </span>
+
+            <h2 class="mt-8 text-5xl font-black">
+
+                Loved by Writers
+
+            </h2>
+
+            <p class="mt-6 text-xl text-slate-400">
+
+                See what content creators love about AI Blog Generator.
+
+            </p>
+
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-8 mt-20">
+
+            <div class="rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8">
+
+                <div class="flex gap-1 text-yellow-400">
+
+                    ★★★★★
+
+                </div>
+
+                <p class="mt-6 text-slate-300 leading-8">
+
+                    "The AI-generated content is incredibly well structured. It saves me hours every week."
+
+                </p>
+
+                <div class="mt-8">
+
+                    <h4 class="font-bold">
+
+                        Sarah Johnson
+
+                    </h4>
+
+                    <p class="text-slate-500">
+
+                        Technical Writer
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8">
+
+                <div class="flex gap-1 text-yellow-400">
+
+                    ★★★★★
+
+                </div>
+
+                <p class="mt-6 text-slate-300 leading-8">
+
+                    "AI images matching every section is my favorite feature. The workflow feels seamless."
+
+                </p>
+
+                <div class="mt-8">
+
+                    <h4 class="font-bold">
+
+                        David Miller
+
+                    </h4>
+
+                    <p class="text-slate-500">
+
+                        Blogger
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="rounded-[2rem] border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-8">
+
+                <div class="flex gap-1 text-yellow-400">
+
+                    ★★★★★
+
+                </div>
+
+                <p class="mt-6 text-slate-300 leading-8">
+
+                    "Everything from writing to exporting is handled in one place. Extremely productive."
+
+                </p>
+
+                <div class="mt-8">
+
+                    <h4 class="font-bold">
+
+                        Emily Carter
+
+                    </h4>
+
+                    <p class="text-slate-500">
+
+                        Content Strategist
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- FAQ -->
+<!-- ================================================= -->
+
+<section
+id="faq"
+class="py-28 bg-slate-900/40">
+
+    <div class="max-w-4xl mx-auto px-6">
+
+        <div class="text-center">
+
+            <h2 class="text-5xl font-black">
+
+                Frequently Asked Questions
+
+            </h2>
+
+            <p class="mt-6 text-xl text-slate-400">
+
+                Everything you need to know.
+
+            </p>
+
+        </div>
+
+        <div class="mt-16 space-y-5">
+
+            <details class="group rounded-2xl border border-slate-800 bg-slate-900 p-6">
+
+                <summary class="cursor-pointer flex items-center justify-between font-semibold">
+
+                    Can I edit AI-generated blogs?
+
+                    <i data-lucide="plus" class="transition group-open:rotate-45"></i>
+
+                </summary>
+
+                <p class="mt-5 text-slate-400 leading-8">
+
+                    Yes. Every generated blog can be edited before exporting.
+
+                </p>
+
+            </details>
+
+            <details class="group rounded-2xl border border-slate-800 bg-slate-900 p-6">
+
+                <summary class="cursor-pointer flex items-center justify-between font-semibold">
+
+                    Which export formats are supported?
+
+                    <i data-lucide="plus" class="transition group-open:rotate-45"></i>
+
+                </summary>
+
+                <p class="mt-5 text-slate-400 leading-8">
+
+                    Markdown, HTML and Microsoft Word (DOCX).
+
+                </p>
+
+            </details>
+
+            <details class="group rounded-2xl border border-slate-800 bg-slate-900 p-6">
+
+                <summary class="cursor-pointer flex items-center justify-between font-semibold">
+
+                    Does AI generate images too?
+
+                    <i data-lucide="plus" class="transition group-open:rotate-45"></i>
+
+                </summary>
+
+                <p class="mt-5 text-slate-400 leading-8">
+
+                    Yes. Hero, chapter and conclusion images are automatically generated.
+
+                </p>
+
+            </details>
+
+            <details class="group rounded-2xl border border-slate-800 bg-slate-900 p-6">
+
+                <summary class="cursor-pointer flex items-center justify-between font-semibold">
+
+                    Is the content SEO friendly?
+
+                    <i data-lucide="plus" class="transition group-open:rotate-45"></i>
+
+                </summary>
+
+                <p class="mt-5 text-slate-400 leading-8">
+
+                    The generated content follows SEO-friendly structure including headings, keywords and metadata.
+
+                </p>
+
+            </details>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- CTA -->
+<!-- ================================================= -->
+
+<section class="py-28">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-700 p-14 lg:p-20">
+
+            <div class="absolute -top-32 -right-32 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
+
+            <div class="absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-white/10 blur-3xl"></div>
+
+            <div class="relative text-center">
+
+                <h2 class="text-5xl lg:text-6xl font-black">
+
+                    Ready to Build Amazing Blogs?
+
+                </h2>
+
+                <p class="mt-8 max-w-2xl mx-auto text-xl text-blue-100">
+
+                    Join thousands of creators using AI to write faster, smarter and better.
+
+                </p>
+
+                <div class="mt-12 flex flex-wrap justify-center gap-5">
+
+                    <a
+
+                    href="{% url 'signup' %}"
+
+                    class="rounded-2xl bg-white px-10 py-4 font-bold text-slate-900 shadow-xl transition hover:scale-105">
+
+                        Create Free Account
+
+                    </a>
+
+                    <a
+
+                    href="{% url 'login' %}"
+
+                    class="rounded-2xl border border-white/30 px-10 py-4 font-semibold text-white backdrop-blur hover:bg-white/10">
+
+                        Login
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================================================= -->
+<!-- Footer -->
+<!-- ================================================= -->
+
+<footer class="border-t border-slate-800 py-12">
+
+    <div class="max-w-7xl mx-auto px-6">
+
+        <div class="grid md:grid-cols-4 gap-12">
+
+            <div>
+
+                <div class="flex items-center gap-3">
+
+                    <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 font-bold">
+
+                        AI
+
+                    </div>
+
+                    <div>
+
+                        <div class="font-bold">
+
+                            AI Blog Generator
+
+                        </div>
+
+                        <div class="text-sm text-slate-500">
+
+                            AI Powered Writing
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <h3 class="font-semibold mb-4">
+
+                    Product
+
+                </h3>
+
+                <div class="space-y-3 text-slate-400">
+
+                    <a href="#features" class="block hover:text-white">Features</a>
+                    <a href="#templates" class="block hover:text-white">Templates</a>
+                    <a href="#how" class="block hover:text-white">How It Works</a>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <h3 class="font-semibold mb-4">
+
+                    Account
+
+                </h3>
+
+                <div class="space-y-3 text-slate-400">
+
+                    <a href="{% url 'login' %}" class="block hover:text-white">Login</a>
+                    <a href="{% url 'signup' %}" class="block hover:text-white">Sign Up</a>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <h3 class="font-semibold mb-4">
+
+                    Contact
+
+                </h3>
+
+                <p class="text-slate-400 leading-8">
+
+                    Build professional blogs with AI-powered writing and image generation.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="mt-14 border-t border-slate-800 pt-8 text-center text-slate-500">
+
+            © 2026 AI Blog Generator. All rights reserved.
+
+        </div>
+
+    </div>
+
+</footer>
+
+<script>
+
+lucide.createIcons();
+
+</script>
+
+</body>
+
+</html>
+<script>
+lucide.createIcons();
+</script>

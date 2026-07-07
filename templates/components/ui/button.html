@@ -1,16 +1,6 @@
-{# -------------------------------------------------------------------- #}
-{# Reusable Button Component                                            #}
-{# Usage:                                                               #}
-{# {% include "components/ui/button.html" with                          #}
-{#     text="Generate Blog"                                             #}
-{#     href=generate_url                                                #}
-{#     variant="primary"                                                #}
-{#     icon="sparkles"                                                  #}
-{# %}                                                                   #}
-{# -------------------------------------------------------------------- #}
-
 {% if href %}
 <a
+    {% if id %}id="{{ id }}"{% endif %}
     href="{{ href }}"
     class="
         inline-flex
@@ -18,55 +8,156 @@
         justify-center
         gap-2
 
-        px-5
-        py-3
+        {% if full %}
+        w-full
+        {% endif %}
 
-        rounded-xl
+        {% if size == 'sm' %}
+            px-4 py-2 text-sm
+        {% elif size == 'lg' %}
+            px-6 py-3.5 text-base
+        {% else %}
+            px-5 py-3 text-sm
+        {% endif %}
 
-        font-medium
+        rounded-2xl
+
+        font-semibold
+
+        whitespace-nowrap
 
         transition-all
-        duration-200
+        duration-300
+
+        active:scale-[0.98]
+
+        focus:outline-none
+        focus:ring-4
+        focus:ring-blue-500/20
+
+        disabled:pointer-events-none
+        disabled:opacity-50
 
         {% if variant == 'primary' %}
-            bg-blue-600
-            hover:bg-blue-700
+
+            bg-gradient-to-r
+            from-blue-600
+            to-indigo-600
+
             text-white
-            shadow-sm
-            hover:shadow-lg
+
+            shadow-lg
+            shadow-blue-500/20
+
+            hover:shadow-xl
+            hover:shadow-blue-500/30
+            hover:-translate-y-0.5
 
         {% elif variant == 'secondary' %}
-            bg-slate-100
-            hover:bg-slate-200
-            dark:bg-slate-800
-            dark:hover:bg-slate-700
 
-        {% elif variant == 'success' %}
-            bg-green-600
-            hover:bg-green-700
-            text-white
+            bg-white
+            dark:bg-slate-900
 
-        {% elif variant == 'danger' %}
-            bg-red-600
-            hover:bg-red-700
-            text-white
-
-        {% elif variant == 'outline' %}
             border
-            border-slate-300
+            border-slate-200
             dark:border-slate-700
+
+            text-slate-700
+            dark:text-slate-200
+
+            shadow-sm
+
             hover:bg-slate-100
             dark:hover:bg-slate-800
 
+            hover:shadow-md
+
+        {% elif variant == 'success' %}
+
+            bg-gradient-to-r
+            from-emerald-500
+            to-green-600
+
+            text-white
+
+            shadow-lg
+            shadow-emerald-500/20
+
+            hover:shadow-xl
+            hover:shadow-emerald-500/30
+
+            hover:-translate-y-0.5
+
+        {% elif variant == 'danger' %}
+
+            bg-gradient-to-r
+            from-red-500
+            to-rose-500
+
+            text-white
+
+            shadow-lg
+            shadow-red-500/20
+
+            hover:shadow-xl
+            hover:shadow-red-500/30
+
+            hover:-translate-y-0.5
+
+        {% elif variant == 'outline' %}
+
+            border
+            border-slate-300
+            dark:border-slate-700
+
+            bg-transparent
+
+            text-slate-700
+            dark:text-slate-200
+
+            hover:bg-slate-50
+            dark:hover:bg-slate-800
+
+            hover:border-blue-500
+
         {% endif %}
+
+        {{ class }}
     "
 >
 
-    {% if icon %}
-    <i
-        data-lucide="{{ icon }}"
-        class="w-5 h-5">
-    </i>
+    {% if loading %}
+
+        <svg
+            class="w-5 h-5 animate-spin"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24">
+
+            <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4">
+            </circle>
+
+            <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+            </path>
+
+        </svg>
+
+    {% elif icon %}
+
+        <i
+            data-lucide="{{ icon }}"
+            class="w-5 h-5">
+        </i>
+
     {% endif %}
 
     {{ text }}
@@ -77,6 +168,10 @@
 
 <button
 
+    {% if id %}id="{{ id }}"{% endif %}
+    {% if name %}name="{{ name }}"{% endif %}
+    {% if disabled %}disabled{% endif %}
+
     type="{{ type|default:'button' }}"
 
     class="
@@ -85,56 +180,159 @@
         justify-center
         gap-2
 
-        px-5
-        py-3
+        {% if full %}
+        w-full
+        {% endif %}
 
-        rounded-xl
+        {% if size == 'sm' %}
+            px-4 py-2 text-sm
+        {% elif size == 'lg' %}
+            px-6 py-3.5 text-base
+        {% else %}
+            px-5 py-3 text-sm
+        {% endif %}
 
-        font-medium
+        rounded-2xl
+
+        font-semibold
+
+        whitespace-nowrap
 
         transition-all
-        duration-200
+        duration-300
+
+        active:scale-[0.98]
+
+        focus:outline-none
+        focus:ring-4
+        focus:ring-blue-500/20
+
+        disabled:pointer-events-none
+        disabled:opacity-50
+        disabled:cursor-not-allowed
 
         {% if variant == 'primary' %}
-            bg-blue-600
-            hover:bg-blue-700
+
+            bg-gradient-to-r
+            from-blue-600
+            to-indigo-600
+
             text-white
-            shadow-sm
-            hover:shadow-lg
+
+            shadow-lg
+            shadow-blue-500/20
+
+            hover:shadow-xl
+            hover:shadow-blue-500/30
+
+            hover:-translate-y-0.5
 
         {% elif variant == 'secondary' %}
-            bg-slate-100
-            hover:bg-slate-200
-            dark:bg-slate-800
-            dark:hover:bg-slate-700
 
-        {% elif variant == 'success' %}
-            bg-green-600
-            hover:bg-green-700
-            text-white
+            bg-white
+            dark:bg-slate-900
 
-        {% elif variant == 'danger' %}
-            bg-red-600
-            hover:bg-red-700
-            text-white
-
-        {% elif variant == 'outline' %}
             border
-            border-slate-300
+            border-slate-200
             dark:border-slate-700
+
+            text-slate-700
+            dark:text-slate-200
+
+            shadow-sm
+
             hover:bg-slate-100
             dark:hover:bg-slate-800
 
+            hover:shadow-md
+
+        {% elif variant == 'success' %}
+
+            bg-gradient-to-r
+            from-emerald-500
+            to-green-600
+
+            text-white
+
+            shadow-lg
+            shadow-emerald-500/20
+
+            hover:shadow-xl
+            hover:shadow-emerald-500/30
+
+            hover:-translate-y-0.5
+
+        {% elif variant == 'danger' %}
+
+            bg-gradient-to-r
+            from-red-500
+            to-rose-500
+
+            text-white
+
+            shadow-lg
+            shadow-red-500/20
+
+            hover:shadow-xl
+            hover:shadow-red-500/30
+
+            hover:-translate-y-0.5
+
+        {% elif variant == 'outline' %}
+
+            border
+            border-slate-300
+            dark:border-slate-700
+
+            bg-transparent
+
+            text-slate-700
+            dark:text-slate-200
+
+            hover:bg-slate-50
+            dark:hover:bg-slate-800
+
+            hover:border-blue-500
+
         {% endif %}
+
+        {{ class }}
     "
 
 >
 
-    {% if icon %}
-    <i
-        data-lucide="{{ icon }}"
-        class="w-5 h-5">
-    </i>
+    {% if loading %}
+
+        <svg
+            class="w-5 h-5 animate-spin"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24">
+
+            <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4">
+            </circle>
+
+            <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z">
+            </path>
+
+        </svg>
+
+    {% elif icon %}
+
+        <i
+            data-lucide="{{ icon }}"
+            class="w-5 h-5">
+        </i>
+
     {% endif %}
 
     {{ text }}

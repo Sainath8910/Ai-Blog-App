@@ -5,132 +5,600 @@ Generate Blog | AI Blog Generator
 {% endblock %}
 
 {% block content %}
-
-<div class="max-w-5xl mx-auto">
+<div class="max-w-7xl mx-auto">
 <div id="pageContent">
-    <!-- Header -->
-
-    <div class="mb-10">
-
-        <h1 class="text-4xl font-bold text-slate-900 dark:text-white">
-
-            Generate AI Blog
-
-        </h1>
-
-        <p class="mt-3 text-slate-500 text-lg">
-
-            Create SEO-optimized blogs with AI-powered content generation and beautiful images.
-
-        </p>
-
-    </div>
-
-    <form method="post" class="space-y-8">
+    <form method="post" id="blogForm">
 
         {% csrf_token %}
 
-        <!-- Card -->
+        <!-- ================================================= -->
+        <!-- Main Content -->
+        <!-- ================================================= -->
 
-        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
+        <div class="space-y-10">
+<!-- ================================================= -->
+<!-- Hero -->
+<!-- ================================================= -->
+<div
+class="mb-8">
 
-            <h2 class="text-2xl font-semibold mb-8">
+    <div
+    class="
+    inline-flex
 
-                Blog Details
+    items-center
 
-            </h2>
+    gap-2
 
-            <!-- Topic -->
+    rounded-full
 
-            <div class="mb-6">
+    border
 
-                <label class="block mb-2 font-medium">
+    border-blue-200
+    dark:border-blue-800
 
-                    {{ form.topic.label }}
+    bg-blue-50
+    dark:bg-blue-900/20
 
-                </label>
+    px-5
 
-                {{ form.topic }}
+    py-2
 
-                {% if form.topic.errors %}
+    text-blue-700
+    dark:text-blue-300">
 
-                    <p class="text-red-500 mt-2">
+        <i
+        data-lucide="sparkles"
+        class="w-4 h-4">
+        </i>
 
-                        {{ form.topic.errors.0 }}
+        <span>
 
-                    </p>
+            New AI Generation Experience
 
-                {% endif %}
+        </span>
 
-            </div>
+    </div>
 
-            <!-- Content Brief -->
+</div>
+<section
+class="relative overflow-hidden rounded-[2rem]
+bg-gradient-to-br
+from-blue-600
+via-indigo-600
+to-violet-700
+text-white
+shadow-2xl">
 
-            <div class="mb-6">
+    <!-- Background Effects -->
 
-                <label class="block mb-2 font-medium">
+    <div
+    class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-white/10 blur-3xl">
+    </div>
 
-                    {{ form.content_brief.label }}
+    <div
+    class="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-white/10 blur-3xl">
+    </div>
 
-                </label>
+    <div
+    class="relative
+    px-8
+    py-10
+    lg:px-10
+    lg:py-12">
 
-                {{ form.content_brief }}
+        <div
+        class="
+        grid
+        xl:grid-cols-[1fr_420px]
+        gap-10
+        items-center">
 
-            </div>
+            <!-- ================================================= -->
+            <!-- Left -->
+            <!-- ================================================= -->
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
 
-                <div>
+                <div
+                class="
+                inline-flex
+                items-center
+                gap-2
 
-                    <label class="block mb-2 font-medium">
+                rounded-full
 
-                        {{ form.target_audience.label }}
+                border
+                border-white/15
 
-                    </label>
+                bg-white/10
 
-                    {{ form.target_audience }}
+                px-4
+                py-2
+
+                backdrop-blur">
+
+                    <i
+                    data-lucide="sparkles"
+                    class="w-4 h-4">
+                    </i>
+
+                    AI Powered Blog Generator
 
                 </div>
 
-                <div>
+                <h1
+                class="
+                mt-6
 
-                    <label class="block mb-2 font-medium">
+                text-4xl
+                md:text-5xl
+                xl:text-6xl
 
-                        {{ form.tone.label }}
+                font-extrabold
 
-                    </label>
+                leading-tight">
 
-                    {{ form.tone }}
+                    What would you like
 
-                </div>
+                    <span class="block text-blue-100">
 
-                <div>
+                        to write today?
 
-                    <label class="block mb-2 font-medium">
+                    </span>
 
-                        {{ form.length.label }}
+                </h1>
 
-                    </label>
+                <p
+                class="
+                mt-6
 
-                    {{ form.length }}
+                max-w-2xl
+
+                text-lg
+
+                leading-8
+
+                text-blue-100">
+
+                    Describe your idea and let AI generate a complete
+                    professional blog with structured chapters,
+                    beautiful AI-generated images, FAQs,
+                    resources and SEO optimization.
+
+                </p>
+
+                <!-- Features -->
+
+                <div
+                class="
+                mt-10
+
+                flex
+                flex-wrap
+                gap-4">
+
+                    <div
+                    class="
+                    inline-flex
+                    items-center
+                    gap-2
+
+                    rounded-full
+
+                    bg-white/10
+
+                    px-4
+                    py-2
+
+                    backdrop-blur">
+
+                        <i
+                        data-lucide="check"
+                        class="w-4 h-4">
+                        </i>
+
+                        SEO Optimized
+
+                    </div>
+
+                    <div
+                    class="
+                    inline-flex
+                    items-center
+                    gap-2
+
+                    rounded-full
+
+                    bg-white/10
+
+                    px-4
+                    py-2
+
+                    backdrop-blur">
+
+                        <i
+                        data-lucide="check"
+                        class="w-4 h-4">
+                        </i>
+
+                        AI Images
+
+                    </div>
+
+                    <div
+                    class="
+                    inline-flex
+                    items-center
+                    gap-2
+
+                    rounded-full
+
+                    bg-white/10
+
+                    px-4
+                    py-2
+
+                    backdrop-blur">
+
+                        <i
+                        data-lucide="check"
+                        class="w-4 h-4">
+                        </i>
+
+                        Complete Blog
+
+                    </div>
 
                 </div>
 
             </div>
 
-            <div class="mt-6">
+            <!-- ================================================= -->
+            <!-- Right -->
+            <!-- ================================================= -->
 
-                <label class="block mb-2 font-medium">
+            <div
+            class="
+            grid
 
-                    {{ form.keywords.label }}
+            grid-cols-2
 
-                </label>
+            lg:grid-cols-1
 
-                {{ form.keywords }}
+            2xl:grid-cols-2
 
-                <p class="text-sm text-slate-500 mt-2">
+            gap-5">
 
-                    {{ form.keywords.help_text }}
+                <!-- AI Content -->
+
+                <div
+                class="
+                group
+
+                relative
+
+                overflow-hidden
+
+                rounded-[1.75rem]
+
+                border
+                border-white/15
+
+                bg-white/10
+
+                backdrop-blur-xl
+
+                p-6
+
+                transition-all
+                duration-300
+
+                hover:-translate-y-2
+                hover:bg-white/15
+                hover:shadow-2xl">
+
+                    <div
+                    class="
+                    absolute
+                    -right-10
+                    -top-10
+
+                    h-32
+                    w-32
+
+                    rounded-full
+
+                    bg-blue-300/20
+
+                    blur-3xl">
+                    </div>
+
+                    <div class="relative">
+
+                        <div
+                        class="
+                        flex
+
+                        h-14
+                        w-14
+
+                        items-center
+                        justify-center
+
+                        rounded-2xl
+
+                        bg-white/15">
+
+                            <i
+                            data-lucide="bot"
+                            class="
+                            w-7
+                            h-7
+
+                            transition-transform
+
+                            duration-300
+
+                            group-hover:scale-110">
+                            </i>
+
+                        </div>
+
+                        <h3
+                        class="
+                        mt-6
+
+                        text-2xl
+
+                        font-bold">
+
+                            AI Content
+
+                        </h3>
+
+                        <p
+                        class="
+                        mt-3
+
+                        leading-7
+
+                        text-blue-100">
+
+                            Generates complete,
+                            SEO-ready blog articles with
+                            chapters, summaries,
+                            takeaways and conclusions.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- AI Images -->
+
+                <div
+                class="
+                group
+
+                relative
+
+                overflow-hidden
+
+                rounded-[1.75rem]
+
+                border
+                border-white/15
+
+                bg-white/10
+
+                backdrop-blur-xl
+
+                p-6
+
+                transition-all
+                duration-300
+
+                hover:-translate-y-2
+                hover:bg-white/15
+                hover:shadow-2xl">
+
+                    <div
+                    class="
+                    absolute
+                    -right-10
+                    -top-10
+
+                    h-32
+                    w-32
+
+                    rounded-full
+
+                    bg-violet-300/20
+
+                    blur-3xl">
+                    </div>
+
+                    <div class="relative">
+
+                        <div
+                        class="
+                        flex
+
+                        h-14
+                        w-14
+
+                        items-center
+                        justify-center
+
+                        rounded-2xl
+
+                        bg-white/15">
+
+                            <i
+                            data-lucide="image"
+                            class="
+                            w-7
+                            h-7
+
+                            transition-transform
+
+                            duration-300
+
+                            group-hover:scale-110">
+                            </i>
+
+                        </div>
+
+                        <h3
+                        class="
+                        mt-6
+
+                        text-2xl
+
+                        font-bold">
+
+                            AI Images
+
+                        </h3>
+
+                        <p
+                        class="
+                        mt-3
+
+                        leading-7
+
+                        text-blue-100">
+
+                            Automatically creates
+                            stunning hero, chapter
+                            and conclusion images that
+                            perfectly match your content.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================================================= -->
+<!-- Blog Details -->
+<!-- ================================================= -->
+
+<section
+class="
+relative
+
+overflow-hidden
+
+rounded-[2rem]
+
+border
+border-slate-200/70
+dark:border-slate-800
+
+bg-white/80
+dark:bg-slate-900/80
+
+backdrop-blur-xl
+
+shadow-xl">
+
+    <!-- Decorative Background -->
+
+    <div
+    class="
+    absolute
+
+    inset-x-0
+
+    top-0
+
+    h-36
+
+    bg-gradient-to-r
+
+    from-blue-500/5
+
+    via-indigo-500/5
+
+    to-violet-500/5
+
+    dark:from-blue-500/10
+    dark:via-indigo-500/10
+    dark:to-violet-500/10">
+    </div>
+
+    <div class="relative p-8 lg:p-10">
+
+        <!-- Header -->
+
+        <div
+        class="
+        flex
+
+        items-start
+
+        gap-5
+
+        mb-10">
+
+            <div
+            class="
+            flex
+
+            h-16
+            w-16
+
+            items-center
+            justify-center
+
+            rounded-3xl
+
+            bg-gradient-to-br
+
+            from-blue-600
+            to-indigo-600
+
+            text-white
+
+            shadow-lg">
+
+                <i
+                data-lucide="file-pen-line"
+                class="w-8 h-8">
+                </i>
+
+            </div>
+
+            <div>
+
+                <h2
+                class="text-3xl font-bold">
+
+                    Blog Details
+
+                </h2>
+
+                <p
+                class="
+                mt-2
+
+                max-w-2xl
+
+                text-slate-500
+                dark:text-slate-400">
+
+                    Describe your idea below. The more context you provide,
+                    the better your AI-generated blog will be.
 
                 </p>
 
@@ -138,123 +606,511 @@ Generate Blog | AI Blog Generator
 
         </div>
 
-        <!-- AI Features -->
+        <!-- Topic -->
 
-        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
+        <div class="mb-8">
 
-            <h2 class="text-2xl font-semibold">
+            <label
+            class="
+            mb-3
 
-                AI Features
+            flex
 
-            </h2>
+            items-center
 
-            <p class="text-slate-500 mt-2 mb-8">
+            gap-2
 
-                Current generation capabilities.
+            text-sm
+
+            font-semibold">
+
+                <i
+                data-lucide="pen-square"
+                class="w-4 h-4 text-blue-600">
+                </i>
+
+                {{ form.topic.label }}
+
+            </label>
+
+            {{ form.topic }}
+
+            {% if form.topic.errors %}
+
+            <p
+            class="mt-3 text-sm text-red-500">
+
+                {{ form.topic.errors.0 }}
 
             </p>
 
-            <div class="space-y-5">
+            {% endif %}
 
-                <div class="flex items-center justify-between">
+        </div>
 
-                    <div>
+        <!-- Content Brief -->
 
-                        <h3 class="font-semibold">
+        <div class="mb-8">
 
-                            AI Content Generation
+            <div
+            class="
+            flex
 
-                        </h3>
+            items-center
 
-                        <p class="text-sm text-slate-500">
+            justify-between
 
-                            Generate complete blog content.
+            mb-3">
 
-                        </p>
+                <label
+                class="
+                flex
 
-                    </div>
+                items-center
 
-                    <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
+                gap-2
 
-                        Enabled
+                text-sm
+
+                font-semibold">
+
+                    <i
+                    data-lucide="align-left"
+                    class="w-4 h-4 text-indigo-600">
+                    </i>
+
+                    {{ form.content_brief.label }}
+
+                </label>
+
+                <span
+                id="briefCounter"
+                class="
+                text-xs
+
+                text-slate-400">
+
+                    0 Characters
+
+                </span>
+
+            </div>
+
+            {{ form.content_brief }}
+
+        </div>
+
+        <!-- Options -->
+
+        <div
+        class="
+        grid
+
+        gap-6
+
+        md:grid-cols-3">
+
+            <div>
+
+                <label
+                class="
+                mb-3
+
+                flex
+
+                items-center
+
+                gap-2
+
+                text-sm
+
+                font-semibold">
+
+                    <i
+                    data-lucide="users"
+                    class="w-4 h-4 text-emerald-600">
+                    </i>
+
+                    {{ form.target_audience.label }}
+
+                </label>
+
+                {{ form.target_audience }}
+
+            </div>
+
+            <div>
+
+                <label
+                class="
+                mb-3
+
+                flex
+
+                items-center
+
+                gap-2
+
+                text-sm
+
+                font-semibold">
+
+                    <i
+                    data-lucide="mic"
+                    class="w-4 h-4 text-violet-600">
+                    </i>
+
+                    {{ form.tone.label }}
+
+                </label>
+
+                {{ form.tone }}
+
+            </div>
+
+            <div>
+
+                <label
+                class="
+                mb-3
+
+                flex
+
+                items-center
+
+                gap-2
+
+                text-sm
+
+                font-semibold">
+
+                    <i
+                    data-lucide="ruler"
+                    class="w-4 h-4 text-orange-600">
+                    </i>
+
+                    {{ form.length.label }}
+
+                </label>
+
+                {{ form.length }}
+
+            </div>
+
+        </div>
+
+        <!-- Keywords -->
+
+        <div class="mt-8">
+
+            <label
+            class="
+            mb-3
+
+            flex
+
+            items-center
+
+            gap-2
+
+            text-sm
+
+            font-semibold">
+
+                <i
+                data-lucide="tags"
+                class="w-4 h-4 text-pink-600">
+                </i>
+
+                {{ form.keywords.label }}
+
+            </label>
+
+            {{ form.keywords }}
+
+            <p
+            class="
+            mt-3
+
+            text-sm
+
+            text-slate-500
+            dark:text-slate-400">
+
+                {{ form.keywords.help_text }}
+
+            </p>
+
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================================================= -->
+<!-- AI Capabilities -->
+<!-- ================================================= -->
+
+<!-- ================================================= -->
+<!-- Generate Section -->
+<!-- ================================================= -->
+
+<section
+class="
+relative
+
+overflow-hidden
+
+rounded-[2rem]
+
+border
+border-slate-200/70
+dark:border-slate-800
+
+bg-gradient-to-br
+
+from-slate-50
+to-blue-50
+
+dark:from-slate-900
+dark:to-slate-950
+
+shadow-xl">
+
+    <!-- Background -->
+
+    <div
+    class="
+    absolute
+
+    -right-20
+    -top-20
+
+    h-64
+    w-64
+
+    rounded-full
+
+    bg-blue-500/10
+
+    blur-3xl">
+    </div>
+
+    <div
+    class="
+    absolute
+
+    -left-20
+    -bottom-20
+
+    h-64
+    w-64
+
+    rounded-full
+
+    bg-violet-500/10
+
+    blur-3xl">
+    </div>
+
+    <div class="relative p-8 lg:p-10">
+
+        <!-- Header -->
+
+        <div
+        class="text-center">
+
+            <div
+            class="
+            mx-auto
+
+            flex
+
+            h-16
+            w-16
+
+            items-center
+            justify-center
+
+            rounded-3xl
+
+            bg-gradient-to-br
+
+            from-blue-600
+            to-indigo-600
+
+            text-white
+
+            shadow-lg">
+
+                <i
+                data-lucide="rocket"
+                class="w-8 h-8">
+                </i>
+
+            </div>
+
+            <h2
+            class="
+            mt-6
+
+            text-3xl
+
+            font-bold">
+
+                Ready to Generate?
+
+            </h2>
+
+            <p
+            class="
+            mt-3
+
+            max-w-2xl
+
+            mx-auto
+
+            text-slate-500
+            dark:text-slate-400">
+
+                AI will analyze your prompt, generate the complete
+                blog, create images and prepare everything for editing.
+
+            </p>
+
+        </div>
+
+        <!-- Summary -->
+
+        <div
+        class="
+        mt-10
+
+        grid
+
+        gap-5
+
+        sm:grid-cols-2
+
+        lg:grid-cols-4">
+
+            <div
+            class="
+            rounded-2xl
+
+            bg-white
+            dark:bg-slate-800
+
+            border
+            border-slate-200
+            dark:border-slate-700
+
+            p-5">
+
+                <div
+                class="flex items-center gap-3">
+
+                    <i
+                    data-lucide="file-text"
+                    class="w-6 h-6 text-blue-600">
+                    </i>
+
+                    <span class="font-medium">
+
+                        Full Article
 
                     </span>
 
                 </div>
 
-                <div class="flex items-center justify-between">
+            </div>
 
-                    <div>
+            <div
+            class="
+            rounded-2xl
 
-                        <h3 class="font-semibold">
+            bg-white
+            dark:bg-slate-800
 
-                            AI Image Generation
+            border
+            border-slate-200
+            dark:border-slate-700
 
-                        </h3>
+            p-5">
 
-                        <p class="text-sm text-slate-500">
+                <div
+                class="flex items-center gap-3">
 
-                            Generate hero, chapter and conclusion images.
+                    <i
+                    data-lucide="image"
+                    class="w-6 h-6 text-violet-600">
+                    </i>
 
-                        </p>
+                    <span class="font-medium">
 
-                    </div>
-
-                    <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-
-                        Enabled
-
-                    </span>
-
-                </div>
-
-                <div class="flex items-center justify-between">
-
-                    <div>
-
-                        <h3 class="font-semibold">
-
-                            FAQ Generation
-
-                        </h3>
-
-                        <p class="text-sm text-slate-500">
-
-                            Coming soon.
-
-                        </p>
-
-                    </div>
-
-                    <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm">
-
-                        Soon
+                        AI Images
 
                     </span>
 
                 </div>
 
-                <div class="flex items-center justify-between">
+            </div>
 
-                    <div>
+            <div
+            class="
+            rounded-2xl
 
-                        <h3 class="font-semibold">
+            bg-white
+            dark:bg-slate-800
 
-                            Resource Generation
+            border
+            border-slate-200
+            dark:border-slate-700
 
-                        </h3>
+            p-5">
 
-                        <p class="text-sm text-slate-500">
+                <div
+                class="flex items-center gap-3">
 
-                            Coming soon.
+                    <i
+                    data-lucide="search"
+                    class="w-6 h-6 text-green-600">
+                    </i>
 
-                        </p>
+                    <span class="font-medium">
 
-                    </div>
+                        SEO Ready
 
-                    <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-sm">
+                    </span>
 
-                        Soon
+                </div>
+
+            </div>
+
+            <div
+            class="
+            rounded-2xl
+
+            bg-white
+            dark:bg-slate-800
+
+            border
+            border-slate-200
+            dark:border-slate-700
+
+            p-5">
+
+                <div
+                class="flex items-center gap-3">
+
+                    <i
+                    data-lucide="clock-3"
+                    class="w-6 h-6 text-orange-600">
+                    </i>
+
+                    <span class="font-medium">
+
+                        2–3 Minutes
 
                     </span>
 
@@ -264,96 +1120,495 @@ Generate Blog | AI Blog Generator
 
         </div>
 
-        <!-- Submit -->
+        <!-- Tip -->
 
-        <div class="flex justify-end gap-4">
+        <div
+        class="
+        mt-8
 
-            <a href="{% url 'blogs:dashboard' %}"
-               class="px-6 py-3 rounded-xl border border-slate-300 hover:bg-slate-100">
+        rounded-2xl
+
+        border
+
+        border-blue-200
+        dark:border-blue-800
+
+        bg-blue-50
+        dark:bg-blue-900/20
+
+        p-5">
+
+            <div
+            class="
+            flex
+
+            items-start
+
+            gap-4">
+
+                <i
+                data-lucide="lightbulb"
+                class="w-6 h-6 text-yellow-500 mt-1">
+                </i>
+
+                <div>
+
+                    <h3
+                    class="font-semibold">
+
+                        AI Tip
+
+                    </h3>
+
+                    <p
+                    class="
+                    mt-1
+
+                    text-slate-600
+                    dark:text-slate-300">
+
+                        Providing a detailed content brief and relevant
+                        keywords helps the AI generate more accurate,
+                        engaging and SEO-friendly blogs.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Buttons -->
+
+        <div
+        class="
+        mt-10
+
+        flex
+
+        flex-col-reverse
+
+        sm:flex-row
+
+        justify-center
+
+        gap-4">
+
+            <a
+
+            href="{% url 'blogs:dashboard' %}"
+
+            class="
+            px-8
+
+            py-4
+
+            rounded-2xl
+
+            border
+
+            border-slate-300
+            dark:border-slate-700
+
+            text-center
+
+            transition-all
+
+            hover:bg-slate-100
+            dark:hover:bg-slate-800">
 
                 Cancel
 
             </a>
 
             <button
-                id="generateButton"
-                type="submit"
-                class="px-8 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold">
 
-                ✨ Generate Blog
+            id="generateButton"
+
+            type="submit"
+
+            class="
+            group
+
+            px-10
+
+            py-4
+
+            rounded-2xl
+
+            bg-gradient-to-r
+
+            from-blue-600
+
+            via-indigo-600
+
+            to-violet-600
+
+            text-white
+
+            font-semibold
+
+            shadow-xl
+
+            shadow-blue-500/25
+
+            transition-all
+
+            duration-300
+
+            hover:-translate-y-1
+
+            hover:shadow-2xl">
+
+                <span
+                class="
+                flex
+
+                items-center
+
+                justify-center
+
+                gap-3">
+
+                    <i
+                    data-lucide="sparkles"
+                    class="
+                    w-5
+                    h-5
+
+                    transition-transform
+
+                    group-hover:rotate-12">
+                    </i>
+
+                    Generate AI Blog
+
+                </span>
 
             </button>
 
         </div>
 
-    </form>
+    </div>
+
+</section>
+<!-- ================================================= -->
+<!-- AI Generation -->
+<!-- ================================================= -->
+</div>
+
+</form>
 </div>
 </div>
-<div id="loadingSkeleton" class="hidden animate-pulse">
+<div
+id="loadingSkeleton" class="hidden max-w-6xl mx-auto">
 
-    <div class="mb-8">
+    <!-- Hero -->
 
-        <div class="flex items-center gap-3">
+    <div class="rounded-[2rem] overflow-hidden
 
-            <div class="w-4 h-4 rounded-full bg-blue-500 animate-ping"></div>
+    bg-gradient-to-br
 
-            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
-                AI is generating your blog...
-            </h2>
+    from-blue-600
+
+    via-indigo-600
+
+    to-violet-700
+
+    text-white
+
+    shadow-2xl">
+
+        <div class="p-10">
+
+            <div
+            class="
+            flex
+
+            items-center
+
+            gap-5">
+
+                <!-- Animated Icon -->
+
+                <div
+                class="
+                relative
+
+                flex
+
+                h-16
+                w-16
+
+                items-center
+                justify-center
+
+                rounded-3xl
+
+                bg-white/10">
+
+                    <div
+                    class="
+                    absolute
+
+                    inset-0
+
+                    rounded-3xl
+
+                    border
+
+                    border-white/30
+
+                    animate-ping">
+                    </div>
+
+                    <i
+                    data-lucide="sparkles"
+
+                    class="
+                    relative
+
+                    w-8
+
+                    h-8
+
+                    animate-pulse">
+                    </i>
+
+                </div>
+
+                <div>
+
+                    <h2
+                    class="
+                    text-3xl
+
+                    font-bold">
+
+                        AI is creating your blog...
+
+                    </h2>
+
+                    <p
+                    class="
+                    mt-2
+
+                    text-blue-100">
+
+                        Sit back and relax while we generate your article.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- Progress -->
+
+            <div
+            class="
+            mt-8
+
+            h-2
+
+            overflow-hidden
+
+            rounded-full
+
+            bg-white/20">
+
+                <div
+
+                id="progressBar"
+
+                class="
+                h-full
+
+                w-1/4
+
+                rounded-full
+
+                bg-white
+
+                animate-pulse">
+                </div>
+
+            </div>
 
         </div>
 
-        <p class="mt-2 text-slate-500">
-            Please wait while we create your article.
-        </p>
+    </div>
+
+    <!-- Timeline -->
+
+    <div
+    class="
+    mt-8
+
+    rounded-[2rem]
+
+    border
+
+    border-slate-200
+
+    dark:border-slate-800
+
+    bg-white
+
+    dark:bg-slate-900
+
+    p-8">
+
+        <div
+        id="generationSteps"
+
+        class="space-y-6">
+
+            <div class="step active">
+
+                ✅ Understanding your topic
+
+            </div>
+
+            <div class="step">
+
+                ⏳ Creating blog outline
+
+            </div>
+
+            <div class="step">
+
+                ⏳ Writing chapters
+
+            </div>
+
+            <div class="step">
+
+                ⏳ Generating AI images
+
+            </div>
+
+            <div class="step">
+
+                ⏳ Optimizing SEO
+
+            </div>
+
+            <div class="step">
+
+                ⏳ Finalizing blog
+
+            </div>
+
+        </div>
 
     </div>
 
-    <!-- Title -->
-    <div class="h-10 w-2/3 rounded-lg bg-slate-200 dark:bg-slate-700 mb-8"></div>
+    <!-- Live Status -->
 
-    <!-- Hero Image -->
-    <div class="h-80 rounded-2xl bg-slate-200 dark:bg-slate-700 mb-10"></div>
+    <div
+    class="
+    mt-8
 
-    <!-- Section -->
-    <div class="space-y-4 mb-10">
+    rounded-2xl
 
-        <div class="h-7 w-1/3 rounded bg-slate-200 dark:bg-slate-700"></div>
+    bg-blue-50
 
-        <div class="h-4 w-full rounded bg-slate-200 dark:bg-slate-700"></div>
-        <div class="h-4 w-11/12 rounded bg-slate-200 dark:bg-slate-700"></div>
-        <div class="h-4 w-5/6 rounded bg-slate-200 dark:bg-slate-700"></div>
-        <div class="h-4 w-4/5 rounded bg-slate-200 dark:bg-slate-700"></div>
+    dark:bg-blue-900/20
+
+    border
+
+    border-blue-200
+
+    dark:border-blue-800
+
+    p-5">
+
+        <div
+        class="
+        flex
+
+        items-center
+
+        gap-3">
+
+            <i
+            data-lucide="bot"
+
+            class="
+            w-6
+
+            h-6
+
+            text-blue-600">
+            </i>
+
+            <span
+
+            id="generationStatus"
+
+            class="font-medium">
+
+                Understanding your prompt...
+
+            </span>
+
+        </div>
 
     </div>
 
-    <!-- Image -->
-    <div class="h-64 rounded-xl bg-slate-200 dark:bg-slate-700 mb-10"></div>
+    <!-- Skeleton -->
 
-    <!-- Section -->
-    <div class="space-y-4 mb-10">
+    <div class="mt-10 space-y-8">
 
-        <div class="h-7 w-2/5 rounded bg-slate-200 dark:bg-slate-700"></div>
+        <div class="skeleton h-12 w-2/3 rounded-xl"></div>
 
-        <div class="h-4 w-full rounded bg-slate-200 dark:bg-slate-700"></div>
-        <div class="h-4 w-full rounded bg-slate-200 dark:bg-slate-700"></div>
-        <div class="h-4 w-10/12 rounded bg-slate-200 dark:bg-slate-700"></div>
+        <div class="skeleton h-96 rounded-3xl"></div>
 
-    </div>
+        <div class="space-y-4">
 
-    <!-- Conclusion -->
-    <div class="space-y-4">
+            <div class="skeleton h-8 w-60 rounded"></div>
 
-        <div class="h-7 w-40 rounded bg-slate-200 dark:bg-slate-700"></div>
+            <div class="skeleton h-5 rounded"></div>
 
-        <div class="h-4 w-full rounded bg-slate-200 dark:bg-slate-700"></div>
-        <div class="h-4 w-5/6 rounded bg-slate-200 dark:bg-slate-700"></div>
+            <div class="skeleton h-5 w-11/12 rounded"></div>
+
+            <div class="skeleton h-5 w-4/5 rounded"></div>
+
+        </div>
+
+        <div class="skeleton h-72 rounded-3xl"></div>
+
+        <div class="space-y-4">
+
+            <div class="skeleton h-8 w-72 rounded"></div>
+
+            <div class="skeleton h-5 rounded"></div>
+
+            <div class="skeleton h-5 w-10/12 rounded"></div>
+
+            <div class="skeleton h-5 w-3/4 rounded"></div>
+
+        </div>
 
     </div>
 
 </div>
 <script>
+const brief = document.getElementById("id_content_brief");
+const counter = document.getElementById("briefCounter");
 
+if (brief && counter) {
+
+    const updateCounter = () => {
+        counter.textContent = `${brief.value.length} Characters`;
+    };
+
+    brief.addEventListener("input", updateCounter);
+
+    updateCounter();
+}
 document.querySelector("form").addEventListener("submit", function () {
 
     const button = document.getElementById("generateButton");

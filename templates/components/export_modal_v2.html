@@ -1,50 +1,251 @@
 <div
     id="exportModal"
-    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+    class="fixed inset-0 z-[100] hidden items-center justify-center
+    bg-slate-950/60 backdrop-blur-md p-4">
 
-    <div class="bg-white dark:bg-slate-900 rounded-3xl w-full max-w-lg p-6">
+    <div
+        class="relative w-full max-w-xl
+        max-h-[90vh] overflow-hidden overflow-y-auto
+        rounded-3xl
+        border border-slate-200/70 dark:border-slate-700/70
+        bg-white/95 dark:bg-slate-900/95
+        backdrop-blur-xl
+        shadow-[0_25px_80px_rgba(0,0,0,.35)]
+        animate-[modalIn_.25s_ease]">
 
-        <div class="flex justify-between items-center mb-6">
+        <!-- Decorative Header Background -->
+        <div
+            class="absolute inset-x-0 top-0 h-28
+            bg-gradient-to-r
+            from-blue-600/10
+            via-indigo-600/10
+            to-violet-600/10">
+        </div>
 
-            <h2 class="text-2xl font-bold">
-                Export Blog
-            </h2>
+        <!-- Header -->
+        <div class="relative flex items-start justify-between p-6 border-b border-slate-200/70 dark:border-slate-700/70">
+
+            <div>
+
+                <div
+                    class="inline-flex items-center justify-center
+                    w-14 h-14 rounded-2xl
+                    bg-gradient-to-br
+                    from-blue-600
+                    to-indigo-600
+                    text-white shadow-lg shadow-blue-500/20">
+
+                    <i
+                        data-lucide="download"
+                        class="w-7 h-7">
+                    </i>
+
+                </div>
+
+                <h2 class="mt-4 text-2xl font-bold">
+
+                    Export Blog
+
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+
+                    Choose your preferred format and download your blog instantly.
+
+                </p>
+
+            </div>
 
             <button
                 type="button"
                 onclick="closeExportModal()"
-                class="text-xl">
-                ✕
+                class="flex items-center justify-center
+                w-11 h-11 rounded-xl
+                hover:bg-slate-100
+                dark:hover:bg-slate-800
+                transition-all duration-200
+                hover:rotate-90">
+
+                <i
+                    data-lucide="x"
+                    class="w-5 h-5">
+                </i>
+
             </button>
 
         </div>
 
-        <div class="space-y-3">
+        <!-- Export Options -->
+        <div class="p-4 sm:p-6 space-y-4">
 
+            <!-- Markdown -->
             <a
                 id="exportMarkdown"
                 href="#"
-                class="block rounded-xl border p-4 hover:bg-slate-100">
+                class="group flex items-center justify-between
+                rounded-2xl
+                border border-slate-200 dark:border-slate-700
+                bg-white dark:bg-slate-900
+                p-5
+                hover:border-blue-500
+                hover:shadow-xl
+                hover:-translate-y-1
+                transition-all duration-300">
 
-                📄 Markdown
+                <div class="flex items-center gap-4">
+
+                    <div
+                        class="flex items-center justify-center
+                        w-14 h-14 rounded-2xl
+                        bg-blue-100 dark:bg-blue-900/30
+                        text-blue-600">
+
+                        <i
+                            data-lucide="file-text"
+                            class="w-7 h-7">
+                        </i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="font-semibold text-lg">
+
+                            Markdown
+
+                        </h3>
+
+                        <p class="text-sm text-slate-500 dark:text-slate-400">
+
+                            Perfect for GitHub, developers, and static sites.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <i
+                    data-lucide="arrow-right"
+                    class="w-5 h-5 text-slate-400
+                    group-hover:text-blue-600
+                    group-hover:translate-x-1
+                    transition-all">
+                </i>
 
             </a>
 
+            <!-- HTML -->
             <a
                 id="exportHtml"
                 href="#"
-                class="block rounded-xl border p-4 hover:bg-slate-100">
+                class="group flex items-center justify-between
+                rounded-2xl
+                border border-slate-200 dark:border-slate-700
+                bg-white dark:bg-slate-900
+                p-5
+                hover:border-orange-500
+                hover:shadow-xl
+                hover:-translate-y-1
+                transition-all duration-300">
 
-                🌐 HTML
+                <div class="flex items-center gap-4">
+
+                    <div
+                        class="flex items-center justify-center
+                        w-14 h-14 rounded-2xl
+                        bg-orange-100 dark:bg-orange-900/30
+                        text-orange-600">
+
+                        <i
+                            data-lucide="globe"
+                            class="w-7 h-7">
+                        </i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="font-semibold text-lg">
+
+                            HTML
+
+                        </h3>
+
+                        <p class="text-sm text-slate-500 dark:text-slate-400">
+
+                            Export as a standalone webpage.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <i
+                    data-lucide="arrow-right"
+                    class="w-5 h-5 text-slate-400
+                    group-hover:text-orange-600
+                    group-hover:translate-x-1
+                    transition-all">
+                </i>
 
             </a>
 
+            <!-- DOCX -->
             <a
                 id="exportDocx"
                 href="#"
-                class="block rounded-xl border p-4 hover:bg-slate-100">
+                class="group flex items-center justify-between
+                rounded-2xl
+                border border-slate-200 dark:border-slate-700
+                bg-white dark:bg-slate-900
+                p-5
+                hover:border-indigo-500
+                hover:shadow-xl
+                hover:-translate-y-1
+                transition-all duration-300">
 
-                📝 DOCX
+                <div class="flex items-center gap-4">
+
+                    <div
+                        class="flex items-center justify-center
+                        w-14 h-14 rounded-2xl
+                        bg-indigo-100 dark:bg-indigo-900/30
+                        text-indigo-600">
+
+                        <i
+                            data-lucide="file-text"
+                            class="w-7 h-7">
+                        </i>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="font-semibold text-lg">
+
+                            Microsoft Word
+
+                        </h3>
+
+                        <p class="text-sm text-slate-500 dark:text-slate-400">
+
+                            Export as a DOCX document.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <i
+                    data-lucide="arrow-right"
+                    class="w-5 h-5 text-slate-400
+                    group-hover:text-indigo-600
+                    group-hover:translate-x-1
+                    transition-all">
+                </i>
 
             </a>
 

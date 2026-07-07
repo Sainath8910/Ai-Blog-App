@@ -46,32 +46,61 @@
 
         tailwind.config = {
 
-            darkMode: "class",
+        darkMode: "class",
 
-            theme: {
+        theme: {
 
-                extend: {
+            extend: {
 
-                    fontFamily: {
+                fontFamily: {
+                    sans: ["Inter", "sans-serif"]
+                },
 
-                        sans: ["Inter"]
+                colors: {
+                    primary: "#2563EB",
+                    accent: "#6366F1",
+                    success: "#10B981",
+                    warning: "#F59E0B",
+                    danger: "#EF4444"
+                },
 
+                borderRadius: {
+                    xl: "1rem",
+                    "2xl": "1.25rem",
+                    "3xl": "1.75rem"
+                },
+
+                boxShadow: {
+                    soft: "0 10px 30px rgba(15,23,42,.08)",
+                    card: "0 12px 40px rgba(15,23,42,.12)",
+                    glow: "0 0 0 4px rgba(37,99,235,.15)"
+                },
+
+                animation: {
+                    fade: "fade .35s ease",
+                    float: "float 5s ease-in-out infinite"
+                },
+
+                keyframes: {
+
+                    fade: {
+                        from: {
+                            opacity: 0,
+                            transform: "translateY(12px)"
+                        },
+                        to: {
+                            opacity: 1,
+                            transform: "translateY(0)"
+                        }
                     },
 
-                    colors: {
-
-                        primary: "#2563EB",
-
-                        secondary: "#0F172A",
-
-                        accent: "#6366F1",
-
-                        success: "#10B981",
-
-                        danger: "#EF4444",
-
-                        warning: "#F59E0B"
-
+                    float: {
+                        "0%,100%": {
+                            transform: "translateY(0px)"
+                        },
+                        "50%": {
+                            transform: "translateY(-8px)"
+                        }
                     }
 
                 }
@@ -80,8 +109,76 @@
 
         }
 
-    </script>
+    }
 
+    </script>
+<style>
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+font-feature-settings:"cv02","cv03","cv04","cv11";
+
+}
+
+*{
+
+transition:
+background-color .25s,
+border-color .25s,
+color .25s,
+box-shadow .25s;
+
+}
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:transparent;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#94a3b8;
+border-radius:999px;
+
+}
+
+.dark ::-webkit-scrollbar-thumb{
+
+background:#475569;
+
+}
+
+:focus-visible{
+
+outline:none;
+
+box-shadow:
+0 0 0 3px rgba(37,99,235,.15);
+
+border-radius:.6rem;
+
+}
+
+.page-enter{
+
+animation:fade .35s ease;
+
+}
+
+</style>
     <!-- Lucide -->
 
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -93,7 +190,10 @@
 </head>
 
 <body
-class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-white min-h-screen">
+class="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200
+dark:from-slate-950 dark:via-slate-900 dark:to-black
+text-slate-800 dark:text-slate-100
+antialiased transition-colors duration-300 selection:bg-primary/20 selection:text-primary">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -106,22 +206,22 @@ window.DASHBOARD_URL = "{% url 'blogs:dashboard' %}";
 <script src="{% static 'js/supabase.js' %}"></script>
 <script src="{% static 'js/auth.js' %}"></script>
 
-<div class="flex h-screen overflow-hidden">
+<div class="flex h-screen overflow-hidden relative">
 
     {% include "components/sidebar.html" %}
 
-    <div class="flex flex-col flex-1 overflow-hidden">
+    <div class="flex flex-col flex-1 overflow-hidden relative">
 
         {% include "components/navbar.html" %}
         <div
     id="sidebarOverlay"
-    class="fixed inset-0 bg-black/50 z-40 hidden lg:hidden">
+    class="fixed inset-0 hidden bg-slate-950/60 backdrop-blur-sm z-40 lg:hidden transition-opacity duration-300">
 </div>
-
+{% include "components/messages.html" %}
         <main
-        class="flex-1 overflow-y-auto p-8">
+        class="page-enter flex-1 overflow-y-auto px-6 py-8 md:px-8 lg:px-10">
 
-            {% include "components/messages.html" %}
+            
 
             {% block content %}
 

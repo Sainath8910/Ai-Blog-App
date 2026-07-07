@@ -156,7 +156,7 @@ class DashboardView(TemplateView):
 
         recent_blogs = (
             blogs
-            .order_by("-created_at")[:5]
+            .order_by("-created_at")[:6]
         )
 
         total_images = 0
