@@ -1,35 +1,154 @@
 {% if blog.call_to_action %}
 
-<section class="mb-20">
+<!-- ===================================== -->
+<!-- Call To Action -->
+<!-- ===================================== -->
+
+<section class="my-24">
 
     <div
-        class="rounded-3xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-10 text-center">
+        class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700 shadow-2xl">
 
-        <h2
-            class="text-4xl font-bold">
+        <!-- Decorative Blur -->
 
-            {{ blog.call_to_action.title }}
+        <div
+            class="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-white/10 blur-[140px]">
+        </div>
 
-        </h2>
+        <div
+            class="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-cyan-400/20 blur-[140px]">
+        </div>
 
-        <p
-            class="mt-5 text-xl">
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,.18),transparent_45%)]">
+        </div>
 
-            {{ blog.call_to_action.description }}
+        <div
+            class="relative px-8 py-14 md:px-12 lg:px-16 lg:py-20">
 
-        </p>
+            <!-- Icon -->
 
-        {% if blog.call_to_action.button_text %}
+            <div
+                class="mx-auto flex h-24 w-24 items-center justify-center rounded-3xl bg-white/15 backdrop-blur-xl border border-white/20 shadow-xl">
 
-        <a
-            href="{{ blog.call_to_action.button_url|default:'#' }}"
-            class="inline-block mt-8 bg-white text-blue-700 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition">
+                <i
+                    data-lucide="rocket"
+                    class="h-12 w-12 text-white">
+                </i>
 
-            {{ blog.call_to_action.button_text }}
+            </div>
 
-        </a>
+            <!-- Title -->
 
-        {% endif %}
+            <h2
+                class="mt-10 text-center text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white">
+
+                {{ blog.call_to_action.title }}
+
+            </h2>
+
+            <!-- Description -->
+
+            <p
+                class="mx-auto mt-8 max-w-3xl text-center text-xl leading-9 text-blue-100">
+
+                {{ blog.call_to_action.description }}
+
+            </p>
+
+            <!-- Button -->
+
+            {% if blog.call_to_action.button_text %}
+
+            <div
+                class="mt-12 flex justify-center">
+
+                <a
+                    href="{{ blog.call_to_action.button_url|default:'#' }}"
+                    class="group inline-flex items-center gap-3 rounded-2xl bg-white px-10 py-5 text-lg font-bold text-blue-700 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-slate-100">
+
+                    <span>
+
+                        {{ blog.call_to_action.button_text }}
+
+                    </span>
+
+                    <i
+                        data-lucide="arrow-right"
+                        class="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1">
+                    </i>
+
+                </a>
+
+            </div>
+
+            {% endif %}
+
+            <!-- Bottom Stats -->
+
+            <div
+                class="mt-16 grid gap-6 sm:grid-cols-3">
+
+                <div
+                    class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl p-6 text-center">
+
+                    <div
+                        class="text-3xl font-black text-white">
+
+                        AI
+
+                    </div>
+
+                    <p
+                        class="mt-2 text-sm text-blue-100">
+
+                        Generated Content
+
+                    </p>
+
+                </div>
+
+                <div
+                    class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl p-6 text-center">
+
+                    <div
+                        class="text-3xl font-black text-white">
+
+                        SEO
+
+                    </div>
+
+                    <p
+                        class="mt-2 text-sm text-blue-100">
+
+                        Optimized Structure
+
+                    </p>
+
+                </div>
+
+                <div
+                    class="rounded-2xl border border-white/15 bg-white/10 backdrop-blur-xl p-6 text-center">
+
+                    <div
+                        class="text-3xl font-black text-white">
+
+                        HD
+
+                    </div>
+
+                    <p
+                        class="mt-2 text-sm text-blue-100">
+
+                        AI Generated Images
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 

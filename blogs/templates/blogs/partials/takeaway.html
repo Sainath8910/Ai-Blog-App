@@ -1,38 +1,149 @@
 {% if blog.key_takeaways %}
 
-<section id="takeaways" class="mb-20">
+<!-- ===================================== -->
+<!-- Key Takeaways -->
+<!-- ===================================== -->
 
-    <div class="rounded-3xl bg-blue-600 text-white p-8">
+<section
+    id="takeaways"
+    class="my-24">
 
-        <h2 class="text-3xl font-bold mb-8">
+    <div
+        class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700 shadow-2xl">
 
-            ✅ Key Takeaways
+        <!-- Decorative Background -->
 
-        </h2>
+        <div
+            class="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-white/10 blur-[140px]">
+        </div>
 
-        <div class="grid md:grid-cols-2 gap-5">
+        <div
+            class="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-cyan-400/20 blur-[140px]">
+        </div>
 
-            {% for takeaway in blog.key_takeaways %}
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,.18),transparent_45%)]">
+        </div>
 
-            <div class="flex gap-4">
+        <div
+            class="relative p-8 md:p-12 lg:p-16">
+
+            <!-- Header -->
+
+            <div
+                class="flex flex-col md:flex-row md:items-center gap-6 mb-12">
 
                 <div
-                    class="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center font-bold">
+                    class="flex h-20 w-20 items-center justify-center rounded-3xl bg-white/15 backdrop-blur-xl border border-white/20 shadow-xl">
 
-                    ✓
+                    <i
+                        data-lucide="badge-check"
+                        class="h-10 w-10 text-white">
+                    </i>
 
                 </div>
 
                 <div>
 
-                    <strong>{{ takeaway.title }}</strong>:
-                    {{ takeaway.description }}
+                    <span
+                        class="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold text-blue-100 backdrop-blur">
+
+                        Summary
+
+                    </span>
+
+                    <h2
+                        class="mt-4 text-4xl md:text-5xl font-black tracking-tight text-white">
+
+                        Key Takeaways
+
+                    </h2>
+
+                    <p
+                        class="mt-3 text-lg text-blue-100">
+
+                        The most important points from this article.
+
+                    </p>
 
                 </div>
 
             </div>
 
-            {% endfor %}
+            <!-- Cards -->
+
+            <div
+                class="grid gap-6 md:grid-cols-2">
+
+                {% for takeaway in blog.key_takeaways %}
+
+                <div
+                    class="group rounded-[2rem] border border-white/15 bg-white/10 backdrop-blur-xl p-7 transition-all duration-300 hover:-translate-y-2 hover:bg-white/15 hover:shadow-2xl">
+
+                    <div
+                        class="flex items-start gap-5">
+
+                        <div
+                            class="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-blue-600 shadow-lg">
+
+                            <i
+                                data-lucide="check"
+                                class="h-7 w-7">
+                            </i>
+
+                        </div>
+
+                        <div>
+
+                            <h3
+                                class="text-xl font-bold text-white">
+
+                                {{ takeaway.title }}
+
+                            </h3>
+
+                            <p
+                                class="mt-4 leading-8 text-blue-100">
+
+                                {{ takeaway.description }}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <!-- Footer -->
+
+            <div
+                class="mt-14 rounded-[2rem] border border-white/15 bg-white/10 p-8 text-center backdrop-blur-xl">
+
+                <i
+                    data-lucide="sparkles"
+                    class="mx-auto h-10 w-10 text-white">
+                </i>
+
+                <h3
+                    class="mt-5 text-2xl font-bold text-white">
+
+                    Keep These Insights in Mind
+
+                </h3>
+
+                <p
+                    class="mt-3 max-w-2xl mx-auto text-lg leading-8 text-blue-100">
+
+                    These key takeaways summarize the essential ideas discussed throughout the article and serve as a quick reference for future learning.
+
+                </p>
+
+            </div>
 
         </div>
 

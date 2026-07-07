@@ -21,66 +21,68 @@
 </div>
 
 <!-- ========================================= -->
-<!-- HERO -->
+<!-- PREMIUM HERO -->
 <!-- ========================================= -->
 
-<section class="relative">
+<section class="relative overflow-hidden">
 
     {% if blog.hero.image.path %}
 
     <img
-
         src="{{ blog.hero.image.path }}"
-
         alt="{{ blog.hero.image.alt_text }}"
-
-        class="w-full h-[420px] md:h-[520px] object-cover"
-
-    >
+        class="h-[460px] md:h-[620px] w-full object-cover transition-transform duration-[2500ms] hover:scale-105">
 
     {% endif %}
 
     <!-- Overlay -->
 
     <div
-
-        class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-transparent">
-
+        class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20">
     </div>
 
-    <!-- Hero Content -->
+    <!-- Decorative Blur -->
 
     <div
+        class="absolute top-10 left-10 h-72 w-72 rounded-full bg-blue-600/20 blur-[120px]">
+    </div>
 
-        class="absolute inset-0 flex items-end">
+    <div
+        class="absolute bottom-10 right-10 h-72 w-72 rounded-full bg-indigo-600/20 blur-[120px]">
+    </div>
 
-        <div
+    <!-- Content -->
 
-            class="max-w-6xl mx-auto w-full px-6 pb-14">
+    <div class="absolute inset-0 flex items-end">
 
-            <div
+        <div class="max-w-7xl mx-auto w-full px-6 pb-16">
 
-                class="flex flex-wrap gap-3 mb-6">
+            <!-- Badges -->
+
+            <div class="flex flex-wrap gap-3 mb-8">
 
                 <span
+                    class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-lg">
 
-                    class="bg-blue-600 text-white px-4 py-1 rounded-full text-sm">
+                    <i data-lucide="folder" class="w-4 h-4"></i>
 
                     {{ blog.category }}
 
                 </span>
 
                 <span
+                    class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm text-white backdrop-blur-xl">
 
-                    class="bg-white/20 text-white backdrop-blur px-4 py-1 rounded-full text-sm">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
 
-                    🤖 AI Generated
+                    AI Generated
 
                 </span>
 
                 <span
+                    class="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm text-white backdrop-blur-xl">
 
-                    class="bg-white/20 text-white backdrop-blur px-4 py-1 rounded-full text-sm">
+                    <i data-lucide="book-open" class="w-4 h-4"></i>
 
                     {{ chapters|length }} Chapters
 
@@ -88,9 +90,10 @@
 
             </div>
 
-            <h1
+            <!-- Title -->
 
-                class="text-5xl md:text-6xl font-extrabold text-white leading-tight">
+            <h1
+                class="max-w-5xl text-5xl md:text-7xl font-black tracking-tight text-white leading-tight">
 
                 {{ blog.title }}
 
@@ -99,8 +102,7 @@
             {% if blog.hero.subtitle %}
 
             <p
-
-                class="mt-6 text-2xl text-slate-200">
+                class="mt-8 max-w-4xl text-2xl text-slate-200 leading-relaxed">
 
                 {{ blog.hero.subtitle }}
 
@@ -111,8 +113,7 @@
             {% if blog.hero.summary %}
 
             <p
-
-                class="mt-6 max-w-3xl text-lg text-slate-300">
+                class="mt-8 max-w-4xl text-lg leading-8 text-slate-300">
 
                 {{ blog.hero.summary }}
 
@@ -120,33 +121,164 @@
 
             {% endif %}
 
+            <!-- Meta Cards -->
+
             <div
+                class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-5">
 
-                class="flex flex-wrap gap-6 mt-8 text-white text-sm">
+                <div
+                    class="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl p-5">
 
-                <span>
+                    <div class="flex items-center gap-3">
 
-                    📅 {{ blog.created_at|date:"d M Y" }}
+                        <div
+                            class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600">
 
-                </span>
+                            <i data-lucide="calendar" class="w-5 h-5 text-white"></i>
 
-                <span>
+                        </div>
 
-                    🎯 {{ blog.target_audience }}
+                        <div>
 
-                </span>
+                            <div class="text-xs uppercase tracking-wider text-slate-300">
 
-                <span>
+                                Published
 
-                    ✍ {{ blog.tone }}
+                            </div>
 
-                </span>
+                            <div class="mt-1 font-semibold text-white">
 
-                <span>
+                                {{ blog.created_at|date:"d M Y" }}
 
-                    🌎 {{ blog.language }}
+                            </div>
 
-                </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl p-5">
+
+                    <div class="flex items-center gap-3">
+
+                        <div
+                            class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600">
+
+                            <i data-lucide="users" class="w-5 h-5 text-white"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="text-xs uppercase tracking-wider text-slate-300">
+
+                                Audience
+
+                            </div>
+
+                            <div class="mt-1 font-semibold text-white">
+
+                                {{ blog.target_audience }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl p-5">
+
+                    <div class="flex items-center gap-3">
+
+                        <div
+                            class="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-600">
+
+                            <i data-lucide="pen-tool" class="w-5 h-5 text-white"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="text-xs uppercase tracking-wider text-slate-300">
+
+                                Tone
+
+                            </div>
+
+                            <div class="mt-1 font-semibold text-white">
+
+                                {{ blog.tone }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="rounded-2xl border border-white/10 bg-white/10 backdrop-blur-xl p-5">
+
+                    <div class="flex items-center gap-3">
+
+                        <div
+                            class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-600">
+
+                            <i data-lucide="languages" class="w-5 h-5 text-white"></i>
+
+                        </div>
+
+                        <div>
+
+                            <div class="text-xs uppercase tracking-wider text-slate-300">
+
+                                Language
+
+                            </div>
+
+                            <div class="mt-1 font-semibold text-white">
+
+                                {{ blog.language }}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Hero Actions -->
+
+            <div class="mt-10 flex flex-wrap gap-4">
+
+                <button
+                    onclick="openExportModal()"
+                    class="inline-flex items-center gap-3 rounded-2xl bg-blue-600 px-7 py-4 font-semibold text-white shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-blue-700">
+
+                    <i data-lucide="download" class="w-5 h-5"></i>
+
+                    Export Blog
+
+                </button>
+
+                <a
+                    href="{% url 'blogs:edit' blog.id %}"
+                    class="inline-flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-7 py-4 font-semibold text-white backdrop-blur-xl transition-all duration-300 hover:bg-white/20">
+
+                    <i data-lucide="square-pen" class="w-5 h-5"></i>
+
+                    Edit Blog
+
+                </a>
 
             </div>
 
@@ -155,24 +287,18 @@
     </div>
 
 </section>
-
 <!-- ========================================= -->
-<!-- BODY -->
+<!-- ARTICLE -->
 <!-- ========================================= -->
 
-<section
+<section class="py-16">
 
-    class="max-w-7xl mx-auto px-6 py-12">
-
-    <div class="max-w-5xl mx-auto">
-
-        <!-- =============================== -->
-        <!-- ARTICLE -->
-        <!-- =============================== -->
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <article
+            class="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl">
 
-            class="xl:col-span-10 max-w-4xl">
+            <div class="px-6 md:px-10 lg:px-14 py-12">
 
             {% for chapter in chapters %}
 
@@ -797,49 +923,68 @@
 
             {% endif %}
 
+                    </div>
+
         </article>
 
     </div>
 
 </section>
 
+
+
 <!-- ========================================= -->
 <!-- Floating Actions -->
 <!-- ========================================= -->
 
 <div
-    class="hidden xl:flex fixed right-8 bottom-8 flex-col gap-4 z-40">
+    class="fixed bottom-8 right-8 z-50 hidden xl:flex flex-col gap-4">
+
+    <!-- Export -->
 
     <button
-
         onclick="openExportModal()"
+        title="Export Blog"
+        class="group flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-blue-600 hover:text-white">
 
-        class="w-12 h-12 rounded-full bg-white dark:bg-slate-900 shadow-lg flex items-center justify-center hover:bg-slate-100">
-
-        <svg xmlns="http://www.w3.org/2000/svg"
-            class="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24">
-
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 16V4m0 12l4-4m-4 4l-4-4M4 20h16"/>
-
-        </svg>
+        <i
+            data-lucide="download"
+            class="h-5 w-5 transition-transform duration-300 group-hover:scale-110">
+        </i>
 
     </button>
 
-    <button
-        class="w-12 h-12 rounded-full bg-white dark:bg-slate-900 shadow-lg">
+    <!-- Edit -->
 
-        <a href="{% url 'blogs:edit' blog.id %}">✏</a>
+    <a
+        href="{% url 'blogs:edit' blog.id %}"
+        title="Edit Blog"
+        class="group flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-emerald-600 hover:text-white">
+
+        <i
+            data-lucide="square-pen"
+            class="h-5 w-5 transition-transform duration-300 group-hover:rotate-12">
+        </i>
+
+    </a>
+
+    <!-- Back To Top -->
+
+    <button
+    onclick="document.getElementById('mainContent').scrollTo({top:0,behavior:'smooth'})"
+    title="Back to Top"
+    class="group flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-700 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-xl transition-all duration-300 hover:-translate-y-1 hover:scale-105 hover:bg-indigo-600 hover:text-white">
+
+    <i
+        data-lucide="arrow-up"
+        class="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-1">
+    </i>
 
 </button>
-{% include "components/export_modal.html" %}
+
 </div>
+
+{% include "components/export_modal.html" %}
 
 <script>
 

@@ -1,140 +1,192 @@
 <section
     id="chapter-{{ chapter.order }}"
-    class="scroll-mt-24 mb-20">
+    class="group mb-24 scroll-mt-28">
 
-    <!-- Chapter Title -->
-
-    <div class="mb-8">
-
-        <span
-            class="inline-flex items-center rounded-full bg-blue-100 text-blue-700 px-3 py-1 text-sm font-medium">
-
-            Chapter {{ chapter.order }}
-
-        </span>
-
-        <h2
-            class="mt-4 text-4xl font-bold text-slate-900 dark:text-white">
-
-            {{ chapter.title }}
-
-        </h2>
-
-    </div>
-
-    <!-- Chapter Image -->
-
-    {% if chapter.image.path %}
-
-    <div class="mb-8 overflow-hidden rounded-2xl shadow">
-
-        <img
-            src="{{ chapter.image.path }}"
-            alt="{{ chapter.image.alt_text }}"
-            class="w-full h-auto object-cover">
-
-    </div>
-
-    {% endif %}
-
-    <!-- Paragraphs -->
-
-    {% for paragraph in chapter.paragraphs %}
-
-    <p
-        class="mb-6 text-lg leading-9 text-slate-700 dark:text-slate-300">
-
-        {{ paragraph }}
-
-    </p>
-
-    {% endfor %}
-
-    <!-- Bullet Points -->
-
-    {% if chapter.bullet_points %}
+    <!-- ===================================== -->
+    <!-- Chapter Header -->
+    <!-- ===================================== -->
 
     <div
-        class="my-8 rounded-2xl bg-slate-100 dark:bg-slate-900 p-6">
+        class="relative overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-white via-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 shadow-xl">
 
-        <h3
-            class="font-bold text-xl mb-5">
+        <!-- Decorative Blur -->
 
-            Key Points
+        <div
+            class="absolute -right-20 -top-20 h-56 w-56 rounded-full bg-blue-500/10 blur-3xl">
+        </div>
 
-        </h3>
+        <div
+            class="absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-indigo-500/10 blur-3xl">
+        </div>
 
-        <ul class="space-y-3">
+        <div class="relative p-8 md:p-10 lg:p-12">
 
-            {% for bullet in chapter.bullet_points %}
+            <!-- Chapter Number -->
 
-            <li class="flex gap-3">
-
-                <span
-                    class="text-blue-600 mt-1">
-
-                    ✓
-
-                </span>
-
-                <span>
-
-                    {{ bullet }}
-
-                </span>
-
-            </li>
-
-            {% endfor %}
-
-        </ul>
-
-    </div>
-
-    {% endif %}
-
-    <!-- Numbered Steps -->
-
-    {% if chapter.numbered_steps %}
-
-    <div class="my-10">
-
-        <h3
-            class="text-2xl font-bold mb-6">
-
-            Step-by-Step
-
-        </h3>
-
-        <div class="space-y-6">
-
-            {% for step in chapter.numbered_steps %}
-
-            <div
-                class="flex gap-5">
+            <div class="flex items-center gap-6">
 
                 <div
-                    class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
+                    class="flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-blue-600 to-indigo-600 text-3xl font-black text-white shadow-xl">
 
-                    {{ forloop.counter }}
+                    {{ chapter.order }}
 
                 </div>
 
-                <div>
+                <div class="flex-1">
 
-                    <h4
-                        class="text-xl font-semibold">
+                    <span
+                        class="inline-flex items-center gap-2 rounded-full bg-blue-100 dark:bg-blue-900/30 px-4 py-2 text-sm font-semibold text-blue-700 dark:text-blue-300">
 
-                        {{ step.title }}
+                        <i data-lucide="book-open" class="w-4 h-4"></i>
 
-                    </h4>
+                        Chapter {{ chapter.order }}
 
-                    <p
-                        class="mt-2 text-slate-600 dark:text-slate-300">
+                    </span>
 
-                        {{ step.description }}
+                    <h2
+                        class="mt-5 text-4xl md:text-5xl font-black tracking-tight text-slate-900 dark:text-white">
 
-                    </p>
+                        {{ chapter.title }}
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================== -->
+    <!-- Chapter Image -->
+    <!-- ===================================== -->
+
+    {% if chapter.image.path %}
+
+    <figure
+        class="group/image mt-10 overflow-hidden rounded-[2rem] shadow-2xl border border-slate-200 dark:border-slate-800">
+
+        <img
+
+            src="{{ chapter.image.path }}"
+
+            alt="{{ chapter.image.alt_text }}"
+
+            class="w-full object-cover transition-transform duration-700 group-hover/image:scale-105">
+
+        {% if chapter.image.alt_text %}
+
+        <figcaption
+            class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-6 py-4 text-center text-sm text-slate-500">
+
+            {{ chapter.image.alt_text }}
+
+        </figcaption>
+
+        {% endif %}
+
+    </figure>
+
+    {% endif %}
+
+    <!-- ===================================== -->
+    <!-- Paragraphs -->
+    <!-- ===================================== -->
+
+    <div
+        class="mt-12 space-y-8">
+
+        {% for paragraph in chapter.paragraphs %}
+
+        <p
+            class="text-xl leading-[2.15] text-slate-700 dark:text-slate-300">
+
+            {{ paragraph }}
+
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- Decorative Divider -->
+
+    <div
+        class="my-14 h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent">
+    </div>
+
+ 
+
+    <!-- ===================================== -->
+<!-- Key Points -->
+<!-- ===================================== -->
+
+{% if chapter.bullet_points %}
+
+<div
+    class="my-14 rounded-[2rem] border border-blue-200 dark:border-blue-900/40 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-950 shadow-lg overflow-hidden">
+
+    <!-- Header -->
+
+    <div
+        class="flex items-center gap-4 border-b border-blue-200 dark:border-slate-800 px-8 py-6">
+
+        <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg">
+
+            <i
+                data-lucide="badge-check"
+                class="h-7 w-7 text-white">
+            </i>
+
+        </div>
+
+        <div>
+
+            <h3
+                class="text-2xl font-bold">
+
+                Key Points
+
+            </h3>
+
+            <p
+                class="text-slate-500">
+
+                Important concepts from this chapter.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- List -->
+
+    <div class="p-8">
+
+        <div class="grid gap-5">
+
+            {% for bullet in chapter.bullet_points %}
+
+            <div
+                class="group flex gap-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+
+                <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white shadow">
+
+                    <i
+                        data-lucide="check"
+                        class="h-5 w-5">
+                    </i>
+
+                </div>
+
+                <div
+                    class="text-lg leading-8 text-slate-700 dark:text-slate-300">
+
+                    {{ bullet }}
 
                 </div>
 
@@ -146,209 +198,571 @@
 
     </div>
 
-    {% endif %}
+</div>
 
-    <!-- Tips -->
+{% endif %}
 
-    {% if chapter.tips %}
+<!-- ===================================== -->
+<!-- Step By Step -->
+<!-- ===================================== -->
+
+{% if chapter.numbered_steps %}
+
+<div class="my-16">
+
+    <div class="flex items-center gap-4 mb-10">
+
+        <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 shadow-lg">
+
+            <i
+                data-lucide="workflow"
+                class="h-7 w-7 text-white">
+            </i>
+
+        </div>
+
+        <div>
+
+            <h3
+                class="text-3xl font-bold">
+
+                Step-by-Step Guide
+
+            </h3>
+
+            <p
+                class="text-slate-500">
+
+                Follow these steps in order.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="space-y-10">
+
+        {% for step in chapter.numbered_steps %}
+
+        <div class="flex gap-6">
+
+            <!-- Number -->
+
+            <div
+                class="relative flex flex-col items-center">
+
+                <div
+                    class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-lg font-bold text-white shadow-xl">
+
+                    {{ forloop.counter }}
+
+                </div>
+
+                {% if not forloop.last %}
+
+                <div
+                    class="mt-3 h-full w-1 rounded-full bg-gradient-to-b from-blue-500 to-indigo-500">
+                </div>
+
+                {% endif %}
+
+            </div>
+
+            <!-- Card -->
+
+            <div
+                class="flex-1 rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+
+                <div class="p-8">
+
+                    <h4
+                        class="text-2xl font-bold text-slate-900 dark:text-white">
+
+                        {{ step.title }}
+
+                    </h4>
+
+                    <p
+                        class="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-300">
+
+                        {{ step.description }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+<!-- ===================================== -->
+<!-- Tips -->
+<!-- ===================================== -->
+
+{% if chapter.tips %}
+
+<div
+    class="my-16 rounded-[2rem] overflow-hidden border border-emerald-200 dark:border-emerald-900/40 shadow-lg">
 
     <div
-        class="my-10 rounded-2xl border-l-4 border-green-500 bg-green-50 dark:bg-green-950/30 p-6">
+        class="flex items-center gap-4 bg-gradient-to-r from-emerald-500 to-green-600 px-8 py-6 text-white">
 
-        <h3
-            class="font-bold text-green-700 dark:text-green-400 mb-4">
+        <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur">
 
-            💡 Tips
+            <i
+                data-lucide="lightbulb"
+                class="w-7 h-7">
+            </i>
 
-        </h3>
+        </div>
 
-        <ul
-            class="space-y-3">
+        <div>
+
+            <h3 class="text-2xl font-bold">
+
+                Pro Tips
+
+            </h3>
+
+            <p class="text-green-100">
+
+                Helpful recommendations.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-900 p-8">
+
+        <div class="space-y-5">
 
             {% for tip in chapter.tips %}
 
-            <li>
+            <div
+                class="flex gap-5 rounded-2xl border border-emerald-200 dark:border-slate-800 bg-emerald-50 dark:bg-slate-950 p-5">
 
-                {{ tip }}
+                <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white">
 
-            </li>
+                    <i
+                        data-lucide="check"
+                        class="w-5 h-5">
+                    </i>
+
+                </div>
+
+                <div
+                    class="text-lg leading-8">
+
+                    {{ tip }}
+
+                </div>
+
+            </div>
 
             {% endfor %}
 
-        </ul>
+        </div>
 
     </div>
 
-    {% endif %}
+</div>
 
-    <!-- Warnings -->
+{% endif %}
 
-    {% if chapter.warnings %}
+<!-- ===================================== -->
+<!-- Warnings -->
+<!-- ===================================== -->
+
+{% if chapter.warnings %}
+
+<div
+    class="my-16 rounded-[2rem] overflow-hidden border border-red-200 dark:border-red-900/40 shadow-lg">
 
     <div
-        class="my-10 rounded-2xl border-l-4 border-red-500 bg-red-50 dark:bg-red-950/30 p-6">
+        class="flex items-center gap-4 bg-gradient-to-r from-red-500 to-rose-600 px-8 py-6 text-white">
 
-        <h3
-            class="font-bold text-red-700 dark:text-red-400 mb-4">
+        <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20">
 
-            ⚠️ Warnings
+            <i
+                data-lucide="triangle-alert"
+                class="w-7 h-7">
+            </i>
 
-        </h3>
+        </div>
 
-        <ul
-            class="space-y-3">
+        <div>
+
+            <h3 class="text-2xl font-bold">
+
+                Warnings
+
+            </h3>
+
+            <p class="text-red-100">
+
+                Read carefully before continuing.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-900 p-8">
+
+        <div class="space-y-5">
 
             {% for warning in chapter.warnings %}
 
-            <li>
+            <div
+                class="flex gap-5 rounded-2xl border border-red-200 dark:border-slate-800 bg-red-50 dark:bg-slate-950 p-5">
 
-                {{ warning }}
+                <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-600 text-white">
 
-            </li>
+                    <i
+                        data-lucide="alert-triangle"
+                        class="w-5 h-5">
+                    </i>
+
+                </div>
+
+                <div
+                    class="text-lg leading-8">
+
+                    {{ warning }}
+
+                </div>
+
+            </div>
 
             {% endfor %}
 
-        </ul>
+        </div>
 
     </div>
 
-    {% endif %}
+</div>
 
-    <!-- Notes -->
+{% endif %}
 
-    {% if chapter.notes %}
+<!-- ===================================== -->
+<!-- Notes -->
+<!-- ===================================== -->
+
+{% if chapter.notes %}
+
+<div
+    class="my-16 rounded-[2rem] overflow-hidden border border-blue-200 dark:border-blue-900/40 shadow-lg">
 
     <div
-        class="my-10 rounded-2xl border-l-4 border-blue-500 bg-blue-50 dark:bg-blue-950/30 p-6">
+        class="flex items-center gap-4 bg-gradient-to-r from-blue-500 to-indigo-600 px-8 py-6 text-white">
 
-        <h3
-            class="font-bold text-blue-700 dark:text-blue-400 mb-4">
+        <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20">
 
-            📝 Notes
+            <i
+                data-lucide="notebook-pen"
+                class="w-7 h-7">
+            </i>
 
-        </h3>
+        </div>
 
-        <ul
-            class="space-y-3">
+        <div>
+
+            <h3 class="text-2xl font-bold">
+
+                Notes
+
+            </h3>
+
+            <p class="text-blue-100">
+
+                Additional information.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <div
+        class="bg-white dark:bg-slate-900 p-8">
+
+        <div class="space-y-5">
 
             {% for note in chapter.notes %}
 
-            <li>
+            <div
+                class="flex gap-5 rounded-2xl border border-blue-200 dark:border-slate-800 bg-blue-50 dark:bg-slate-950 p-5">
 
-                {{ note }}
+                <div
+                    class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white">
 
-            </li>
+                    <i
+                        data-lucide="info"
+                        class="w-5 h-5">
+                    </i>
+
+                </div>
+
+                <div
+                    class="text-lg leading-8">
+
+                    {{ note }}
+
+                </div>
+
+            </div>
 
             {% endfor %}
 
-        </ul>
+        </div>
 
     </div>
 
-    {% endif %}
+</div>
 
-    <!-- Quotes -->
+{% endif %}
 
-    {% if chapter.quotes %}
+<!-- ===================================== -->
+<!-- Quotes -->
+<!-- ===================================== -->
 
-    {% for quote in chapter.quotes %}
+{% if chapter.quotes %}
 
-    <blockquote
-        class="my-10 border-l-4 border-slate-300 pl-6 italic text-2xl text-slate-600 dark:text-slate-300">
+{% for quote in chapter.quotes %}
 
-        "{{ quote }}"
+<blockquote
+    class="relative my-16 overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 p-10 shadow-xl">
 
-    </blockquote>
+    <div
+        class="absolute -left-8 -top-10 text-[120px] font-black text-blue-100 dark:text-slate-800">
 
-    {% endfor %}
+        “
 
-    {% endif %}
+    </div>
 
-    <!-- Code Examples -->
+    <div
+        class="relative">
 
-    {% if chapter.code_examples %}
+        <i
+            data-lucide="quote"
+            class="mb-6 h-10 w-10 text-blue-600">
+        </i>
+
+        <p
+            class="text-2xl italic leading-10 text-slate-700 dark:text-slate-300">
+
+            {{ quote }}
+
+        </p>
+
+    </div>
+
+</blockquote>
+
+{% endfor %}
+
+{% endif %}
+
+<!-- ===================================== -->
+<!-- Code Examples -->
+<!-- ===================================== -->
+
+{% if chapter.code_examples %}
+
+<div class="my-16">
+
+    <div class="flex items-center gap-4 mb-8">
+
+        <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 shadow-lg">
+
+            <i
+                data-lucide="code-2"
+                class="h-7 w-7 text-white">
+            </i>
+
+        </div>
+
+        <div>
+
+            <h3 class="text-3xl font-bold">
+
+                Code Examples
+
+            </h3>
+
+            <p class="text-slate-500">
+
+                Practical implementation examples.
+
+            </p>
+
+        </div>
+
+    </div>
 
     {% for code in chapter.code_examples %}
 
     <div
-        class="my-10 rounded-2xl overflow-hidden">
+        class="mb-10 overflow-hidden rounded-[2rem] border border-slate-800 shadow-2xl">
+
+        <!-- VS Code Header -->
 
         <div
-            class="bg-slate-900 text-white px-5 py-3 font-medium">
+            class="flex items-center justify-between bg-[#1e1e1e] px-6 py-4">
 
-            {{ code.language }}
+            <div class="flex items-center gap-3">
+
+                <div class="h-3 w-3 rounded-full bg-red-500"></div>
+                <div class="h-3 w-3 rounded-full bg-yellow-500"></div>
+                <div class="h-3 w-3 rounded-full bg-green-500"></div>
+
+            </div>
+
+            <span
+                class="rounded-full bg-slate-700 px-4 py-1 text-xs font-medium uppercase tracking-wider text-slate-300">
+
+                {{ code.language }}
+
+            </span>
 
         </div>
 
+        <!-- Code -->
+
         <pre
-            class="bg-slate-950 text-green-400 overflow-x-auto p-6 text-sm"><code>{{ code.code }}</code></pre>
+            class="overflow-x-auto bg-[#0d1117] p-8 text-[15px] leading-7 text-green-400"><code>{{ code.code }}</code></pre>
 
     </div>
 
     {% endfor %}
 
-    {% endif %}
+</div>
 
-    <!-- Tables -->
+{% endif %}
 
-    {% if chapter.tables %}
+<!-- ===================================== -->
+<!-- Tables -->
+<!-- ===================================== -->
+
+{% if chapter.tables %}
+
+<div class="my-16">
+
+    <div class="flex items-center gap-4 mb-8">
+
+        <div
+            class="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-lg">
+
+            <i
+                data-lucide="table-properties"
+                class="h-7 w-7 text-white">
+            </i>
+
+        </div>
+
+        <div>
+
+            <h3 class="text-3xl font-bold">
+
+                Comparison Tables
+
+            </h3>
+
+            <p class="text-slate-500">
+
+                Structured information for quick reference.
+
+            </p>
+
+        </div>
+
+    </div>
 
     {% for table in chapter.tables %}
 
     <div
-        class="overflow-x-auto my-10">
+        class="overflow-hidden rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-xl">
 
-        <table
-            class="min-w-full border border-slate-300 dark:border-slate-700">
+        <div class="overflow-x-auto">
 
-            <thead>
+            <table
+                class="min-w-full">
 
-                <tr>
+                <thead
+                    class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
 
-                    {% for header in table.headers %}
+                    <tr>
 
-                    <th
-                        class="border bg-slate-100 dark:bg-slate-900 px-4 py-3 text-left">
+                        {% for header in table.headers %}
 
-                        {{ header }}
+                        <th
+                            class="px-6 py-5 text-left text-sm font-semibold uppercase tracking-wider whitespace-nowrap">
 
-                    </th>
+                            {{ header }}
+
+                        </th>
+
+                        {% endfor %}
+
+                    </tr>
+
+                </thead>
+
+                <tbody
+                    class="divide-y divide-slate-200 dark:divide-slate-800">
+
+                    {% for row in table.rows %}
+
+                    <tr
+                        class="transition-colors hover:bg-slate-50 dark:hover:bg-slate-900">
+
+                        {% for cell in row %}
+
+                        <td
+                            class="px-6 py-5 text-slate-700 dark:text-slate-300">
+
+                            {{ cell }}
+
+                        </td>
+
+                        {% endfor %}
+
+                    </tr>
 
                     {% endfor %}
 
-                </tr>
+                </tbody>
 
-            </thead>
+            </table>
 
-            <tbody>
-
-                {% for row in table.rows %}
-
-                <tr>
-
-                    {% for cell in row %}
-
-                    <td
-                        class="border px-4 py-3">
-
-                        {{ cell }}
-
-                    </td>
-
-                    {% endfor %}
-
-                </tr>
-
-                {% endfor %}
-
-            </tbody>
-
-        </table>
+        </div>
 
     </div>
 
     {% endfor %}
 
-    {% endif %}
+</div>
+
+{% endif %}
 
 </section>
