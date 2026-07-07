@@ -117,6 +117,87 @@ class BlogRepository:
         return db_blog
 
     @staticmethod
+    @transaction.atomic
+    def replace_blog(
+        existing_blog,
+        generated_blog,
+    ):
+        """
+        Replace an existing blog with newly generated content.
+        Keeps the same Blog ID and metadata.
+        """
+
+        # ------------------------------------
+        # Blog Information
+        # ------------------------------------
+        existing_blog.topic = generated_blog.blog_info.topic
+        existing_blog.language = generated_blog.blog_info.language
+        existing_blog.tone = generated_blog.blog_info.tone
+        existing_blog.blog_type = generated_blog.blog_info.blog_type
+        existing_blog.target_audience = generated_blog.blog_info.target_audience
+
+        # ------------------------------------
+        # Metadata
+        # ------------------------------------
+
+        existing_blog.title = generated_blog.metadata.title
+        existing_blog.slug = generated_blog.metadata.slug
+        existing_blog.description = generated_blog.metadata.description
+        existing_blog.category = generated_blog.metadata.category
+
+        existing_blog.keywords = serialize(
+            generated_blog.metadata.keywords
+        )
+
+        existing_blog.tags = serialize(
+            generated_blog.metadata.tags
+        )
+
+        # ------------------------------------
+        # Rich Content
+        # ------------------------------------
+
+        existing_blog.hero = serialize(
+            generated_blog.hero
+        )
+
+        existing_blog.key_takeaways = serialize(
+            generated_blog.key_takeaways
+        )
+
+        existing_blog.faq = serialize(
+            generated_blog.faq
+        )
+
+        existing_blog.resources = serialize(
+            generated_blog.resources
+        )
+
+        existing_blog.call_to_action = serialize(
+            generated_blog.call_to_action
+        )
+
+        existing_blog.conclusion = serialize(
+            generated_blog.conclusion
+        )
+
+        existing_blog.processing_status = "completed"
+
+        existing_blog.save()
+
+        # ------------------------------------
+        # Replace Chapters
+        # ------------------------------------
+
+        existing_blog.chapters.all().delete()
+
+        ChapterRepository.bulk_create(
+            existing_blog,
+            generated_blog.chapters,
+        )
+
+        return existing_blog
+    @staticmethod
     def get_blog(blog_id):
 
         return Blog.objects.prefetch_related(

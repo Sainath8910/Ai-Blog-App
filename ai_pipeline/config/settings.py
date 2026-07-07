@@ -55,11 +55,11 @@ PRIMARY_LLM = os.getenv(
 )
 
 BACKUP_LLMS = [
+    "openrouter_deepseek",
+    "openrouter_qwen",
     "gemini_flash_lite",
     "gemini_20_flash",
     "openrouter",
-    "openrouter_deepseek",
-    "openrouter_qwen",
     "openrouter_llama33",
 ]
 
@@ -84,13 +84,14 @@ MAX_OUTPUT_TOKENS = int(
 # Image Generation
 # ==========================================================
 
-IMAGE_PRIMARY_PROVIDER = "cloudflare_dreamshaper"
+IMAGE_PRIMARY_PROVIDER = "pollinations_flux_dev"
 
 IMAGE_BACKUP_PROVIDERS = [
-    "cloudflare_sdxl",
+    
     "pollinations",
-    "pollinations_flux_dev",
     "pollinations_turbo",
+    "cloudflare_sdxl",
+    "cloudflare_dreamshaper",
 ]
 
 IMAGE_MODEL = os.getenv(

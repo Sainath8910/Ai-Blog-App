@@ -16,6 +16,7 @@ from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
 import json
 from blogs.services.regenerate_service import RegenerateService
+from .services.blog_regeneration_service import BlogRegenerationService
 
 @method_decorator(login_required, name="dispatch")
 class GenerateBlogView(TemplateView):
@@ -462,3 +463,46 @@ def regenerate_chapter(request):
         "chapter":chapter,
 
     })
+
+@login_required
+@require_POST
+def regenerate_entire_blog(request):
+
+    data = json.loads(request.body)
+
+    blog = BlogRepository.get_blog(
+        data["blog_id"]
+    )
+
+    if str(blog.user_id) != request.user["id"]:
+
+        return JsonResponse(
+            {
+                "success": False,
+                "message": "Permission denied."
+            },
+            status=403,
+        )
+
+    try:
+
+        service = BlogRegenerationService()
+
+        blog = service.regenerate(blog)
+
+        return JsonResponse(
+            {
+                "success": True,
+                "blog_id": blog.id,
+            }
+        )
+
+    except Exception as e:
+
+        return JsonResponse(
+            {
+                "success": False,
+                "message": str(e),
+            },
+            status=500,
+        )

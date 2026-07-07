@@ -10,7 +10,7 @@ from blogs.services.image_service import ImageService
 
 class BlogService:
     """
-    Orchestrates the complete blog generation workflow.
+    Handles blog generation.
     """
 
     def __init__(self):
@@ -20,6 +20,27 @@ class BlogService:
         self.image_service = ImageService()
 
         self.repository = BlogRepository()
+
+    def generate_content(
+        self,
+        request: BlogRequest,
+        user_id: str,
+        generation_uuid,
+    ):
+        """
+        Generate the complete AI blog (content + images),
+        but DO NOT save it to the database.
+        """
+
+        blog = self.pipeline.generate(request)
+
+        blog = self.image_service.generate_images(
+            blog=blog,
+            user_id=user_id,
+            generation_uuid=generation_uuid,
+        )
+
+        return blog
 
     def generate(
         self,
@@ -31,27 +52,29 @@ class BlogService:
 
         start = time.perf_counter()
 
-        # Generate blog content
-        blog = self.pipeline.generate(request)
-
-        # Generate images and upload to Supabase
-        blog = self.image_service.generate_images(
-            blog=blog,
+        generated_blog = self.generate_content(
+            request=request,
             user_id=user_id,
             generation_uuid=generation_uuid,
         )
 
         end = time.perf_counter()
 
-        # Save everything
         db_blog = self.repository.create_blog(
-            blog=blog,
+            blog=generated_blog,
             user_id=user_id,
             generation_uuid=generation_uuid,
         )
 
-        db_blog.generation_time = round(end - start, 2)
+        db_blog.generation_time = round(
+            end - start,
+            2,
+        )
 
-        db_blog.save(update_fields=["generation_time"])
+        db_blog.save(
+            update_fields=[
+                "generation_time",
+            ]
+        )
 
         return db_blog

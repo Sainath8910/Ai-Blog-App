@@ -11,60 +11,32 @@ from .views import (
     regenerate_paragraph,
     regenerate_image,
     regenerate_chapter,
+    regenerate_entire_blog,
 )
 
 app_name = "blogs"
 
 urlpatterns = [
 
-    path(
-        "",
-        DashboardView.as_view(),
-        name="dashboard",
-    ),
+    path("", DashboardView.as_view(), name="dashboard"),
 
-    path(
-        "generate/",
-        GenerateBlogView.as_view(),
-        name="generate",
-    ),
-    path("<int:blog_id>/",blog_detail,name="detail",),
-    path(
-        "my/",
-        my_blogs,
-        name="my_blogs",
-    ),
-    path(
-    "<int:blog_id>/edit/",
-    edit_blog,
-    name="edit",),
-    path(
-    "<int:blog_id>/delete/",
-    delete_blog,
-    name="delete",
-),
-path(
+    path("generate/", GenerateBlogView.as_view(), name="generate"),
 
-    "<int:blog_id>/update/",
+    path("my/", my_blogs, name="my_blogs"),
 
-    update_blog,
+    path("regenerate/paragraph/", regenerate_paragraph, name="regenerate_paragraph"),
 
-    name="update",
+    path("regenerate/image/", regenerate_image, name="regenerate_image"),
 
-),
-path(
-    "regenerate/paragraph/",
-    regenerate_paragraph,
-    name="regenerate_paragraph",
-),
-path(
-    "regenerate/image/",
-    regenerate_image,
-    name="regenerate_image",
-),
-path(
-    "regenerate/chapter/",
-    regenerate_chapter,
-    name="regenerate_chapter",
-),
+    path("regenerate/chapter/", regenerate_chapter, name="regenerate_chapter"),
+
+    path("regenerate/blog/", regenerate_entire_blog, name="regenerate_blog"),
+
+    path("<int:blog_id>/edit/", edit_blog, name="edit"),
+
+    path("<int:blog_id>/update/", update_blog, name="update"),
+
+    path("<int:blog_id>/delete/", delete_blog, name="delete"),
+
+    path("<int:blog_id>/", blog_detail, name="detail"),
 ]

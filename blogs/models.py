@@ -65,7 +65,10 @@ class Blog(models.Model):
         max_length=100,
         default="General"
     )
-
+    length = models.CharField(
+        max_length=50,
+        default="Medium"
+    )
     # --------------------------------------------------
     # Metadata
     # --------------------------------------------------
