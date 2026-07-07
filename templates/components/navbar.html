@@ -24,20 +24,14 @@ class="sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 da
 
         <!-- Theme -->
 
-        <button
+       <button
             id="themeToggle"
             class="rounded-xl p-2 hover:bg-slate-100 dark:hover:bg-slate-800">
 
             <i
-                id="moonIcon"
+                id="themeIcon"
                 data-lucide="moon"
                 class="w-5 h-5">
-            </i>
-
-            <i
-                id="sunIcon"
-                data-lucide="sun"
-                class="w-5 h-5 hidden">
             </i>
 
         </button>
@@ -105,35 +99,31 @@ class="sticky top-0 z-40 bg-white dark:bg-slate-900 border-b border-slate-200 da
 </div>
 
 <script>
-
 const themeButton = document.getElementById("themeToggle");
-const themeIcon = document.getElementById("themeIcon");
 
 function updateThemeIcon() {
-    if (document.documentElement.classList.contains("dark")) {
-        themeIcon.setAttribute("data-lucide", "sun");
-    } else {
-        themeIcon.setAttribute("data-lucide", "moon");
-    }
+    const dark = document.documentElement.classList.contains("dark");
 
+    // Replace the button content with the correct icon
+    themeButton.innerHTML = dark
+        ? '<i id="themeIcon" data-lucide="sun" class="w-5 h-5"></i>'
+        : '<i id="themeIcon" data-lucide="moon" class="w-5 h-5"></i>';
+
+    // Convert the new <i> into an SVG
     lucide.createIcons();
 }
 
 themeButton.addEventListener("click", () => {
-
     document.documentElement.classList.toggle("dark");
 
-    if (document.documentElement.classList.contains("dark")) {
-        localStorage.setItem("theme", "dark");
-    } else {
-        localStorage.setItem("theme", "light");
-    }
+    const dark = document.documentElement.classList.contains("dark");
+
+    localStorage.setItem("theme", dark ? "dark" : "light");
 
     updateThemeIcon();
-
 });
 
-// Set correct icon when page loads
+// Initialize on page load
 updateThemeIcon();
 </script>
 
